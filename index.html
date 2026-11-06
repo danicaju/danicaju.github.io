@@ -45,14 +45,15 @@
     <style>
         html {
             scroll-behavior: auto;
+            overflow-x: hidden;
         }
 
         html, body {
-            overflow-x: hidden;
             max-width: 100%;
         }
 
         body {
+            overflow-x: clip;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
@@ -237,6 +238,10 @@
         <div id="orb3" class="parallax-orb-wrapper top-[75vh] left-[8vw]">
             <div class="parallax-orb-pulse-3 w-[520px] h-[520px] rounded-full bg-teal-500/10 blur-[110px]"></div>
         </div>
+        <!-- Orbe Cuarto: Violeta ambiental medio-izquierdo -->
+        <div id="orb4" class="parallax-orb-wrapper top-[55vh] -left-32">
+            <div class="parallax-orb-pulse-1 w-[480px] h-[480px] rounded-full bg-purple-600/10 blur-[125px]"></div>
+        </div>
     </div>
 
     <!-- Botón Flotante WhatsApp -->
@@ -274,6 +279,7 @@
                     Calculadora
                 </a>
                 <a href="#faq" class="hover:text-white transition-colors">Dudas frecuentes</a>
+                <a href="#contacto" class="hover:text-white transition-colors">Contacto</a>
             </div>
 
             <div class="flex items-center gap-2 sm:gap-3">
@@ -300,6 +306,7 @@
             <a href="#modalidades" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Modalidades</a>
             <a href="#calculadora" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-indigo-400 hover:text-indigo-300 hover:bg-slate-800 transition-colors">Calculadora interactiva</a>
             <a href="#faq" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Dudas frecuentes</a>
+            <a href="#contacto" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Contacto</a>
         </div>
     </nav>
 
@@ -916,7 +923,16 @@
     </section>
 
     <!-- Sección de Contacto Final -->
-    <section id="contacto" class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 scroll-mt-20 scroll-reveal">
+    <section id="contacto" class="relative max-w-5xl mx-auto px-4 sm:px-6 pb-20 scroll-mt-20 scroll-reveal overflow-hidden lg:overflow-visible">
+        
+        <!-- Elementos decorativos de lógica y funciones con parallax en Contacto -->
+        <div class="parallax-math-symbol hidden xl:block -left-20 top-24 text-indigo-400/20 text-2xl font-mono select-none" data-parallax-speed="0.12" aria-hidden="true">
+            f : ℝ → ℝ
+        </div>
+        <div class="parallax-math-symbol hidden xl:block -right-20 top-36 text-emerald-400/25 text-3xl font-serif select-none" data-parallax-speed="-0.14" aria-hidden="true">
+            Q.E.D. ■
+        </div>
+
         <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-14 text-center shadow-2xl border border-slate-800 relative overflow-hidden interactive-tilt" data-tilt-max="2">
             <div class="absolute -top-32 -left-32 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-32 -right-32 w-72 h-72 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -968,6 +984,8 @@
                 <a href="#metodologia" class="hover:text-slate-800 transition-colors">Metodología</a>
                 <a href="#modalidades" class="hover:text-slate-800 transition-colors">Modalidades</a>
                 <a href="#calculadora" class="hover:text-slate-800 transition-colors">Calculadora</a>
+                <a href="#faq" class="hover:text-slate-800 transition-colors">Dudas frecuentes</a>
+                <a href="#contacto" class="hover:text-slate-800 transition-colors">Contacto</a>
                 <a href="https://github.com/danicaju" target="_blank" rel="noopener noreferrer" class="hover:text-slate-800 transition-colors flex items-center gap-1">
                     <i class="fab fa-github"></i> GitHub
                 </a>
@@ -1140,66 +1158,124 @@
         // ==========================================
         // 1. DESPLAZAMIENTO SUAVE Y NAVEGACIÓN ANCLA
         // ==========================================
-        function initSmoothAnchorNavigation() {
+        let activeScrollCancel = null;
+        let activeScrollRafId = null;
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function smoothScrollTo(targetY, onComplete) {
+            // Cancelar cualquier animación de scroll previa para evitar carreras o saltos
+            if (activeScrollCancel) {
+                activeScrollCancel();
+                activeScrollCancel = null;
+            }
+            if (activeScrollRafId) {
+                cancelAnimationFrame(activeScrollRafId);
+                activeScrollRafId = null;
+            }
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                if ('scrollBehavior' in document.documentElement.style) {
+                    window.scrollTo({ top: targetY, behavior: 'smooth' });
+                } else {
+                    window.scrollTo(0, targetY);
+                }
+                if (onComplete) onComplete();
+                return;
+            }
+
+            const startY = window.pageYOffset || window.scrollY || 0;
+            const diff = targetY - startY;
+            if (Math.abs(diff) < 2) {
+                if (onComplete) onComplete();
+                return;
+            }
+
+            // Duración orgánica adaptativa según la distancia recorrida
+            const duration = Math.min(800, Math.max(450, Math.abs(diff) * 0.25));
+
+            let startTime = null;
+            let isCancelled = false;
+
+            function cancelScroll() {
+                if (isCancelled) return;
+                isCancelled = true;
+                if (activeScrollRafId) {
+                    cancelAnimationFrame(activeScrollRafId);
+                    activeScrollRafId = null;
+                }
+                cleanup();
+                activeScrollCancel = null;
+            }
+
+            function cleanup() {
+                window.removeEventListener('wheel', cancelScroll);
+                window.removeEventListener('touchmove', cancelScroll);
+                window.removeEventListener('keydown', onKeyDown);
+            }
+
+            function onKeyDown(e) {
+                if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'].includes(e.code)) {
+                    cancelScroll();
+                }
+            }
+
+            window.addEventListener('wheel', cancelScroll, { passive: true });
+            window.addEventListener('touchmove', cancelScroll, { passive: true });
+            window.addEventListener('keydown', onKeyDown, { passive: true });
+
+            activeScrollCancel = cancelScroll;
+
+            function step(timestamp) {
+                if (isCancelled) return;
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = easeInOutCubic(progress);
+
+                window.scrollTo(0, startY + diff * eased);
+
+                if (progress < 1) {
+                    activeScrollRafId = requestAnimationFrame(step);
+                } else {
+                    cleanup();
+                    activeScrollCancel = null;
+                    activeScrollRafId = null;
+                    if (onComplete) onComplete();
+                }
+            }
+
+            activeScrollRafId = requestAnimationFrame(step);
+        }
+
+        function scrollToElement(target, hash) {
+            if (!target) return;
             const headerOffset = 70; // Altura de la barra sticky + margen de confort
 
-            function easeInOutCubic(t) {
-                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            // Revelar el destino y sus elementos si tenían scroll-reveal pendiente
+            target.classList.add('is-revealed');
+            const childReveals = target.querySelectorAll('.scroll-reveal');
+            childReveals.forEach(el => el.classList.add('is-revealed'));
+
+            const rect = target.getBoundingClientRect();
+            const currentScrollY = window.pageYOffset || window.scrollY || 0;
+            const offsetPosition = rect.top + currentScrollY - headerOffset;
+
+            smoothScrollTo(Math.max(0, offsetPosition), () => {
+                if (!target.hasAttribute('tabindex')) {
+                    target.setAttribute('tabindex', '-1');
+                }
+                target.focus({ preventScroll: true });
+            });
+
+            if (hash && history.pushState) {
+                history.pushState(null, null, hash);
             }
+        }
 
-            function smoothScrollTo(targetY, duration = 750) {
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    window.scrollTo(0, targetY);
-                    return;
-                }
-
-                const startY = window.pageYOffset;
-                const diff = targetY - startY;
-                if (Math.abs(diff) < 2) return;
-
-                let startTime = null;
-                let isCancelled = false;
-
-                function cancelScroll() {
-                    isCancelled = true;
-                    cleanup();
-                }
-
-                function cleanup() {
-                    window.removeEventListener('wheel', cancelScroll);
-                    window.removeEventListener('touchmove', cancelScroll);
-                    window.removeEventListener('keydown', onKeyDown);
-                }
-
-                function onKeyDown(e) {
-                    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'].includes(e.code)) {
-                        cancelScroll();
-                    }
-                }
-
-                window.addEventListener('wheel', cancelScroll, { passive: true });
-                window.addEventListener('touchmove', cancelScroll, { passive: true });
-                window.addEventListener('keydown', onKeyDown, { passive: true });
-
-                function step(timestamp) {
-                    if (isCancelled) return;
-                    if (!startTime) startTime = timestamp;
-                    const elapsed = timestamp - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const eased = easeInOutCubic(progress);
-
-                    window.scrollTo(0, startY + diff * eased);
-
-                    if (progress < 1) {
-                        requestAnimationFrame(step);
-                    } else {
-                        cleanup();
-                    }
-                }
-
-                requestAnimationFrame(step);
-            }
-
+        function initSmoothAnchorNavigation() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
@@ -1214,7 +1290,8 @@
                         return;
                     }
 
-                    const target = document.querySelector(href);
+                    const targetId = href.startsWith('#') ? href.slice(1) : href;
+                    const target = document.getElementById(targetId);
                     if (!target) return;
 
                     e.preventDefault();
@@ -1227,16 +1304,19 @@
                         menuIcon.classList.add('fa-bars');
                     }
 
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    smoothScrollTo(Math.max(0, offsetPosition));
-
-                    if (history.pushState) {
-                        history.pushState(null, null, href);
-                    }
+                    scrollToElement(target, href);
                 });
             });
+
+            // Soporte a enlaces entrantes con hash en la URL
+            if (window.location.hash) {
+                const initialTarget = document.getElementById(window.location.hash.slice(1));
+                if (initialTarget) {
+                    setTimeout(() => {
+                        scrollToElement(initialTarget);
+                    }, 120);
+                }
+            }
         }
 
         // ==========================================
@@ -1260,13 +1340,13 @@
                 });
             }, {
                 root: null,
-                rootMargin: '0px 0px -40px 0px',
-                threshold: 0.08
+                rootMargin: '0px 0px -30px 0px',
+                threshold: 0.05
             });
 
             revealElements.forEach(el => {
                 const rect = el.getBoundingClientRect();
-                // Si el elemento ya está dentro o cerca del viewport inicial, revelar de inmediato
+                // Si el elemento ya está dentro o visible en el viewport inicial, revelar de inmediato
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     el.classList.add('is-revealed');
                 } else {
@@ -1285,16 +1365,22 @@
             const orb1 = document.getElementById('orb1');
             const orb2 = document.getElementById('orb2');
             const orb3 = document.getElementById('orb3');
+            const orb4 = document.getElementById('orb4');
             const mathSymbols = Array.from(document.querySelectorAll('.parallax-math-symbol'));
 
-            // Cachear posiciones iniciales de secciones para calcular desplazamiento local
+            // Cachear posiciones de secciones relativas al documento completo
             let symbolData = [];
             function cachePositions() {
+                const currentScrollY = window.pageYOffset || window.scrollY || 0;
                 symbolData = mathSymbols.map(el => {
                     const parent = el.closest('section, header');
+                    const rect = parent ? parent.getBoundingClientRect() : { top: 0, height: 0 };
+                    const sectionTop = parent ? rect.top + currentScrollY : 0;
+                    const sectionHeight = parent ? (parent.offsetHeight || rect.height) : 0;
                     return {
                         el,
-                        sectionTop: parent ? parent.offsetTop : 0,
+                        sectionTop,
+                        sectionHeight,
                         speed: parseFloat(el.getAttribute('data-parallax-speed') || '0.12')
                     };
                 });
@@ -1302,37 +1388,57 @@
             cachePositions();
             window.addEventListener('resize', cachePositions, { passive: true });
 
-            let latestScrollY = window.pageYOffset;
+            let latestScrollY = window.pageYOffset || window.scrollY || 0;
             let ticking = false;
 
             function updateParallax() {
-                // Orbes ambientales con velocidades diferenciales relativas
+                const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+                const progress = Math.min(1, Math.max(0, latestScrollY / maxScroll));
+
+                // Orbes ambientales multicapa: desplazamiento armónico continuo
+                // que conserva su presencia e iluminación a lo largo de toda la página
                 if (orb1) {
-                    const y1 = latestScrollY * -0.14;
-                    orb1.style.transform = `translate3d(0, ${y1.toFixed(1)}px, 0)`;
+                    const y1 = (progress - 0.5) * 140;
+                    const x1 = (progress - 0.5) * 40;
+                    orb1.style.transform = `translate3d(${x1.toFixed(1)}px, ${y1.toFixed(1)}px, 0)`;
                 }
                 if (orb2) {
-                    const y2 = latestScrollY * 0.10;
-                    orb2.style.transform = `translate3d(0, ${y2.toFixed(1)}px, 0)`;
+                    const y2 = (progress - 0.5) * -160;
+                    const x2 = (progress - 0.5) * -50;
+                    orb2.style.transform = `translate3d(${x2.toFixed(1)}px, ${y2.toFixed(1)}px, 0)`;
                 }
                 if (orb3) {
-                    const y3 = latestScrollY * -0.08;
-                    orb3.style.transform = `translate3d(0, ${y3.toFixed(1)}px, 0)`;
+                    const y3 = (progress - 0.5) * 130;
+                    const x3 = (progress - 0.5) * 35;
+                    orb3.style.transform = `translate3d(${x3.toFixed(1)}px, ${y3.toFixed(1)}px, 0)`;
+                }
+                if (orb4) {
+                    const y4 = (progress - 0.5) * -120;
+                    const x4 = (progress - 0.5) * 45;
+                    orb4.style.transform = `translate3d(${x4.toFixed(1)}px, ${y4.toFixed(1)}px, 0)`;
                 }
 
-                // Elementos decorativos sutiles de matemáticas/lógica
+                // Elementos decorativos de matemáticas y lógica con desplazamiento acotado al viewport
+                const viewportCenter = latestScrollY + window.innerHeight / 2;
                 for (let i = 0; i < symbolData.length; i++) {
                     const item = symbolData[i];
-                    const relY = latestScrollY - item.sectionTop;
-                    const y = relY * item.speed;
-                    item.el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+                    const sectionCenter = item.sectionTop + (item.sectionHeight / 2);
+                    const delta = viewportCenter - sectionCenter;
+                    const maxRange = (window.innerHeight + item.sectionHeight) / 2;
+
+                    // Únicamente calcular y aplicar cuando la sección está en proximidad al viewport
+                    if (Math.abs(delta) < maxRange + 150) {
+                        const rawY = delta * item.speed;
+                        const clampedY = Math.max(-45, Math.min(45, rawY));
+                        item.el.style.transform = `translate3d(0, ${clampedY.toFixed(1)}px, 0)`;
+                    }
                 }
 
                 ticking = false;
             }
 
             function onScroll() {
-                latestScrollY = window.pageYOffset;
+                latestScrollY = window.pageYOffset || window.scrollY || 0;
                 if (!ticking) {
                     requestAnimationFrame(updateParallax);
                     ticking = true;
@@ -1354,39 +1460,65 @@
             const tiltElements = document.querySelectorAll('.interactive-tilt');
 
             tiltElements.forEach(el => {
-                let bounds = null;
                 let isHovered = false;
+                let rafId = null;
+                let resetTimer = null;
                 const maxTilt = parseFloat(el.getAttribute('data-tilt-max') || '3.5');
 
-                el.addEventListener('mouseenter', () => {
+                function onMouseEnter() {
                     isHovered = true;
-                    bounds = el.getBoundingClientRect();
-                    el.style.transition = 'transform 0.1s ease-out, box-shadow 0.2s ease-out';
-                });
+                    if (resetTimer) {
+                        clearTimeout(resetTimer);
+                        resetTimer = null;
+                    }
+                    el.style.transition = 'transform 0.12s ease-out, box-shadow 0.2s ease-out';
+                }
 
-                el.addEventListener('mousemove', (e) => {
+                function onMouseMove(e) {
                     if (!isHovered) return;
-                    if (!bounds) bounds = el.getBoundingClientRect();
+                    if (rafId) return;
 
-                    const x = e.clientX - bounds.left;
-                    const y = e.clientY - bounds.top;
-                    const centerX = bounds.width / 2;
-                    const centerY = bounds.height / 2;
+                    rafId = requestAnimationFrame(() => {
+                        rafId = null;
+                        if (!isHovered) return;
 
-                    const rotateX = ((centerY - y) / centerY) * maxTilt;
-                    const rotateY = ((x - centerX) / centerX) * maxTilt;
+                        const bounds = el.getBoundingClientRect();
+                        const x = e.clientX - bounds.left;
+                        const y = e.clientY - bounds.top;
+                        const centerX = bounds.width / 2;
+                        const centerY = bounds.height / 2;
 
-                    el.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px) scale3d(1.01, 1.01, 1.01)`;
-                    el.style.boxShadow = '0 20px 30px -10px rgba(15, 23, 42, 0.15), 0 10px 15px -5px rgba(15, 23, 42, 0.06)';
-                });
+                        const rotateX = Math.max(-maxTilt, Math.min(maxTilt, ((centerY - y) / (centerY || 1)) * maxTilt));
+                        const rotateY = Math.max(-maxTilt, Math.min(maxTilt, ((x - centerX) / (centerX || 1)) * maxTilt));
 
-                el.addEventListener('mouseleave', () => {
+                        el.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px) scale3d(1.01, 1.01, 1.01)`;
+                        el.style.boxShadow = '0 20px 30px -10px rgba(15, 23, 42, 0.15), 0 10px 15px -5px rgba(15, 23, 42, 0.06)';
+                    });
+                }
+
+                function onMouseLeave() {
                     isHovered = false;
-                    bounds = null;
-                    el.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    if (rafId) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                    el.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
                     el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale3d(1, 1, 1)';
                     el.style.boxShadow = '';
-                });
+
+                    // Limpiar inline styles tras transición para restaurar completamente el cascade CSS
+                    resetTimer = setTimeout(() => {
+                        if (!isHovered) {
+                            el.style.transform = '';
+                            el.style.transition = '';
+                            el.style.boxShadow = '';
+                        }
+                    }, 420);
+                }
+
+                el.addEventListener('mouseenter', onMouseEnter);
+                el.addEventListener('mousemove', onMouseMove);
+                el.addEventListener('mouseleave', onMouseLeave);
             });
         }
 
