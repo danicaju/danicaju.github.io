@@ -1,191 +1,951 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clases de Matemáticas | Daniel Casado Juan</title>
-    <!-- Tailwind CSS -->
+    <title>Daniel Casado Juan | Clases de Matemáticas (ESO y Bachillerato)</title>
+    <meta name="description" content="Clases particulares de Matemáticas para ESO y Bachillerato en Palma de Mallorca y Online. Aprende a razonar, no a memorizar. Pizarra digital Goodnotes y apuntes en PDF.">
+
+    <!-- Tipografía Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome para los iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
-        .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .floating-whatsapp {
-            position: fixed; bottom: 20px; right: 20px; z-index: 50;
-            animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            animation-delay: 1s; opacity: 0; transform: scale(0);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+                        body: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                            950: '#1e1b4b',
+                        }
+                    }
+                }
+            }
         }
-        @keyframes bounceIn { to { opacity: 1; transform: scale(1); } }
-        .bg-pattern {
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 20px 20px;
+    </script>
+
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .bg-grid-subtle {
+            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+        }
+
+        .bg-grid-dark {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .floating-whatsapp-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 50;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .floating-whatsapp-btn:hover {
+            transform: translateY(-4px) scale(1.04);
+        }
+
+        /* Suaves transiciones en tarjetas de tarifa */
+        .plan-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .plan-card:hover {
+            transform: translateY(-4px);
         }
     </style>
 </head>
-<body class="text-slate-800 pb-20 min-h-screen bg-pattern">
-    
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white">
+
     <!-- Botón Flotante WhatsApp -->
-    <a href="https://wa.me/34637621315" target="_blank" class="floating-whatsapp bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl hover:bg-green-600 transition transform hover:scale-110">
-        <i class="fab fa-whatsapp"></i>
+    <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20he%20visto%20tu%20web%20y%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       id="floatingWhatsApp"
+       class="floating-whatsapp-btn flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white pl-4 pr-5 py-3.5 rounded-full shadow-2xl hover:shadow-emerald-500/30 group">
+        <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+        </span>
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <span class="text-sm font-semibold tracking-wide hidden sm:inline">WhatsApp directo</span>
     </a>
 
-    <!-- Cabecera Hero -->
-    <header class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white pt-20 pb-20 px-4 text-center shadow-2xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        <div class="max-w-3xl mx-auto relative z-10 fade-in">
-            
-            <!-- Foto de Perfil -->
-            <img src="191407876.jfif" alt="Daniel Casado Juan" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-white/20 shadow-xl object-cover">
-
-            <span class="bg-blue-700/50 text-blue-200 text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6 inline-block backdrop-blur-sm border border-blue-500/30">Plazas limitadas: Especial Verano</span>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-                Daniel Casado Juan
-            </h1>
-            <p class="text-xl md:text-2xl text-blue-100 font-light mb-8 max-w-2xl mx-auto">
-                Clases de Matemáticas para ESO. Aprende a razonar, entender y superar la asignatura.
-            </p>
-            <a href="#contacto" class="inline-block bg-white text-blue-800 px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:bg-blue-50 transition transform hover:-translate-y-1 text-lg">
-                Contactar por WhatsApp
+    <!-- Barra de Navegación Superior -->
+    <nav class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center text-white font-extrabold text-base shadow-md group-hover:scale-105 transition-transform">
+                    D
+                </div>
+                <div>
+                    <span class="text-white font-bold text-sm sm:text-base tracking-tight block">Daniel Casado Juan</span>
+                    <span class="text-slate-400 text-xs block -mt-0.5">Clases de Matemáticas</span>
+                </div>
             </a>
+
+            <div class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+                <a href="#metodologia" class="hover:text-white transition-colors">Metodología</a>
+                <a href="#modalidades" class="hover:text-white transition-colors">Modalidades</a>
+                <a href="#calculadora" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                    Calculadora
+                </a>
+                <a href="#faq" class="hover:text-white transition-colors">Dudas frecuentes</a>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl shadow-md transition-all">
+                    <i class="fab fa-whatsapp text-base"></i>
+                    <span>Contactar</span>
+                </a>
+                <button type="button" 
+                        id="mobileMenuToggle" 
+                        aria-label="Abrir menú de navegación" 
+                        aria-expanded="false" 
+                        class="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <i id="menuIcon" class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-4 space-y-2 backdrop-blur-md">
+            <a href="#metodologia" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Metodología</a>
+            <a href="#modalidades" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Modalidades</a>
+            <a href="#calculadora" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-indigo-400 hover:text-indigo-300 hover:bg-slate-800 transition-colors">Calculadora interactiva</a>
+            <a href="#faq" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Dudas frecuentes</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-900 text-white pt-14 pb-20 sm:pt-20 sm:pb-28 overflow-hidden bg-grid-dark">
+        <!-- Glows decorativos de fondo -->
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-40 right-10 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="flex flex-col items-center text-center">
+                
+                <!-- Badge de Temporada Actualizado -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 mb-8 backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Curso 2026/2027 • Plazas limitadas</span>
+                </div>
+
+                <!-- Foto de Perfil Integrada -->
+                <div class="relative mb-8 group">
+                    <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-teal-400 opacity-60 blur-md group-hover:opacity-90 transition duration-300"></div>
+                    <img src="191407876.jfif" 
+                         alt="Daniel Casado Juan - Profesor de Clases de Matemáticas" 
+                         width="144" 
+                         height="144" 
+                         loading="eager"
+                         class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-slate-900 shadow-2xl">
+                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-slate-900/90 text-indigo-300 border border-indigo-400/30 text-[11px] font-semibold px-3 py-0.5 rounded-full shadow whitespace-nowrap backdrop-blur-sm">
+                        UIB Informática
+                    </div>
+                </div>
+
+                <!-- Titular Principal -->
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 max-w-3xl leading-[1.15]">
+                    Clases de Matemáticas <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-teal-300">
+                        para ESO y Bachillerato
+                    </span>
+                </h1>
+
+                <!-- Subtítulo -->
+                <p class="text-base sm:text-xl text-slate-300 font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Aprende a razonar y a resolver problemas con autonomía. Metodología práctica y visual con pizarra digital interactiva y apuntes en PDF tras cada sesión.
+                </p>
+
+                <!-- Acciones Principales -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                    <a href="#calculadora" 
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 text-base">
+                        <i class="fas fa-calculator text-indigo-200"></i>
+                        <span>Calcular mi tarifa</span>
+                    </a>
+                    <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20he%20visto%20tu%20web%20y%20quiero%20consultar%20disponibilidad%20para%20clases." 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-slate-800/90 hover:bg-slate-700 text-slate-100 border border-slate-700/80 font-semibold px-7 py-3.5 rounded-xl transition-all transform hover:-translate-y-0.5 text-base">
+                        <i class="fab fa-whatsapp text-emerald-400 text-lg"></i>
+                        <span>Escribir por WhatsApp</span>
+                    </a>
+                </div>
+
+                <!-- Aviso Bachillerato -->
+                <p class="text-xs sm:text-sm text-slate-400 mt-6 flex items-center gap-2">
+                    <i class="fas fa-info-circle text-indigo-400"></i>
+                    <span>Foco prioritario en ESO. Plazas selectas disponibles para Bachillerato según temario.</span>
+                </p>
+
+            </div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 -mt-10 relative z-20">
-        
-        <!-- Sección Perfil y Autoridad -->
-        <section class="bg-white rounded-3xl shadow-xl p-8 md:p-10 mb-8 fade-in delay-1 border border-slate-100">
-            <div class="grid md:grid-cols-2 gap-10 items-center">
+    <!-- Credenciales y Autoridad -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 -mt-8 sm:-mt-12 relative z-20">
+        <div class="glass-panel rounded-2xl shadow-xl p-6 sm:p-8 border border-slate-200/90">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200">
+                
+                <div class="pt-2 md:pt-0">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-3 text-lg">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="font-bold text-slate-900 text-sm sm:text-base">Grado UIB</div>
+                    <div class="text-xs text-slate-500 mt-0.5">Ingeniería Informática</div>
+                </div>
+
+                <div class="pt-2 md:pt-0 md:pl-4">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3 text-lg">
+                        <i class="fas fa-clock-rotate-left"></i>
+                    </div>
+                    <div class="font-bold text-slate-900 text-sm sm:text-base">3 Años de Experiencia</div>
+                    <div class="text-xs text-slate-500 mt-0.5">Clases particulares activas</div>
+                </div>
+
+                <div class="pt-2 md:pt-0 md:pl-4">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-3 text-lg">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="font-bold text-slate-900 text-sm sm:text-base">Sant Antoni Abat</div>
+                    <div class="text-xs text-slate-500 mt-0.5">Antiguo alumno del centro</div>
+                </div>
+
+                <div class="pt-2 md:pt-0 md:pl-4">
+                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center mx-auto mb-3 text-lg">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="font-bold text-slate-900 text-sm sm:text-base">Apuntes en PDF</div>
+                    <div class="text-xs text-slate-500 mt-0.5">Pizarra digital Goodnotes</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología: Aprender a razonar, no a memorizar -->
+    <section id="metodologia" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24 scroll-mt-20">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">
+                Metodología
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-4 mb-4 tracking-tight">
+                Aprender a razonar, no a memorizar
+            </h2>
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+                Las matemáticas se complican cuando se intentan aprender como una lista de recetas fijas. Mi objetivo es que el estudiante entienda el origen lógico de cada concepto para resolver cualquier problema con criterio propio.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <!-- Pilar 1 -->
+            <div class="bg-white rounded-2xl p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
                 <div>
-                    <h2 class="text-3xl font-bold text-slate-800 mb-6">
-                        El objetivo es <span class="text-blue-600">entender</span>, no solo memorizar.
-                    </h2>
-                    <p class="mb-4 text-slate-600 leading-relaxed text-lg">
-                        Soy estudiante en la <strong>Universitat de les Illes Balears</strong> y antiguo alumno del <strong>colegio Sant Antoni Abat</strong>. Conozco perfectamente el nivel de exigencia y el temario de cada curso.
-                    </p>
-                    <p class="text-slate-600 leading-relaxed text-lg">
-                        Llevo <strong>3 años impartiendo clases de repaso</strong>. Mi enfoque se aleja de dar las cosas hechas; busco que el alumno entienda el <em>porqué</em> de las matemáticas mediante la lógica y el pensamiento crítico.
+                    <div class="w-12 h-12 rounded-xl bg-blue-100/70 text-blue-700 flex items-center justify-center text-xl font-bold mb-5">
+                        1
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Diagnóstico de lagunas</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Muchas dificultades en cursos actuales proceden de dudas no resueltas de cursos anteriores (fracciones, signos, despeje de ecuaciones). Detectamos el punto de fricción y reconstruimos la base con solidez.
                     </p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-blue-50 p-6 rounded-2xl text-center">
-                        <i class="fas fa-school text-4xl text-blue-600 mb-3"></i>
-                        <div class="font-bold text-slate-800">Experiencia</div>
-                        <div class="text-sm text-slate-500">Conozco el temario del centro a la perfección.</div>
-                    </div>
-                    <div class="bg-indigo-50 p-6 rounded-2xl text-center">
-                        <i class="fas fa-brain text-4xl text-indigo-600 mb-3"></i>
-                        <div class="font-bold text-slate-800">Razonamiento</div>
-                        <div class="text-sm text-slate-500">Fomento el pensamiento crítico y reflexivo.</div>
-                    </div>
-                    <div class="bg-emerald-50 p-6 rounded-2xl text-center sm:col-span-2">
-                        <i class="fas fa-tablet-alt text-4xl text-emerald-600 mb-3"></i>
-                        <div class="font-bold text-slate-800">Herramientas Actuales</div>
-                        <div class="text-sm text-slate-500">Uso Goodnotes como pizarra interactiva para que las explicaciones sean 100% visuales y claras.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Metodología -->
-        <section class="mb-12 fade-in delay-2">
-            <h2 class="text-2xl font-bold text-center text-slate-800 mb-8">¿Cómo son las clases?</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 text-center relative overflow-hidden group hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 group-hover:scale-110 transition">1</div>
-                    <h3 class="font-bold mb-2">Base sólida</h3>
-                    <p class="text-slate-500 text-sm">Evaluamos dónde están los fallos o lagunas de cursos anteriores para construir desde ahí.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 text-center relative overflow-hidden group hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 group-hover:scale-110 transition">2</div>
-                    <h3 class="font-bold mb-2">Pensamiento crítico</h3>
-                    <p class="text-slate-500 text-sm">Hago pensar al alumno mediante preguntas guiadas para que llegue a la solución por sí mismo y entienda el proceso.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 text-center relative overflow-hidden group hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 group-hover:scale-110 transition">3</div>
-                    <h3 class="font-bold mb-2">Dinámicas y visuales</h3>
-                    <p class="text-slate-500 text-sm">Tanto en persona como online, la clase es activa y nos apoyamos en herramientas digitales para entender la teoría.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tarifas -->
-        <section class="mb-12 fade-in delay-3">
-            <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">Modalidades y Tarifas</h2>
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <!-- Presencial -->
-                <div class="bg-white rounded-3xl shadow-lg p-8 border-t-8 border-blue-600 relative hover:-translate-y-1 transition duration-300">
-                    <h3 class="text-2xl font-bold text-slate-800 text-center mb-2">Presencial</h3>
-                    <p class="text-slate-400 text-center text-sm mb-6">A domicilio</p>
-                    <div class="text-center mb-6">
-                        <span class="text-5xl font-extrabold text-blue-700">15€</span>
-                        <span class="text-slate-500 font-medium">/hora</span>
-                    </div>
-                    <ul class="text-slate-600 space-y-4 font-medium">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-3 text-lg"></i> Atención 100% personalizada</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-3 text-lg"></i> Desplazamiento incluido</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-3 text-lg"></i> Enfoque en el razonamiento lógico</li>
-                    </ul>
-                </div>
-
-                <!-- Online -->
-                <div class="bg-white rounded-3xl shadow-lg p-8 border-t-8 border-indigo-500 relative hover:-translate-y-1 transition duration-300">
-                    <h3 class="text-2xl font-bold text-slate-800 text-center mb-2">Online</h3>
-                    <p class="text-slate-400 text-center text-sm mb-6">Videollamada</p>
-                    <div class="text-center mb-6">
-                        <span class="text-5xl font-extrabold text-indigo-600">13€</span>
-                        <span class="text-slate-500 font-medium">/hora</span>
-                    </div>
-                    <ul class="text-slate-600 space-y-4 font-medium">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3 text-lg"></i> Explicaciones visuales con Goodnotes</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3 text-lg"></i> Clases 100% interactivas</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3 text-lg"></i> Horarios más flexibles</li>
-                    </ul>
+                <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-blue-600 flex items-center gap-1.5">
+                    <i class="fas fa-check"></i> Base conceptual clara
                 </div>
             </div>
 
-            <!-- Promo -->
-            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl shadow-xl p-8 text-white text-center transform hover:scale-[1.01] transition duration-300">
-                <span class="bg-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 inline-block backdrop-blur-md">Promoción</span>
-                <h3 class="text-2xl md:text-3xl font-bold mb-4">
-                    <i class="fas fa-user-friends mr-2"></i> Estudia con un compañero
+            <!-- Pilar 2 -->
+            <div class="bg-white rounded-2xl p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-indigo-100/70 text-indigo-700 flex items-center justify-center text-xl font-bold mb-5">
+                        2
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Comprensión guiada</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        No doy las respuestas hechas. Guío al estudiante mediante preguntas para que deduzca los pasos lógicos por sí mismo, gane confianza ante el folio en blanco y sea capaz de defender el resultado ante un examen.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-indigo-600 flex items-center gap-1.5">
+                    <i class="fas fa-check"></i> Autonomía de razonamiento
+                </div>
+            </div>
+
+            <!-- Pilar 3 -->
+            <div class="bg-white rounded-2xl p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold mb-5">
+                        3
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Pizarra digital Goodnotes</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Tanto en clases presenciales como online nos apoyamos en Goodnotes en tableta para generar esquemas visuales, desarrollos ordenados y pasos limpios. Al finalizar, el alumno recibe el archivo PDF íntegro.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-emerald-600 flex items-center gap-1.5">
+                    <i class="fas fa-check"></i> Apuntes en PDF listos
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Modalidades y Tarifas -->
+    <section id="modalidades" class="bg-slate-100/80 py-16 sm:py-24 border-y border-slate-200/80 bg-grid-subtle scroll-mt-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full">
+                    Precios Claros
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-4 mb-3 tracking-tight">
+                    Modalidades y Tarifas
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Precios transparentes y sin matrícula. Elige entre atención presencial a domicilio o la flexibilidad de las sesiones online.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-10">
+                
+                <!-- Tarjeta Presencial -->
+                <div class="plan-card bg-white rounded-3xl p-8 border border-slate-200 shadow-md relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute top-0 left-0 right-0 h-2 bg-blue-600"></div>
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Individual</span>
+                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Presencial a Domicilio</h3>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Palma de Mallorca</span>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-6">Atención directa en tu hogar con el material de clase.</p>
+                        
+                        <div class="mb-7 flex items-baseline">
+                            <span class="text-5xl font-extrabold text-slate-900">15€</span>
+                            <span class="text-slate-500 font-medium ml-2">/ hora</span>
+                        </div>
+
+                        <ul class="space-y-3.5 text-sm text-slate-600 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-blue-600 text-base"></i>
+                                <span><strong>Desplazamiento incluido</strong> en Palma y zonas acordadas.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-blue-600 text-base"></i>
+                                <span>Seguimiento directo del temario y exámenes del colegio.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-blue-600 text-base"></i>
+                                <span>Ritmo 100% individualizado para afianzar cada paso.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-blue-600 text-base"></i>
+                                <span>Resolución directa de dudas y ejercicios prácticos.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#calculadora" 
+                       onclick="setCalculatorModality('presencial')"
+                       class="w-full text-center block bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-sm">
+                        Seleccionar en calculadora
+                    </a>
+                </div>
+
+                <!-- Tarjeta Online -->
+                <div class="plan-card bg-white rounded-3xl p-8 border border-slate-200 shadow-md relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute top-0 left-0 right-0 h-2 bg-indigo-600"></div>
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md">Individual</span>
+                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Online Interactiva</h3>
+                            </div>
+                            <span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md">Pizarra Goodnotes</span>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-6">Sesión en tiempo real con pizarra compartida y audio nítido.</p>
+                        
+                        <div class="mb-7 flex items-baseline">
+                            <span class="text-5xl font-extrabold text-slate-900">13€</span>
+                            <span class="text-slate-500 font-medium ml-2">/ hora</span>
+                        </div>
+
+                        <ul class="space-y-3.5 text-sm text-slate-600 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-indigo-600 text-base"></i>
+                                <span><strong>Pizarra Goodnotes en vivo</strong> para ver cada paso con claridad.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-indigo-600 text-base"></i>
+                                <span><strong>Envío del PDF</strong> con todas las soluciones al finalizar la clase.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-indigo-600 text-base"></i>
+                                <span>Mayor flexibilidad de franjas horarias y sin pérdidas de tiempo.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-indigo-600 text-base"></i>
+                                <span>Ideal para repasar dudas antes de entregas o exámenes.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#calculadora" 
+                       onclick="setCalculatorModality('online')"
+                       class="w-full text-center block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-sm">
+                        Seleccionar en calculadora
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Banner Modalidad Dúo -->
+            <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-8 sm:p-10 text-white shadow-xl border border-indigo-900/50 relative overflow-hidden">
+                <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                    <div class="max-w-xl text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-teal-300 bg-teal-900/40 border border-teal-500/30 px-3 py-1 rounded-full mb-3">
+                            <i class="fas fa-user-friends"></i>
+                            <span>Opción compartida</span>
+                        </div>
+                        <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">
+                            Modalidad Dúo: Estudia con un compañero
+                        </h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Si compartes clase con un amigo o compañero del mismo curso y temario, las sesiones resultan dinámicas y el coste por alumno se reduce.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full lg:w-auto">
+                        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 text-center w-full sm:w-48 backdrop-blur-sm flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-slate-400 block mb-1">Presencial Dúo</span>
+                                <div class="text-3xl font-extrabold text-teal-300">12€</div>
+                                <span class="text-xs text-slate-300">/h por alumno</span>
+                            </div>
+                            <a href="#calculadora" 
+                               onclick="setCalculatorModality('duo-presencial')" 
+                               class="mt-4 inline-block text-xs font-semibold text-teal-300 hover:text-white bg-teal-950/70 hover:bg-teal-900 border border-teal-500/40 py-2 px-3 rounded-lg transition-all">
+                                Calcular tarifa →
+                            </a>
+                        </div>
+
+                        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 text-center w-full sm:w-48 backdrop-blur-sm flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-slate-400 block mb-1">Online Dúo</span>
+                                <div class="text-3xl font-extrabold text-teal-300">10€</div>
+                                <span class="text-xs text-slate-300">/h por alumno</span>
+                            </div>
+                            <a href="#calculadora" 
+                               onclick="setCalculatorModality('duo-online')" 
+                               class="mt-4 inline-block text-xs font-semibold text-teal-300 hover:text-white bg-teal-950/70 hover:bg-teal-900 border border-teal-500/40 py-2 px-3 rounded-lg transition-all">
+                                Calcular tarifa →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Calculadora Interactiva de Tarifas -->
+    <section id="calculadora" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24 scroll-mt-20">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">
+                Simulador en tiempo real
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-4 mb-3 tracking-tight">
+                Calculadora interactiva de tarifas
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base">
+                Selecciona la modalidad, el curso y las horas semanales para ver el cálculo mensual estimado y contactar directamente con tu solicitud lista.
+            </p>
+        </div>
+
+        <!-- Widget Calculadora -->
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+            <div class="grid lg:grid-cols-12">
+                
+                <!-- Columna de Configuración (7 cols) -->
+                <div class="lg:col-span-7 p-6 sm:p-10 space-y-8">
+                    
+                    <!-- 1. Modalidad -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
+                            1. Modalidad de clase
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="modalitySelector" role="radiogroup" aria-label="Modalidad de clase">
+                            
+                            <label class="relative flex flex-col p-4 rounded-2xl border-2 border-indigo-600 bg-indigo-50/50 hover:border-indigo-400 cursor-pointer transition-all modality-option focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2" data-modality="presencial" data-rate="15">
+                                <input type="radio" name="modalidad" value="presencial" class="sr-only" checked>
+                                <span class="font-bold text-slate-900 text-sm">Presencial a domicilio</span>
+                                <span class="text-xs text-slate-500 mt-1">15€ / hora (individual)</span>
+                                <span class="text-[11px] font-semibold text-indigo-600 mt-2">Palma de Mallorca</span>
+                            </label>
+
+                            <label class="relative flex flex-col p-4 rounded-2xl border-2 border-slate-200 hover:border-slate-300 cursor-pointer transition-all modality-option focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2" data-modality="online" data-rate="13">
+                                <input type="radio" name="modalidad" value="online" class="sr-only">
+                                <span class="font-bold text-slate-900 text-sm">Online interactiva</span>
+                                <span class="text-xs text-slate-500 mt-1">13€ / hora (individual)</span>
+                                <span class="text-[11px] font-semibold text-slate-500 mt-2">Pizarra Goodnotes + PDF</span>
+                            </label>
+
+                            <label class="relative flex flex-col p-4 rounded-2xl border-2 border-slate-200 hover:border-slate-300 cursor-pointer transition-all modality-option focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2" data-modality="duo-presencial" data-rate="12">
+                                <input type="radio" name="modalidad" value="duo-presencial" class="sr-only">
+                                <span class="font-bold text-slate-900 text-sm">Dúo presencial</span>
+                                <span class="text-xs text-slate-500 mt-1">12€ / h por alumno</span>
+                                <span class="text-[11px] font-semibold text-emerald-600 mt-2">2 alumnos juntos</span>
+                            </label>
+
+                            <label class="relative flex flex-col p-4 rounded-2xl border-2 border-slate-200 hover:border-slate-300 cursor-pointer transition-all modality-option focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2" data-modality="duo-online" data-rate="10">
+                                <input type="radio" name="modalidad" value="duo-online" class="sr-only">
+                                <span class="font-bold text-slate-900 text-sm">Dúo online</span>
+                                <span class="text-xs text-slate-500 mt-1">10€ / h por alumno</span>
+                                <span class="text-[11px] font-semibold text-emerald-600 mt-2">2 alumnos online</span>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <!-- 2. Nivel / Curso -->
+                    <div>
+                        <label for="studentLevel" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
+                            2. Nivel escolar del alumno
+                        </label>
+                        <select id="studentLevel" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+                            <option value="1º de ESO">1º de ESO</option>
+                            <option value="2º de ESO">2º de ESO</option>
+                            <option value="3º de ESO" selected>3º de ESO</option>
+                            <option value="4º de ESO">4º de ESO (Académicas o Aplicadas)</option>
+                            <option value="1º de Bachillerato">1º de Bachillerato (Consultar temario)</option>
+                            <option value="2º de Bachillerato">2º de Bachillerato (Consultar temario)</option>
+                        </select>
+                        <div id="bachilleratoNotice" class="hidden mt-2.5 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2.5">
+                            <i class="fas fa-info-circle text-amber-600 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span>Las plazas para Bachillerato son limitadas y se confirman tras consultar el temario y los objetivos específicos del alumno.</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Horas por semana -->
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                3. Horas de clase a la semana
+                            </label>
+                            <span id="hoursLabel" class="text-sm font-bold text-indigo-600">2 horas / semana</span>
+                        </div>
+                        <div class="grid grid-cols-5 gap-1.5 sm:gap-2" id="hoursSelector" role="radiogroup" aria-label="Horas de clase a la semana">
+                            <button type="button" data-hours="1" aria-pressed="false" class="hour-btn py-2 sm:py-2.5 px-1 sm:px-2 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-center">1h</button>
+                            <button type="button" data-hours="1.5" aria-pressed="false" class="hour-btn py-2 sm:py-2.5 px-1 sm:px-2 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-center">1,5h</button>
+                            <button type="button" data-hours="2" aria-pressed="true" class="hour-btn py-2 sm:py-2.5 px-1 sm:px-2 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-center">2h</button>
+                            <button type="button" data-hours="3" aria-pressed="false" class="hour-btn py-2 sm:py-2.5 px-1 sm:px-2 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-center">3h</button>
+                            <button type="button" data-hours="4" aria-pressed="false" class="hour-btn py-2 sm:py-2.5 px-1 sm:px-2 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-center">4h</button>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">La dedicación recomendada para consolidar conceptos y resolver dudas con continuidad es de 1,5h a 2h semanales.</p>
+                    </div>
+
+                </div>
+
+                <!-- Columna de Resultados y CTA WhatsApp (5 cols) -->
+                <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-6 sm:p-10 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-800">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Presupuesto estimado</span>
+                            <span class="text-xs bg-indigo-500/20 text-indigo-300 px-2.5 py-1 rounded-md border border-indigo-500/30">Sin matrícula</span>
+                        </div>
+
+                        <!-- Resumen dinámico -->
+                        <div class="space-y-4 mb-8">
+                            <div class="flex justify-between items-center text-sm text-slate-300">
+                                <span>Modalidad seleccionada:</span>
+                                <strong id="summaryModality" class="text-white text-right font-semibold">Presencial a domicilio</strong>
+                            </div>
+                            <div class="flex justify-between items-center text-sm text-slate-300">
+                                <span>Tarifa horaria:</span>
+                                <strong id="summaryRate" class="text-white font-semibold">15€ / h</strong>
+                            </div>
+                            <div class="flex justify-between items-center text-sm text-slate-300">
+                                <span>Dedicación semanal:</span>
+                                <strong id="summaryHours" class="text-white font-semibold">2 horas / semana</strong>
+                            </div>
+                            <div class="flex justify-between items-center text-sm text-slate-300">
+                                <span>Inversión semanal:</span>
+                                <strong id="summaryWeekly" class="text-white font-semibold">30€ / semana</strong>
+                            </div>
+                        </div>
+
+                        <!-- Total Mensual Destacado -->
+                        <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700/80 mb-6">
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">
+                                Total mensual estimado (~4 semanas)
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span id="monthlyTotal" class="text-4xl sm:text-5xl font-black text-white tracking-tight">120€</span>
+                                <span id="perStudentBadge" class="text-xs text-slate-300 font-medium">al mes</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-2">
+                                Cálculo orientativo basado en 4 semanas de clase al mes. Los pagos se formalizan periódicamente sin permanencia.
+                            </p>
+                        </div>
+
+                        <!-- Preview del mensaje WhatsApp -->
+                        <div class="text-[11px] text-slate-400 bg-slate-950/60 rounded-xl p-3 border border-slate-800/80 mb-6">
+                            <div class="font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
+                                <i class="fab fa-whatsapp text-emerald-400"></i> Mensaje que se enviará:
+                            </div>
+                            <p id="whatsappMessagePreview" class="italic text-slate-300 line-clamp-3">
+                                "¡Hola Daniel! He visto tu web de clases de matemáticas..."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Botón directo a WhatsApp con texto dinámico -->
+                    <a id="calculatorWhatsAppBtn" 
+                       href="https://wa.me/34637621315?text=%C2%A1Hola%20Daniel!%20He%20visto%20tu%20web%20de%20clases%20de%20matem%C3%A1ticas.%20Me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%203%C2%BA%20de%20ESO%20en%20modalidad%20Presencial%20a%20domicilio%2C%20con%202%20horas%20a%20la%20semana%20(estimado%20mensual%3A%20120%E2%82%AC%2Fmes).%20%C2%BFQu%C3%A9%20horarios%20tendr%C3%ADas%20libres%3F" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="w-full inline-flex items-center justify-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-emerald-500/20 transition-all transform hover:-translate-y-0.5 text-base">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span>Pedir plaza por WhatsApp</span>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Preguntas Frecuentes (FAQ) -->
+    <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 scroll-mt-20">
+        <div class="text-center mb-12">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-200/70 px-3.5 py-1.5 rounded-full">
+                Preguntas frecuentes
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-4 mb-2">
+                Respuestas directas a dudas habituales
+            </h2>
+        </div>
+
+        <div class="space-y-4">
+            
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i class="fas fa-question-circle text-indigo-600"></i>
+                    ¿Cómo funcionan las clases online con pizarra digital?
                 </h3>
-                <p class="text-emerald-50 mb-8 max-w-2xl mx-auto text-lg">
-                    Si vienes con un amigo o compañero de clase, el precio se reduce para ambos.
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Nos conectamos mediante videollamada con audio de alta fidelidad y comparto la pantalla de mi iPad en tiempo real con Goodnotes. El alumno visualiza la explicación paso a paso como si estuviera a mi lado y, nada más terminar, recibe el archivo PDF exportado para volver a leerlo cuando lo necesite.
                 </p>
-                <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-16">
-                    <div>
-                        <p class="text-sm text-emerald-200 uppercase font-bold tracking-wider mb-1">Presencial Dúo</p>
-                        <p class="text-3xl font-bold">12€ <span class="text-lg font-normal text-emerald-100">/h por alumno</span></p>
-                    </div>
-                    <div class="hidden md:block w-px h-16 bg-white/20"></div>
-                    <div>
-                        <p class="text-sm text-emerald-200 uppercase font-bold tracking-wider mb-1">Online Dúo</p>
-                        <p class="text-3xl font-bold">10€ <span class="text-lg font-normal text-emerald-100">/h por alumno</span></p>
-                    </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i class="fas fa-question-circle text-indigo-600"></i>
+                    ¿Las clases presenciales a domicilio tienen coste de desplazamiento?
+                </h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    No, el desplazamiento está completamente incluido en la tarifa de 15€/h dentro de Palma y zonas acordadas.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i class="fas fa-question-circle text-indigo-600"></i>
+                    ¿Hay matrícula o compromiso de permanencia?
+                </h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    No hay matrícula ni permanencia obligatoria. Las clases se programan de forma acordada y puedes pausar o finalizar el servicio cuando ya se hayan alcanzado los objetivos académicos.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i class="fas fa-question-circle text-indigo-600"></i>
+                    ¿Qué ocurre si un día no podemos hacer la clase?
+                </h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Avisando con antelación suficiente, reprogramamos la clase en otro hueco disponible durante la semana o el fin de semana sin ningún inconveniente ni recargo.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sección de Contacto Final -->
+    <section id="contacto" class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 scroll-mt-20">
+        <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-14 text-center shadow-2xl border border-slate-800 relative overflow-hidden">
+            <div class="absolute -top-32 -left-32 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-32 -right-32 w-72 h-72 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    Atención directa sin intermediarios
+                </span>
+                
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+                    Consulta horarios y disponibilidad
+                </h2>
+                
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
+                    Escríbeme por WhatsApp con el curso actual del alumno, sus objetivos y tu disponibilidad de horarios. Te contestaré a la mayor brevedad posible para concretar detalles.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20he%20visto%20tu%20web%20y%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:-translate-y-0.5 text-lg">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span>+34 637 621 315</span>
+                    </a>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+                    <span class="flex items-center gap-1.5">
+                        <i class="fas fa-map-marker-alt text-indigo-400"></i> Palma de Mallorca
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <i class="fas fa-laptop text-indigo-400"></i> Clases Online en directo
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <i class="fas fa-user-graduate text-indigo-400"></i> Daniel Casado Juan
+                    </span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Contacto -->
-        <section id="contacto" class="bg-slate-900 text-white rounded-3xl shadow-2xl p-10 text-center relative overflow-hidden">
-            <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-600 rounded-full blur-3xl opacity-20"></div>
-            <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-600 rounded-full blur-3xl opacity-20"></div>
-            <div class="relative z-10">
-                <h2 class="text-3xl font-extrabold mb-4">¿Preparados para mejorar esas notas?</h2>
-                <p class="text-slate-300 mb-8 max-w-xl mx-auto text-lg">
-                    Escríbeme por WhatsApp para consultar disponibilidad de horarios, temarios o cualquier otra duda. Te contestaré lo antes posible sin ningún compromiso.
-                </p>
-                <a href="https://wa.me/34637621315" target="_blank" class="inline-flex items-center justify-center bg-green-500 text-white px-8 py-4 rounded-xl font-bold text-xl shadow-lg hover:bg-green-400 transition transform hover:-translate-y-1 w-full md:w-auto">
-                    <i class="fab fa-whatsapp text-3xl mr-3"></i> 
-                    +34 637 621 315
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-8 text-center text-xs text-slate-500">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 Daniel Casado Juan. Clases particulares de Matemáticas para ESO y Bachillerato.</p>
+            <div class="flex items-center gap-4">
+                <a href="#metodologia" class="hover:text-slate-800 transition-colors">Metodología</a>
+                <a href="#modalidades" class="hover:text-slate-800 transition-colors">Modalidades</a>
+                <a href="#calculadora" class="hover:text-slate-800 transition-colors">Calculadora</a>
+                <a href="https://github.com/danicaju" target="_blank" rel="noopener noreferrer" class="hover:text-slate-800 transition-colors flex items-center gap-1">
+                    <i class="fab fa-github"></i> GitHub
                 </a>
             </div>
-        </section>
-    </main>
+        </div>
+    </footer>
+
+    <!-- Script de la Calculadora Interactiva de Tarifas y Menú Móvil -->
+    <script>
+        const modalityRates = {
+            'presencial': { rate: 15, name: 'Presencial a domicilio', isDuo: false, note: 'Palma de Mallorca' },
+            'online': { rate: 13, name: 'Online interactiva', isDuo: false, note: 'Pizarra Goodnotes + PDF' },
+            'duo-presencial': { rate: 12, name: 'Dúo presencial', isDuo: true, note: '12€/h por alumno' },
+            'duo-online': { rate: 10, name: 'Dúo online', isDuo: true, note: '10€/h por alumno' }
+        };
+
+        let currentModality = 'presencial';
+        let currentHours = 2;
+
+        const studentLevelSelect = document.getElementById('studentLevel');
+        const bachilleratoNotice = document.getElementById('bachilleratoNotice');
+        const summaryModality = document.getElementById('summaryModality');
+        const summaryRate = document.getElementById('summaryRate');
+        const summaryHours = document.getElementById('summaryHours');
+        const summaryWeekly = document.getElementById('summaryWeekly');
+        const monthlyTotal = document.getElementById('monthlyTotal');
+        const perStudentBadge = document.getElementById('perStudentBadge');
+        const hoursLabel = document.getElementById('hoursLabel');
+        const whatsappMessagePreview = document.getElementById('whatsappMessagePreview');
+        const calculatorWhatsAppBtn = document.getElementById('calculatorWhatsAppBtn');
+
+        function formatCurrency(amount) {
+            if (Number.isInteger(amount)) {
+                return `${amount}€`;
+            }
+            return `${amount.toFixed(2).replace('.', ',')}€`;
+        }
+
+        function formatHourText(h) {
+            const hStr = h.toString().replace('.', ',');
+            return `${hStr} ${h === 1 ? 'hora' : 'horas'} / semana`;
+        }
+
+        function updateCalculator() {
+            const modData = modalityRates[currentModality] || modalityRates['presencial'];
+            const rate = modData.rate;
+            const level = studentLevelSelect.value;
+            const weekly = rate * currentHours;
+            const monthly = weekly * 4;
+
+            // Aviso de Bachillerato según temario
+            const isBach = level.includes('Bachillerato');
+            if (bachilleratoNotice) {
+                if (isBach) {
+                    bachilleratoNotice.classList.remove('hidden');
+                } else {
+                    bachilleratoNotice.classList.add('hidden');
+                }
+            }
+
+            // Actualizar etiquetas en interfaz con formato europeo
+            summaryModality.textContent = modData.name;
+            summaryRate.textContent = `${rate}€ / h${modData.isDuo ? ' por alumno' : ''}`;
+            summaryHours.textContent = formatHourText(currentHours);
+            summaryWeekly.textContent = `${formatCurrency(weekly)} / semana${modData.isDuo ? ' por alumno' : ''}`;
+            monthlyTotal.textContent = `${formatCurrency(monthly)}`;
+            perStudentBadge.textContent = modData.isDuo ? 'al mes por alumno' : 'al mes';
+            hoursLabel.textContent = formatHourText(currentHours);
+
+            // Construir texto personalizado de WhatsApp
+            const duoText = modData.isDuo ? ' (por alumno)' : '';
+            const hoursDisplay = currentHours.toString().replace('.', ',');
+            const bachNote = isBach ? ' Me gustaría consultar disponibilidad de temario y horarios.' : ' ¿Qué horarios tendrías libres?';
+            const msg = `¡Hola Daniel! He visto tu web de clases de matemáticas. Me gustaría consultar disponibilidad para ${level} en modalidad ${modData.name}, con ${hoursDisplay} horas a la semana (estimado mensual: ${formatCurrency(monthly)}${duoText}).${bachNote}`;
+            
+            whatsappMessagePreview.textContent = `"${msg}"`;
+            
+            const encodedMsg = encodeURIComponent(msg);
+            calculatorWhatsAppBtn.href = `https://wa.me/34637621315?text=${encodedMsg}`;
+        }
+
+        // Selección de modalidad accesible (click y teclado)
+        const modalityCards = document.querySelectorAll('.modality-option');
+        const modalityRadios = document.querySelectorAll('input[name="modalidad"]');
+
+        function setCalculatorModality(mod) {
+            if (!modalityRates[mod]) return;
+            currentModality = mod;
+            modalityCards.forEach(c => {
+                const isSelected = c.getAttribute('data-modality') === mod;
+                const radio = c.querySelector('input[type="radio"]');
+                if (isSelected) {
+                    radio.checked = true;
+                    c.classList.add('border-indigo-600', 'bg-indigo-50/50', 'hover:border-indigo-400');
+                    c.classList.remove('border-slate-200');
+                } else {
+                    radio.checked = false;
+                    c.classList.remove('border-indigo-600', 'bg-indigo-50/50', 'hover:border-indigo-400');
+                    c.classList.add('border-slate-200');
+                }
+            });
+            updateCalculator();
+        }
+
+        modalityCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                const mod = card.getAttribute('data-modality');
+                setCalculatorModality(mod);
+            });
+        });
+
+        // Soporte accesible a eventos de teclado en radio buttons
+        modalityRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                setCalculatorModality(radio.value);
+            });
+        });
+
+        // Selección de horas con botones y accesibilidad aria-pressed
+        const hourBtns = document.querySelectorAll('.hour-btn');
+        hourBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentHours = parseFloat(btn.getAttribute('data-hours'));
+                hourBtns.forEach(b => {
+                    b.setAttribute('aria-pressed', 'false');
+                    b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-700', 'font-bold');
+                    b.classList.add('border-slate-200', 'text-slate-700', 'font-semibold');
+                });
+                btn.setAttribute('aria-pressed', 'true');
+                btn.classList.remove('border-slate-200', 'text-slate-700', 'font-semibold');
+                btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-700', 'font-bold');
+                updateCalculator();
+            });
+        });
+
+        // Cambio de nivel escolar
+        studentLevelSelect.addEventListener('change', updateCalculator);
+
+        // Menú Móvil
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                if (isOpen) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'true');
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                }
+            });
+
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                });
+            });
+        }
+
+        // Inicialización inmediata
+        document.addEventListener('DOMContentLoaded', updateCalculator);
+        updateCalculator();
+    </script>
 </body>
 </html>
