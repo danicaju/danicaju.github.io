@@ -95,17 +95,73 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Botón Flotante WhatsApp */
+        /* ================================================= */
+        /* HERO LATERAL DECORATIONS & AMBIENT GLOWS          */
+        /* ================================================= */
+        @keyframes heroFloatSoft1 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-0.5deg); }
+        }
+        @keyframes heroFloatSoft2 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(0.5deg); }
+        }
+        .hero-float-left {
+            animation: heroFloatSoft1 7s ease-in-out infinite;
+            opacity: 0.16;
+            transition: opacity 0.3s ease;
+        }
+        .hero-float-right {
+            animation: heroFloatSoft2 8s ease-in-out infinite 1s;
+            opacity: 0.16;
+            transition: opacity 0.3s ease;
+        }
+        .hero-float-left:hover, .hero-float-right:hover {
+            opacity: 0.45;
+        }
+
+        /* Glassmorphism secundario Hero */
+        .btn-glass-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-glass-secondary:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(99, 102, 241, 0.8);
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Botón Flotante WhatsApp con visibilidad reactiva al scroll */
         .floating-whatsapp-btn {
             position: fixed;
             bottom: 24px;
             right: 24px;
             z-index: 50;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
         }
-
+        .floating-whatsapp-btn.btn-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
         .floating-whatsapp-btn:hover {
             transform: translateY(-4px) scale(1.04);
+        }
+
+        /* Modal PDF */
+        #pdfModal.modal-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #pdfModal.modal-open > div {
+            transform: scale(1);
         }
 
         /* Orbes Parallax Ambientales Multicapa */
@@ -536,20 +592,81 @@
         </div>
     </header>
 
-    <!-- Hero Section con Fondo Continuo y Parallax -->
+    <!-- Hero Section con Fondo Continuo, Parallax y Ambient Glow -->
     <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden">
-        <!-- Glows de iluminación ambiental sobre el lienzo -->
-        <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute top-36 right-8 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <!-- Ambient Glow: Fondos difuminados para dar profundidad al lienzo oscuro -->
+        <div class="absolute -top-12 left-[-8%] w-[580px] h-[580px] bg-sky-500/[0.12] rounded-full pointer-events-none z-0" style="filter: blur(130px);" aria-hidden="true"></div>
+        <div class="absolute top-8 right-[-8%] w-[620px] h-[620px] bg-indigo-600/[0.12] rounded-full pointer-events-none z-0" style="filter: blur(130px);" aria-hidden="true"></div>
 
-        <!-- Símbolos matemáticos con parallax -->
-        <div class="parallax-math-symbol hidden lg:flex flex-col items-start gap-1 left-8 top-32 text-indigo-300/25 select-none font-serif" data-parallax-speed="-0.15" aria-hidden="true">
-            <span class="text-2xl sm:text-3xl tracking-wide">∫<sub>0</sub><sup>∞</sup> e<sup>-x²</sup> dx = <sup>√π</sup>/<sub>2</sub></span>
-            <span class="text-[11px] font-mono text-indigo-400/40 tracking-widest uppercase">Cálculo & Razonamiento</span>
+        <!-- BLOQUE DECORATIVO LATERAL IZQUIERDO: ÁLGEBRA & FUNCIONES (ESO / Bachillerato) -->
+        <div class="hero-lateral-block hero-float-left hidden lg:flex flex-col items-start gap-3 absolute left-4 xl:left-12 2xl:left-24 top-24 xl:top-32 z-0 pointer-events-none select-none" data-parallax-speed="-0.12" aria-hidden="true">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-[10px] font-mono tracking-widest text-sky-400 uppercase">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                ÁLGEBRA & FUNCIONES
+            </div>
+            
+            <!-- Gráfica SVG de Función Cuadrática sobre Ejes Cartesianos -->
+            <svg width="240" height="170" viewBox="0 0 240 170" fill="none" class="stroke-sky-400">
+                <!-- Ejes cartesianos -->
+                <line x1="20" y1="120" x2="220" y2="120" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35"/>
+                <line x1="120" y1="15" x2="120" y2="160" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35"/>
+                <!-- Flechas de los ejes -->
+                <polyline points="214,116 220,120 214,124" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.5"/>
+                <polyline points="116,21 120,15 124,21" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.5"/>
+                <!-- Marcas de graduación en ejes -->
+                <line x1="70" y1="117" x2="70" y2="123" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.4"/>
+                <line x1="170" y1="117" x2="170" y2="123" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.4"/>
+                <line x1="117" y1="70" x2="123" y2="70" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.4"/>
+                <!-- Parábola y = ax² + bx + c -->
+                <path d="M 40 155 Q 120 15 200 155" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-opacity="0.65" stroke-linecap="round"/>
+                <!-- Puntos notables: Vértice y Raíces -->
+                <circle cx="120" cy="85" r="3.5" fill="#38bdf8" fill-opacity="0.8"/>
+                <circle cx="68" cy="120" r="3" fill="#6366f1" fill-opacity="0.8"/>
+                <circle cx="172" cy="120" r="3" fill="#6366f1" fill-opacity="0.8"/>
+                <text x="126" y="80" fill="#38bdf8" fill-opacity="0.75" font-family="monospace" font-size="10">V(h, k)</text>
+                <!-- Eje de simetría discontinuo -->
+                <line x1="120" y1="35" x2="120" y2="155" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.3"/>
+            </svg>
+
+            <!-- Fórmula Cuadrática General de Resolución -->
+            <div class="text-sky-300/60 font-mono text-sm tracking-wide bg-sky-950/30 px-3.5 py-1.5 rounded-lg border border-sky-500/15 backdrop-blur-sm">
+                <span>x = <sup>-b ± √(b² - 4ac)</sup>&frasl;<sub>2a</sub></span>
+            </div>
         </div>
-        <div class="parallax-math-symbol hidden lg:flex flex-col items-end gap-1 right-8 top-36 text-blue-300/25 select-none font-serif" data-parallax-speed="0.18" aria-hidden="true">
-            <span class="text-2xl sm:text-3xl tracking-wide">∑<sub>n=1</sub><sup>∞</sup> <sup>1</sup>/<sub>n²</sub> = <sup>π²</sup>/<sub>6</sub></span>
-            <span class="text-[11px] font-mono text-blue-400/40 tracking-widest uppercase">Series & Convergencia</span>
+
+        <!-- BLOQUE DECORATIVO LATERAL DERECHO: GEOMETRÍA & TRIGONOMETRÍA (ESO / Bachillerato) -->
+        <div class="hero-lateral-block hero-float-right hidden lg:flex flex-col items-end gap-3 absolute right-4 xl:right-12 2xl:right-24 top-28 xl:top-36 z-0 pointer-events-none select-none" data-parallax-speed="0.14" aria-hidden="true">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[10px] font-mono tracking-widest text-indigo-400 uppercase">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                GEOMETRÍA & TRIGONOMETRÍA
+            </div>
+            
+            <!-- Gráfica SVG de Triángulo Rectángulo, Circunferencia y Onda Seno -->
+            <svg width="240" height="170" viewBox="0 0 240 170" fill="none" class="stroke-indigo-400">
+                <!-- Circunferencia goniométrica -->
+                <circle cx="155" cy="85" r="55" stroke="#6366f1" stroke-width="1.2" stroke-opacity="0.25" stroke-dasharray="3 3"/>
+                <line x1="90" y1="85" x2="220" y2="85" stroke="#6366f1" stroke-width="1" stroke-opacity="0.3"/>
+                <line x1="155" y1="20" x2="155" y2="150" stroke="#6366f1" stroke-width="1" stroke-opacity="0.3"/>
+                <!-- Triángulo rectángulo inscrito -->
+                <polygon points="155,85 198,85 198,48" fill="rgba(99, 102, 241, 0.08)" stroke="#818cf8" stroke-width="1.8" stroke-opacity="0.65"/>
+                <!-- Símbolo de ángulo recto -->
+                <rect x="189" y="76" width="9" height="9" fill="none" stroke="#818cf8" stroke-width="1.2" stroke-opacity="0.5"/>
+                <!-- Arco de ángulo alfa -->
+                <path d="M 170 85 A 15 15 0 0 0 167 72" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.7"/>
+                <text x="173" y="78" fill="#38bdf8" fill-opacity="0.8" font-family="sans-serif" font-size="10">α</text>
+                <!-- Catetos y etiquetas -->
+                <text x="172" y="98" fill="#818cf8" fill-opacity="0.7" font-family="monospace" font-size="9">cos(α)</text>
+                <text x="203" y="68" fill="#38bdf8" fill-opacity="0.7" font-family="monospace" font-size="9">sin(α)</text>
+                <!-- Onda sinusoidal sutil a la izquierda -->
+                <path d="M 15 85 Q 38 45, 60 85 T 105 85" fill="none" stroke="#6366f1" stroke-width="1.4" stroke-opacity="0.4" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Fórmulas: Teorema de Pitágoras y Relación Fundamental -->
+            <div class="flex flex-col items-end gap-1 text-indigo-300/60 font-mono text-sm tracking-wide bg-indigo-950/30 px-3.5 py-1.5 rounded-lg border border-indigo-500/15 backdrop-blur-sm">
+                <span>a² + b² = c²</span>
+                <span class="text-xs text-indigo-400/50">sin²(α) + cos²(α) = 1</span>
+            </div>
         </div>
 
         <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
@@ -561,7 +678,7 @@
                     <span>Curso 2026/2027 • Plazas en Palma y Online</span>
                 </div>
 
-                <!-- Foto de Perfil Integrada con Micro-Tilt 3D -->
+                <!-- Foto de Perfil Integrada con Badge de Autoridad UIB Mejorado -->
                 <div class="relative mb-8 group interactive-tilt cursor-pointer" data-tilt-max="5">
                     <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-teal-400 opacity-60 blur-md group-hover:opacity-90 transition duration-300"></div>
                     <img src="191407876.jfif" 
@@ -570,8 +687,11 @@
                          height="144" 
                          loading="eager"
                          class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-slate-900 shadow-2xl">
-                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-slate-900/90 text-indigo-300 border border-indigo-400/30 text-[11px] font-semibold px-3 py-0.5 rounded-full shadow whitespace-nowrap backdrop-blur-sm">
-                        UIB Informática
+                    
+                    <!-- Badge de Autoridad UIB Informática Legible y Elegante -->
+                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-slate-900/95 text-sky-300 border border-sky-400/40 text-[0.8rem] font-semibold px-3.5 py-1 rounded-full shadow-lg whitespace-nowrap backdrop-blur-md flex items-center gap-1.5 tracking-wide">
+                        <span class="text-sm">🎓</span>
+                        <span>UIB Informática</span>
                     </div>
                 </div>
 
@@ -584,31 +704,46 @@
                 </h1>
 
                 <!-- Subtítulo -->
-                <p class="text-base sm:text-xl text-slate-300 font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
+                <p class="text-base sm:text-xl text-slate-300 font-normal max-w-2xl mx-auto mb-9 leading-relaxed">
                     Aprende a razonar y a resolver problemas con autonomía. Metodología práctica y visual con pizarra digital interactiva y apuntes en PDF tras cada sesión.
                 </p>
 
-                <!-- Acciones Principales -->
+                <!-- Acciones Principales: Jerarquía invertida -->
                 <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                    <a href="#calculadora" 
-                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 text-base">
-                        <i class="fas fa-calculator text-indigo-200"></i>
-                        <span>Simulador Casio fx-991</span>
-                    </a>
-                    <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20he%20visto%20tu%20web%20y%20quiero%20consultar%20disponibilidad%20para%20clases." 
+                    <!-- BOTÓN PRINCIPAL: Contacto directo / Reserva con WhatsApp -->
+                    <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
                        target="_blank" 
                        rel="noopener noreferrer" 
-                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-100 border border-slate-700/80 font-semibold px-7 py-3.5 rounded-xl transition-all transform hover:-translate-y-0.5 text-base">
-                        <i class="fab fa-whatsapp text-emerald-400 text-lg"></i>
-                        <span>Escribir por WhatsApp</span>
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold px-8 py-4 rounded-xl shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:shadow-[0_0_35px_rgba(16,185,129,0.55)] transition-all transform hover:-translate-y-0.5 text-base">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        <span>Reservar clase / Consultar dudas</span>
+                    </a>
+
+                    <!-- BOTÓN SECUNDARIO: Glassmorphism hacia la calculadora Casio -->
+                    <a href="#calculadora" 
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 btn-glass-secondary text-slate-200 hover:text-white font-semibold px-7 py-4 rounded-xl text-base">
+                        <i class="fas fa-calculator text-indigo-400"></i>
+                        <span>Simulador Casio fx-991</span>
                     </a>
                 </div>
 
-                <!-- Aviso Bachillerato -->
-                <p class="text-xs sm:text-sm text-slate-400 mt-6 flex items-center gap-2">
-                    <i class="fas fa-info-circle text-indigo-400"></i>
-                    <span>Foco prioritario en ESO. Plazas selectas disponibles para Bachillerato según temario.</span>
-                </p>
+                <!-- Demostración de Valor y Coherencia de Temario -->
+                <div class="mt-5 flex flex-col items-center gap-3">
+                    <!-- Micro-elemento interactivo de valor: Muestra de apuntes en PDF -->
+                    <button type="button" 
+                            id="openPdfModalBtn" 
+                            class="group inline-flex items-center gap-2 text-xs sm:text-sm text-indigo-300 hover:text-white transition-colors py-1.5 px-4 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 hover:border-indigo-400/40 cursor-pointer backdrop-blur-sm shadow-sm">
+                        <span>📄</span>
+                        <span class="underline decoration-indigo-400/50 underline-offset-4 group-hover:decoration-white font-medium">Ver ejemplo real de apuntes en PDF</span>
+                        <i class="fas fa-arrow-right text-[10px] opacity-70 group-hover:translate-x-0.5 transition-transform"></i>
+                    </button>
+
+                    <!-- Píldora de coherencia del temario -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 text-xs sm:text-sm text-slate-300 shadow-sm backdrop-blur-sm">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+                        <span>Especialista en ESO (1º a 4º) • Plazas limitadas para Bachillerato</span>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -1190,7 +1325,47 @@
                     </div>
                 </div>
 
-                <!-- 3. Desglose y Resumen de Presupuesto (Abierto, Tipográfico y Elegante) -->
+                <!-- 3. Selector de Días de Repaso por Semana y Duración -->
+                <div class="pt-6 border-t border-slate-800/80">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest">
+                            3. Días de repaso por semana
+                        </label>
+                        <span class="text-[11px] text-sky-400 font-semibold" id="panelDaysIndicator">2 días / semana (Habitual)</span>
+                    </div>
+                    
+                    <!-- Botones de Días por semana -->
+                    <div class="grid grid-cols-4 gap-2 mb-3" id="daysSelector">
+                        <button type="button" data-days="1" class="day-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-center transition-all hover:border-slate-700">
+                            <span class="block text-xs font-bold text-slate-300">1 día</span>
+                            <span class="block text-[10px] text-slate-500 mt-0.5">Ocasional</span>
+                        </button>
+                        <button type="button" data-days="2" class="day-btn p-2.5 rounded-xl border border-indigo-500 bg-indigo-500/15 text-center transition-all">
+                            <span class="block text-xs font-bold text-white">2 días</span>
+                            <span class="block text-[10px] text-indigo-300 mt-0.5">Habitual</span>
+                        </button>
+                        <button type="button" data-days="3" class="day-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-center transition-all hover:border-slate-700">
+                            <span class="block text-xs font-bold text-slate-300">3 días</span>
+                            <span class="block text-[10px] text-slate-500 mt-0.5">Refuerzo</span>
+                        </button>
+                        <button type="button" data-days="4" class="day-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-center transition-all hover:border-slate-700">
+                            <span class="block text-xs font-bold text-slate-300">4 días</span>
+                            <span class="block text-[10px] text-slate-500 mt-0.5">Intensivo</span>
+                        </button>
+                    </div>
+
+                    <!-- Selector de Duración por Sesión -->
+                    <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-800/40">
+                        <span class="text-xs text-slate-400 font-medium">Duración por sesión:</span>
+                        <div class="inline-flex rounded-lg p-0.5 bg-slate-950 border border-slate-800" id="durationSelector">
+                            <button type="button" data-duration="1.0" class="dur-btn px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-600 text-white transition-all">1,0 h</button>
+                            <button type="button" data-duration="1.5" class="dur-btn px-2.5 py-1 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-all">1,5 h</button>
+                            <button type="button" data-duration="2.0" class="dur-btn px-2.5 py-1 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-all">2,0 h</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Desglose y Resumen de Presupuesto (Abierto, Tipográfico y Elegante) -->
                 <div class="pt-6 border-t border-slate-800/80">
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Resumen del presupuesto</span>
@@ -1203,7 +1378,11 @@
                             <strong id="panelModalityText" class="text-white font-semibold">Presencial a Domicilio</strong>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-slate-400">Frecuencia semanal:</span>
+                            <span class="text-slate-400">Frecuencia elegida:</span>
+                            <strong id="panelFrequencyText" class="text-white font-semibold">2 días / semana (1,0h por clase)</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Horas semanales totales:</span>
                             <strong id="panelHoursText" class="text-white font-semibold">2,0 horas / semana</strong>
                         </div>
                         <div class="flex justify-between">
@@ -1452,6 +1631,8 @@
 
         // Estado Global de la Calculadora
         let currentModality = 'presencial';
+        let currentDays = 2;
+        let currentDuration = 1.0;
         let currentHours = 2.0;
 
         // Elementos DOM de la Calculadora Casio
@@ -1467,6 +1648,8 @@
         // Elementos DOM del Panel Lateral y WhatsApp
         const studentLevelSelect = document.getElementById('studentLevelSelect');
         const bachNotice = document.getElementById('bachNotice');
+        const panelDaysIndicator = document.getElementById('panelDaysIndicator');
+        const panelFrequencyText = document.getElementById('panelFrequencyText');
         const panelModalityText = document.getElementById('panelModalityText');
         const panelHoursText = document.getElementById('panelHoursText');
         const panelWeeklyText = document.getElementById('panelWeeklyText');
@@ -1486,6 +1669,7 @@
 
         // Actualización Reactiva de la Calculadora Casio y el Panel
         function renderCalculator(skipFlash = false) {
+            currentHours = Math.round((currentDays * currentDuration) * 10) / 10;
             const modData = modalityConfig[currentModality] || modalityConfig['presencial'];
             const rate = modData.rate;
             const level = studentLevelSelect.value;
@@ -1501,8 +1685,9 @@
             }
 
             const hDisp = currentHours.toFixed(1).replace('.0', '');
-            // Formato exacto requerido: 2.0 h/sem (30.00€)
-            lcdOperation.textContent = `${hDisp} h/sem (${weekly.toFixed(2)}€)`;
+            const durDisp = currentDuration.toFixed(1).replace('.0', '').replace('.', ',');
+            // Formato exacto en LCD Casio
+            lcdOperation.textContent = `${currentDays}d × ${durDisp}h = ${hDisp}h/sem (${weekly.toFixed(2)}€)`;
             lcdTotalAmount.textContent = `${monthly.toFixed(2)}€`;
             casioCurrentHoursIndicator.textContent = `${hDisp} h/sem`;
 
@@ -1548,16 +1733,61 @@
                 }
             });
 
-            // 4. Actualizar Panel Lateral
+            // 4. Actualizar Botones de Días por Semana
+            const dayLabels = {
+                1: '1 día / semana (Ocasional)',
+                2: '2 días / semana (Habitual)',
+                3: '3 días / semana (Refuerzo)',
+                4: '4 días / semana (Intensivo)'
+            };
+
+            if (panelDaysIndicator) {
+                panelDaysIndicator.textContent = dayLabels[currentDays] || `${currentDays} días / semana`;
+            }
+
+            document.querySelectorAll('.day-btn').forEach(btn => {
+                const days = parseInt(btn.getAttribute('data-days'), 10);
+                const titleSpan = btn.querySelector('span:first-child');
+                const noteSpan = btn.querySelector('span:last-child');
+                if (days === currentDays) {
+                    btn.classList.add('border-indigo-500', 'bg-indigo-500/15');
+                    btn.classList.remove('border-slate-800', 'bg-slate-900/60');
+                    if (titleSpan) { titleSpan.classList.add('text-white'); titleSpan.classList.remove('text-slate-300'); }
+                    if (noteSpan) { noteSpan.classList.add('text-indigo-300'); noteSpan.classList.remove('text-slate-500'); }
+                } else {
+                    btn.classList.remove('border-indigo-500', 'bg-indigo-500/15');
+                    btn.classList.add('border-slate-800', 'bg-slate-900/60');
+                    if (titleSpan) { titleSpan.classList.remove('text-white'); titleSpan.classList.add('text-slate-300'); }
+                    if (noteSpan) { noteSpan.classList.remove('text-indigo-300'); noteSpan.classList.add('text-slate-500'); }
+                }
+            });
+
+            // 5. Actualizar Botones de Duración por Sesión
+            document.querySelectorAll('.dur-btn').forEach(btn => {
+                const dur = parseFloat(btn.getAttribute('data-duration'));
+                if (Math.abs(dur - currentDuration) < 0.05) {
+                    btn.classList.add('bg-indigo-600', 'text-white');
+                    btn.classList.remove('text-slate-400');
+                } else {
+                    btn.classList.remove('bg-indigo-600', 'text-white');
+                    btn.classList.add('text-slate-400');
+                }
+            });
+
+            // 6. Actualizar Panel Lateral
+            if (panelFrequencyText) {
+                panelFrequencyText.textContent = `${currentDays} ${currentDays === 1 ? 'día' : 'días'} / semana (${durDisp}h por clase)`;
+            }
+
             panelModalityText.textContent = modData.name;
             panelHoursText.textContent = formatHoursText(currentHours);
             panelWeeklyText.textContent = `${formatCurrency(weekly)} / semana${modData.isDuo ? ' por alumno' : ''}`;
             panelMonthlyText.textContent = formatCurrency(monthly);
 
-            // 5. Construir y Actualizar Enlace Directo a WhatsApp
+            // 7. Construir y Actualizar Enlace Directo a WhatsApp
             const duoText = modData.isDuo ? ' (por alumno)' : '';
             const bachExtra = isBach ? ' Me gustaría consultar disponibilidad de temario y horarios.' : ' ¿Qué horarios tendrías libres?';
-            const msg = `¡Hola Daniel! He visto tu web de clases de matemáticas. Me gustaría consultar disponibilidad para ${level} en modalidad ${modData.name}, con ${hDisp} horas a la semana (estimado mensual: ${formatCurrency(monthly)}${duoText}).${bachExtra}`;
+            const msg = `¡Hola Daniel! He visto tu web de clases de matemáticas. Me gustaría consultar disponibilidad para ${level} en modalidad ${modData.name}, con ${currentDays} ${currentDays === 1 ? 'día' : 'días'} a la semana (${durDisp}h por sesión, total ${hDisp}h/semana; estimado mensual: ${formatCurrency(monthly)}${duoText}).${bachExtra}`;
 
             whatsappMessageText.textContent = `"${msg}"`;
             const encoded = encodeURIComponent(msg);
@@ -1587,6 +1817,9 @@
             if (newHours < 1.0) newHours = 1.0;
             if (newHours > 8.0) newHours = 8.0;
             currentHours = newHours;
+            if (currentHours >= 1 && currentHours <= 4 && currentDuration === 1.0) {
+                currentDays = Math.round(currentHours);
+            }
             renderCalculator();
         }
 
@@ -1638,6 +1871,8 @@
             if (casioResetBtn) casioResetBtn.addEventListener('click', () => {
                 previousHoursValue = currentHours;
                 currentModality = 'presencial';
+                currentDays = 2;
+                currentDuration = 1.0;
                 currentHours = 2.0;
                 studentLevelSelect.value = '3º de ESO';
                 renderCalculator();
@@ -1664,7 +1899,15 @@
             document.querySelectorAll('.casio-hour-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     previousHoursValue = currentHours;
-                    currentHours = parseFloat(btn.getAttribute('data-hour'));
+                    const targetHours = parseFloat(btn.getAttribute('data-hour'));
+                    if (targetHours === 1.5) {
+                        currentDays = 1;
+                        currentDuration = 1.5;
+                    } else {
+                        currentDays = Math.min(4, Math.max(1, Math.round(targetHours)));
+                        currentDuration = 1.0;
+                    }
+                    currentHours = targetHours;
                     renderCalculator();
                 });
             });
@@ -1755,6 +1998,8 @@
                 casioAcKey.addEventListener('click', () => {
                     previousHoursValue = currentHours;
                     currentModality = 'presencial';
+                    currentDays = 2;
+                    currentDuration = 1.0;
                     currentHours = 2.0;
                     studentLevelSelect.value = '3º de ESO';
                     renderCalculator();
@@ -1774,6 +2019,24 @@
                 pill.addEventListener('click', () => {
                     const mod = pill.getAttribute('data-mod');
                     setCalculatorModality(mod);
+                });
+            });
+
+            // Selector de Días de Repaso por Semana
+            document.querySelectorAll('.day-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentDays = parseInt(btn.getAttribute('data-days'), 10) || 2;
+                    currentHours = Math.round((currentDays * currentDuration) * 10) / 10;
+                    renderCalculator();
+                });
+            });
+
+            // Selector de Duración por Sesión
+            document.querySelectorAll('.dur-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentDuration = parseFloat(btn.getAttribute('data-duration')) || 1.0;
+                    currentHours = Math.round((currentDays * currentDuration) * 10) / 10;
+                    renderCalculator();
                 });
             });
 
@@ -2177,10 +2440,67 @@
             });
         }
 
+        // ==========================================
+        // 5. VISIBILIDAD REACTIVA DEL BOTÓN WHATSAPP
+        // ==========================================
+        function initFloatingWhatsAppScroll() {
+            const floatingBtn = document.getElementById('floatingWhatsApp');
+            if (!floatingBtn) return;
+
+            function updateFloatingVisibility() {
+                const scrollY = window.pageYOffset || window.scrollY || 0;
+                if (scrollY > 400) {
+                    floatingBtn.classList.add('btn-visible');
+                } else {
+                    floatingBtn.classList.remove('btn-visible');
+                }
+            }
+
+            window.addEventListener('scroll', updateFloatingVisibility, { passive: true });
+            updateFloatingVisibility();
+        }
+
+        // ==========================================
+        // 6. MODAL INTERACTIVO DE APUNTES EN PDF
+        // ==========================================
+        function initPdfModal() {
+            const openBtn = document.getElementById('openPdfModalBtn');
+            const modal = document.getElementById('pdfModal');
+            const closeBtn = document.getElementById('closePdfModalBtn');
+            const closeBtnBottom = document.getElementById('closePdfModalBtnBottom');
+            if (!modal) return;
+
+            function openModal() {
+                modal.classList.add('modal-open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.remove('modal-open');
+                document.body.style.overflow = '';
+            }
+
+            if (openBtn) openBtn.addEventListener('click', openModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (closeBtnBottom) closeBtnBottom.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('modal-open')) {
+                    closeModal();
+                }
+            });
+        }
+
         // Inicialización General
         function initApp() {
             renderCalculator(true);
             initCasioInteractions();
+            initFloatingWhatsAppScroll();
+            initPdfModal();
             initSmoothAnchorNavigation();
             initScrollReveals();
             initParallax();
@@ -2193,5 +2513,78 @@
             initApp();
         }
     </script>
+
+    <!-- Modal de Muestra Real de Apuntes en PDF (Goodnotes) -->
+    <div id="pdfModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+        <div class="relative w-full max-w-2xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+            
+            <!-- Cabecera del modal -->
+            <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/90">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm font-bold border border-indigo-500/30">
+                        PDF
+                    </div>
+                    <div>
+                        <h4 id="pdfModalTitle" class="text-sm sm:text-base font-bold text-white leading-tight">Ejemplo Real de Apuntes Digitales (Goodnotes)</h4>
+                        <p class="text-[11px] text-slate-400">Generados en directo en la pizarra y enviados en PDF al alumno al terminar la clase</p>
+                    </div>
+                </div>
+                <button type="button" id="closePdfModalBtn" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors" aria-label="Cerrar modal">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Cuerpo con previsualización de apuntes -->
+            <div class="p-4 sm:p-6 overflow-y-auto bg-slate-950/60">
+                <!-- Hoja de apuntes simulada estilo iPad / Goodnotes cuadrícula milimetrada -->
+                <div class="rounded-xl border border-slate-700/60 p-5 sm:p-7 shadow-inner text-slate-200 font-mono text-xs sm:text-sm leading-relaxed" style="background-color: #0b1120; background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px); background-size: 18px 18px;">
+                    <div class="flex items-center justify-between pb-3 mb-4 border-b border-indigo-500/30 font-sans text-xs text-indigo-300">
+                        <span class="font-bold">📘 TEMA: Estudio de Funciones Cuadráticas (3º ESO)</span>
+                        <span class="text-slate-400">Sesión #04 • Pizarra Goodnotes</span>
+                    </div>
+
+                    <p class="font-sans font-bold text-white text-sm sm:text-base mb-2">Problema: Trayectoria de un lanzamiento parabólico</p>
+                    <p class="text-slate-300 mb-3 font-sans">Ecuación de altura: <span class="text-sky-400 font-mono font-bold">h(t) = -5t² + 20t + 25</span> (h en metros, t en segundos)</p>
+
+                    <div class="bg-indigo-950/50 border-l-4 border-indigo-400 p-3.5 rounded-r-lg mb-4 font-sans text-xs text-indigo-200 leading-normal">
+                        💡 <strong class="text-white">Razonamiento guiado durante la clase:</strong><br>
+                        1. Identificamos coeficientes: <code class="text-amber-300">a = -5, b = 20, c = 25</code> (a &lt; 0 → parábola cóncava hacia abajo).<br>
+                        2. Tiempo del vértice (altura máx.): <code class="text-sky-300 font-bold">t_v = -b / (2a) = -20 / (2 · (-5)) = 2 s</code><br>
+                        3. Altura máxima alcanzada: <code class="text-emerald-300 font-bold">h(2) = -5(2)² + 20(2) + 25 = 45 m</code><br>
+                        4. Instante de impacto con el suelo (<code class="text-indigo-300">h = 0</code>): resolución de la ecuación cuadrática → <code class="text-emerald-300">t = 5 s</code>.
+                    </div>
+
+                    <!-- Gráfica ilustrativa dibujada a mano alzada digital -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-3 my-3 flex flex-col items-center">
+                        <svg width="300" height="115" viewBox="0 0 300 115" fill="none" class="max-w-full">
+                            <line x1="20" y1="95" x2="280" y2="95" stroke="#64748b" stroke-width="1.5"/>
+                            <line x1="30" y1="10" x2="30" y2="105" stroke="#64748b" stroke-width="1.5"/>
+                            <path d="M 30 70 Q 130 12 230 95" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="130" cy="30" r="4.5" fill="#38bdf8"/>
+                            <text x="135" y="27" fill="#38bdf8" font-size="10" font-family="sans-serif" font-weight="bold">Vértice (2s, 45m)</text>
+                            <circle cx="30" cy="70" r="3.5" fill="#f59e0b"/>
+                            <text x="35" y="65" fill="#f59e0b" font-size="9" font-family="sans-serif">Inicio (0s, 25m)</text>
+                            <circle cx="230" cy="95" r="3.5" fill="#10b981"/>
+                            <text x="210" y="108" fill="#10b981" font-size="9" font-family="sans-serif">Suelo (5s)</text>
+                        </svg>
+                    </div>
+
+                    <p class="text-[11px] text-slate-400 mt-2 font-sans italic flex items-center gap-1.5">
+                        <i class="fas fa-check-circle text-emerald-400"></i>
+                        <span>Apuntes limpios, ordenados y exportados en PDF tras cada sesión para estudiar sin tener que copiar deprisa.</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Pie del modal -->
+            <div class="px-5 py-3 border-t border-slate-800 bg-slate-900/90 flex items-center justify-between">
+                <span class="text-xs text-slate-400">Formato vectorial claro y visual</span>
+                <button type="button" id="closePdfModalBtnBottom" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-colors">
+                    Cerrar vista previa
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
