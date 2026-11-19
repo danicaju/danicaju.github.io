@@ -69,8 +69,15 @@
       month: document.getElementById('o-month'),
       msg: document.getElementById('o-msg'),
       wa: document.getElementById('est-wa'),
-      bach: document.getElementById('bach-notice')
+      bach: document.getElementById('bach-notice'),
+      barTotal: document.getElementById('eb-total'),
+      barWa: document.getElementById('eb-wa')
     };
+    function setMonthText(v) {
+      var t = eurScreen(v);
+      out.month.textContent = t;
+      if (out.barTotal) out.barTotal.textContent = t;
+    }
     var shown = 120;        // importe mensual mostrado (coincide con el HTML por defecto)
     var rafId = 0;
     var currentMessage = '';
@@ -78,13 +85,13 @@
     // Interpolación rápida del importe (solo texto; no cambia el layout gracias a tabular-nums)
     function tweenMonthly(to) {
       if (rafId) cancelAnimationFrame(rafId);
-      if (reduced() || shown === to) { shown = to; out.month.textContent = eurScreen(to); return; }
+      if (reduced() || shown === to) { shown = to; setMonthText(to); return; }
       var from = shown, start = null, dur = 220;
       function step(ts) {
         if (start === null) start = ts;
         var t = Math.min((ts - start) / dur, 1);
         shown = from + (to - from) * easeOut(t);
-        out.month.textContent = eurScreen(t < 1 ? shown : to);
+        setMonthText(t < 1 ? shown : to);
         if (t < 1) rafId = requestAnimationFrame(step);
         else { shown = to; rafId = 0; }
       }
@@ -108,9 +115,10 @@
       currentMessage = r.message;
       out.msg.textContent = '«' + r.message + '»';
       out.wa.href = r.url;
+      if (out.barWa) out.barWa.href = r.url;
       out.bach.hidden = !r.isBach;
       if (animate) { tweenMonthly(r.monthly); pulse(out.msg); }
-      else { shown = r.monthly; out.month.textContent = eurScreen(r.monthly); }
+      else { shown = r.monthly; setMonthText(r.monthly); }
     }
 
     form.addEventListener('change', function () { render(true); });
@@ -219,7 +227,7 @@
     }
 
     var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
-    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-desktop a[href^="#"], .menu-panel a[href^="#"]'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-desktop a[href^="#"], .sheet-nav a[href^="#"]'));
     if (!hasIO || !sections.length || !links.length) return;
     var visible = [];
     var spy = new IntersectionObserver(function (entries) {
@@ -271,29 +279,151 @@
   }
 
   // ------------------------------------------------------------------
-  // Menú móvil
+  // Menú móvil: bottom sheet (clic fuera, Escape, enlace y arrastre hacia abajo)
   // ------------------------------------------------------------------
   function initMenu() {
-    var menu = document.querySelector('.menu');
-    if (!menu) return;
-    var summary = menu.querySelector('summary');
-    summary.setAttribute('aria-expanded', 'false');
-    menu.addEventListener('toggle', function () { summary.setAttribute('aria-expanded', String(menu.open)); });
-    menu.addEventListener('click', function (e) {
-      if (e.target.closest('.menu-panel a')) menu.open = false;
+    var btn = document.getElementById('menu-btn');
+    var sheet = document.getElementById('menu-sheet');
+    if (!btn || !sheet || typeof sheet.showModal !== 'function') return;
+    var handle = document.getElementById('sheet-handle');
+    var closeBtn = sheet.querySelector('.sheet-close');
+
+    btn.addEventListener('click', function () {
+      sheet.showModal();
+      btn.setAttribute('aria-expanded', 'true');
     });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && menu.open) { menu.open = false; summary.focus(); }
+    sheet.addEventListener('close', function () {
+      btn.setAttribute('aria-expanded', 'false');
+      sheet.style.transform = '';
+      sheet.style.transition = '';
+      btn.focus();
     });
-    document.addEventListener('click', function (e) {
-      if (menu.open && !menu.contains(e.target)) menu.open = false;
+    sheet.addEventListener('click', function (e) {
+      if (e.target === sheet || e.target.closest('.sheet-nav a')) sheet.close();
     });
-    menu.addEventListener('focusout', function (e) {
-      if (menu.open && e.relatedTarget && !menu.contains(e.relatedTarget)) menu.open = false;
-    });
+    closeBtn.addEventListener('click', function () { sheet.close(); });
     window.matchMedia('(min-width: 48rem)').addEventListener('change', function (mq) {
-      if (mq.matches) menu.open = false;
+      if (mq.matches && sheet.open) sheet.close();
     });
+
+    // Arrastre 1:1 con proyección de inercia (decelerationRate 0,99)
+    var drag = null;
+    handle.addEventListener('pointerdown', function (e) {
+      if (e.button > 0) return;
+      handle.setPointerCapture(e.pointerId);
+      drag = { id: e.pointerId, y0: e.clientY, dy: 0, h: sheet.getBoundingClientRect().height, pts: [{ t: e.timeStamp, y: e.clientY }] };
+      sheet.style.transition = 'none';
+    });
+    handle.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      drag.dy = Math.max(0, e.clientY - drag.y0);
+      drag.pts.push({ t: e.timeStamp, y: e.clientY });
+      while (drag.pts.length > 2 && e.timeStamp - drag.pts[0].t > 100) drag.pts.shift();
+      sheet.style.transform = 'translateY(' + drag.dy + 'px)';
+    });
+    function endDrag(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var d = drag, a = d.pts[0], b = d.pts[d.pts.length - 1];
+      drag = null;
+      var v = b.t > a.t ? (b.y - a.y) / (b.t - a.t) * 1000 : 0;          // px/s
+      var projected = d.dy + (v / 1000) * 0.99 / (1 - 0.99);
+      sheet.style.transition = '';
+      sheet.style.transform = '';
+      if (projected > d.h * 0.4) sheet.close();
+    }
+    handle.addEventListener('pointerup', endDrag);
+    handle.addEventListener('pointercancel', endDrag);
+  }
+
+  // ------------------------------------------------------------------
+  // Tarifas (móvil): control segmentado Individual | Dúo
+  // ------------------------------------------------------------------
+  function initPlanTabs() {
+    var seg = document.querySelector('.seg');
+    if (!seg) return;
+    var tabs = Array.prototype.slice.call(seg.querySelectorAll('[role="tab"]'));
+    var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+    var mq = window.matchMedia('(max-width: 47.99rem)');
+    var active = 0;
+
+    function apply() {
+      if (!mq.matches) {   // escritorio: las dos tarifas visibles, sin semántica de pestañas
+        panels.forEach(function (p) {
+          p.hidden = false;
+          p.removeAttribute('role');
+          p.removeAttribute('aria-labelledby');
+        });
+        return;
+      }
+      tabs.forEach(function (t, i) {
+        var on = i === active;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        panels[i].hidden = !on;
+        panels[i].setAttribute('role', 'tabpanel');
+        panels[i].setAttribute('aria-labelledby', t.id);
+      });
+      seg.setAttribute('data-active', String(active));
+    }
+    seg.addEventListener('click', function (e) {
+      var t = e.target.closest('[role="tab"]');
+      if (!t) return;
+      active = tabs.indexOf(t);
+      apply();
+    });
+    seg.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(document.activeElement), to = -1;
+      if (i < 0) return;
+      if (e.key === 'ArrowRight') to = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') to = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') to = 0;
+      else if (e.key === 'End') to = tabs.length - 1;
+      if (to > -1) { e.preventDefault(); active = to; apply(); tabs[to].focus(); }
+    });
+    mq.addEventListener('change', apply);
+    apply();
+  }
+
+  // ------------------------------------------------------------------
+  // Apuntes (móvil): indicador "n / total" del carrusel, sin listener de scroll
+  // ------------------------------------------------------------------
+  function initSheetsCounter() {
+    var scroller = document.querySelector('.sheets');
+    var counter = document.getElementById('sheet-count');
+    if (!scroller || !counter || !hasIO) return;
+    var figs = Array.prototype.slice.call(scroller.children);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) counter.textContent = (figs.indexOf(en.target) + 1) + ' / ' + figs.length;
+      });
+    }, { root: scroller, threshold: 0.6 });
+    figs.forEach(function (f) { io.observe(f); });
+  }
+
+  // ------------------------------------------------------------------
+  // Barra de cuota (móvil): visible mientras se elige en #estimador y el resumen aún no se ve
+  // ------------------------------------------------------------------
+  function initEstBar() {
+    var bar = document.getElementById('est-bar');
+    var section = document.getElementById('estimador');
+    var summary = document.querySelector('.est-out');
+    if (!bar || !section || !summary || !hasIO) return;
+    var mq = window.matchMedia('(max-width: 47.99rem)');
+    var sectionVisible = false, summaryVisible = false;
+    function update() {
+      var show = mq.matches && sectionVisible && !summaryVisible;
+      bar.classList.toggle('is-visible', show);
+      if (show) bar.removeAttribute('inert'); else bar.setAttribute('inert', '');
+    }
+    new IntersectionObserver(function (entries) {
+      sectionVisible = entries[entries.length - 1].isIntersecting;
+      update();
+    }, { rootMargin: '0px 0px -35% 0px' }).observe(section);   // la sección debe entrar en la parte alta de la pantalla
+    new IntersectionObserver(function (entries) {
+      summaryVisible = entries[entries.length - 1].intersectionRatio >= 0.25;
+      update();
+    }, { threshold: [0, 0.25] }).observe(summary);
+    mq.addEventListener('change', update);
   }
 
   // ------------------------------------------------------------------
@@ -377,7 +507,7 @@
       update();
     }).observe(heroCta);
 
-    var others = [document.getElementById('est-wa'), document.querySelector('.contact .btn-primary'), document.querySelector('.site-footer')];
+    var others = [document.getElementById('estimador'), document.querySelector('.contact .btn-primary'), document.querySelector('.site-footer')];
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         var i = blockers.indexOf(en.target);
@@ -399,6 +529,9 @@
     initHeader();
     initAccordion();
     initMenu();
+    initPlanTabs();
+    initSheetsCounter();
+    initEstBar();
     initNotes();
     initFab();
   }

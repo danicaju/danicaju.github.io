@@ -114,10 +114,23 @@ Sin emojis ni fuentes de iconos. SVG propios en sprite, trazo 1,5 px, `currentCo
 - Nota sobre `apple-design`: no se adoptan materiales translúcidos generalizados ni resortes/gestos (no hay arrastre).
 
 ## 8. Restricciones técnicas (GitHub Pages)
-Sitio 100 % estático: `index.html`, `css/main.css`, `js/main.js`, `assets/`, `DESIGN.md`. Sin frameworks ni CDNs de código. CSS en `@layer tokens, base, layout, components`. HTML semántico. JS ≤ 20 KB (≤ 6 KB gzip), progresivo (sin JS: enlaces de contacto, tarifas y FAQ funcionan y el estimador muestra su cálculo por defecto). Presupuesto: HTML ≤ 40 KB, CSS ≤ 40 KB (≤ 8 KB gzip), fuentes ≤ 150 KB, retrato ≤ 60 KB, cada apunte ≤ 80 KB. WCAG 2.2 AA, `lang="es"`.
+Sitio 100 % estático: `index.html`, `css/main.css`, `js/main.js`, `assets/`, `DESIGN.md`. Sin frameworks ni CDNs de código. CSS en `@layer tokens, base, layout, components`. HTML semántico. JS ≤ 26 KB (≤ 7 KB gzip), progresivo (sin JS: enlaces de contacto, tarifas y FAQ funcionan y el estimador muestra su cálculo por defecto). Presupuesto: HTML ≤ 40 KB, CSS ≤ 52 KB (≤ 10 KB gzip), fuentes ≤ 150 KB, retrato ≤ 60 KB, cada apunte ≤ 80 KB. WCAG 2.2 AA, `lang="es"`.
 
 ## 9. Contenido
 Se conserva el texto real (tarifas, metodología, FAQ, credenciales, textos de WhatsApp, apuntes). Se puede recomponer y recortar redundancias; no se añade experiencia, resultados, testimonios ni estadísticas. Dos textos prellenados de WhatsApp literales (cabecera/hero y contacto). El único canal es WhatsApp (más GitHub).
 
 ## 10. Checklist de prohibiciones
 Degradados · glow · glass/blur · orbes · cuadrícula de fondo · sombras de color o fuera de la lista · bordes negros duros · puntos guía en precios · píldoras y badges decorativos · eyebrows en mayúsculas · puntos con pulso · "Recomendado" · emojis · fuentes de iconos · parallax/tilt · reveal en el hero · `@keyframes` · listeners de scroll · animar propiedades de layout (salvo las excepciones de §7) · botón flotante duplicado · dos controles con el mismo destino en una vista · `backdrop-filter` fuera del header con scroll y el lightbox · `:hover` sin `(hover: hover)` · controles sin `:active` · texto < 14 px · acento fuera de CTA/activo/pulsado · más de un CTA primario por vista · datos sin fuente en el repo.
+
+## 11. Móvil (≤ 768 px): experiencia tipo app
+Todo vive en la capa CSS `mobile` bajo `@media (max-width: 47.99rem)` o está oculto en escritorio. El escritorio (≥ 48rem) no cambia.
+
+- **Tokens:** `--gutter: 1.25rem` (20 px) y `--header-h: 3.5rem`. Secciones con relleno vertical de 32–40 px. Los carruseles sangran a los bordes.
+- **Cabecera:** marca en una línea + botón "Menú" (44 px). El WhatsApp de la cabecera solo existe en escritorio.
+- **Menú:** bottom sheet (`<dialog>`) con asa, enlaces de 52 px, `aria-current` por scrollspy y botón de WhatsApp. Cierra con clic fuera, `Escape`, enlace, botón ✕ y **arrastre hacia abajo** (Pointer Events, seguimiento 1:1, proyección de inercia con `decelerationRate` 0,99; se cierra si lo proyectado supera el 40 % de su altura). Fondo sin blur. `env(safe-area-inset-bottom)`.
+- **Hero:** el retrato pasa a cabecera de perfil (avatar 72 px, radio 16, `object-position: 50% 0`) con nombre, "Ingeniería Informática · UIB" y "Palma · Online". Línea de precio, H1 de 2rem, primera frase del subtítulo (el resto, `lead-more`, solo en ≥ 48rem), CTA de 48 px a ancho completo y fila "Ver tarifas · teléfono". CTA y fila terminan por encima de los 560 px a 390×844.
+- **Tarifas:** control segmentado `Individual | Dúo` (`role="tablist"`, indicador deslizante con `transform`, flechas/Inicio/Fin). Cada `plan-group` es un `tabpanel` solo en móvil; en escritorio las cuatro tarifas siguen visibles y la barra desaparece. Tarjetas compactas (nombre y precio en la misma fila).
+- **Apuntes:** carrusel `scroll-snap-type: x mandatory`, hojas al 82 % para que asome la siguiente, indicador `n / total` (IntersectionObserver). Al tocar, el visor ocupa toda la pantalla (safe areas incluidas).
+- **Estimador:** modalidad 2×2, días en una fila de 4, duración en 3. **Barra de cuota inferior fija** (total en vivo + "Consultar por WhatsApp", `env(safe-area-inset-bottom)`), visible solo mientras `#estimador` está en la parte alta de la pantalla y el resumen oscuro aún no se ve.
+- **Un solo CTA primario por vista:** el WhatsApp flotante se oculta durante el estimador (sección y barra), el cierre y el footer; la barra de cuota y el resumen nunca coinciden.
+- **Táctil:** `touch-action: manipulation`, `-webkit-tap-highlight-color: transparent`, `:active` con `scale(.98)` y objetivos ≥ 44 px (medidos). Con `prefers-reduced-motion: reduce` no hay desplazamientos ni escalas: solo fundidos.

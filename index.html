@@ -49,19 +49,10 @@
       <a href="#estimador">Estimador</a>
       <a href="#faq">Dudas</a>
     </nav>
-    <a class="btn btn-ink btn-sm" href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer">
+    <a class="btn btn-ink btn-sm bar-wa" href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer">
       <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp
     </a>
-    <details class="menu">
-      <summary>Menú</summary>
-      <nav class="menu-panel" aria-label="Principal (móvil)">
-        <a href="#metodologia">Metodología</a>
-        <a href="#tarifas">Tarifas</a>
-        <a href="#estimador">Estimador de cuota</a>
-        <a href="#faq">Preguntas frecuentes</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </details>
+    <button type="button" class="btn btn-ink btn-sm menu-btn" id="menu-btn" aria-haspopup="dialog" aria-controls="menu-sheet" aria-expanded="false">Menú</button>
   </div>
 </header>
 
@@ -71,20 +62,20 @@
   <section class="hero" id="inicio" aria-labelledby="h-hero">
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <p class="mono">Palma de Mallorca · Online · desde 10&nbsp;€/h por alumno</p>
+        <p class="mono"><span class="meta-place">Palma de Mallorca · Online · </span><span class="meta-price">desde 10&nbsp;€/h por alumno</span></p>
         <h1 id="h-hero">Clases de Matemáticas para ESO y Bachillerato</h1>
-        <p class="lead">Aprende a razonar y a resolver problemas con autonomía. Metodología práctica y visual con pizarra digital interactiva y apuntes en PDF tras cada sesión.</p>
+        <p class="lead">Aprende a razonar y a resolver problemas con autonomía.<span class="lead-more"> Metodología práctica y visual con pizarra digital interactiva y apuntes en PDF tras cada sesión.</span></p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer">
             <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>Escribir por WhatsApp
           </a>
           <a class="link" href="#tarifas">Ver tarifas</a>
+          <p class="phone mono">+34 637 621 315</p>
         </div>
-        <p class="phone mono">+34 637 621 315</p>
       </div>
       <figure class="portrait">
         <img src="assets/img/daniel-640.webp" width="640" height="800" fetchpriority="high" alt="Retrato de Daniel Casado Juan, profesor de Matemáticas">
-        <figcaption>Daniel Casado Juan · Grado en Ingeniería Informática, UIB</figcaption>
+        <figcaption><span class="cap-name">Daniel Casado Juan</span><span class="cap-role">Grado en Ingeniería Informática, UIB</span><span class="cap-role-m">Ingeniería Informática · UIB</span><span class="cap-place">Palma · Online</span></figcaption>
       </figure>
     </div>
   </section>
@@ -161,6 +152,7 @@
           <figcaption class="mono">Pág. 2 · Inversa y recorrido</figcaption>
         </figure>
       </div>
+      <p class="sheet-count mono" id="sheet-count" aria-live="polite">1 / 2</p>
     </div>
   </section>
 
@@ -172,7 +164,13 @@
         <p class="lead">Sin matrícula ni permanencia obligatoria. Escoge entre el apoyo directo a domicilio en Palma o la comodidad y flexibilidad de las sesiones online.</p>
       </div>
 
-      <div class="plan-group">
+      <div class="seg" role="tablist" aria-label="Tipo de clase" data-active="0">
+        <button type="button" role="tab" class="seg-tab" id="tab-ind" aria-selected="true" aria-controls="panel-ind">Individual</button>
+        <button type="button" role="tab" class="seg-tab" id="tab-duo" aria-selected="false" aria-controls="panel-duo" tabindex="-1">Dúo</button>
+        <span class="seg-thumb" aria-hidden="true"></span>
+      </div>
+
+      <div class="plan-group" id="panel-ind">
         <div class="group-head" data-reveal>
           <h3>Individual</h3>
           <p>Sesiones para un solo alumno, con ritmo individualizado para afianzar cada paso.</p>
@@ -205,7 +203,7 @@
         </ul>
       </div>
 
-      <div class="plan-group">
+      <div class="plan-group" id="panel-duo">
         <div class="group-head" data-reveal>
           <h3>Modalidad Dúo: estudia con un compañero</h3>
           <p>Si compartes clase con un amigo o compañero del mismo curso y temario, las sesiones resultan dinámicas, participativas y la tarifa por alumno se reduce.</p>
@@ -383,6 +381,26 @@
     </nav>
   </div>
 </footer>
+
+<!-- Barra de cuota (solo móvil; visible mientras se elige en el estimador) -->
+<div class="est-bar" id="est-bar" inert>
+  <div class="est-bar-total"><span class="mono">Cuota mensual</span><strong id="eb-total">120,00&nbsp;€</strong></div>
+  <a class="btn btn-primary" id="eb-wa" target="_blank" rel="noopener noreferrer" href="https://wa.me/34637621315?text=%C2%A1Hola%20Daniel!%20He%20visto%20tu%20web%20de%20clases%20de%20matem%C3%A1ticas.%20Me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%203%C2%BA%20de%20ESO%20en%20modalidad%20Presencial%20a%20Domicilio%2C%20con%202%20d%C3%ADas%20a%20la%20semana%20(1h%20por%20sesi%C3%B3n%2C%20total%202h%2Fsemana%3B%20estimado%20mensual%3A%20120%2C00%E2%82%AC).%20%C2%BFQu%C3%A9%20horarios%20tendr%C3%ADas%20libres%3F">Consultar por WhatsApp</a>
+</div>
+
+<!-- Menú móvil: bottom sheet -->
+<dialog class="sheet" id="menu-sheet" aria-label="Navegación">
+  <div class="sheet-handle" id="sheet-handle" aria-hidden="true"><span></span></div>
+  <button type="button" class="sheet-close" aria-label="Cerrar menú"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+  <nav class="sheet-nav" aria-label="Principal (móvil)">
+    <a href="#metodologia">Metodología</a>
+    <a href="#tarifas">Tarifas</a>
+    <a href="#estimador">Estimador de cuota</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <a class="btn btn-primary btn-block" href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>Escribir por WhatsApp</a>
+</dialog>
 
 <!-- WhatsApp flotante (solo móvil; aparece al salir el CTA del hero) -->
 <a class="btn btn-primary fab" id="fab" inert href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp</a>
