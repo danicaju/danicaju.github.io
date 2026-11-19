@@ -1,2747 +1,410 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daniel Casado Juan | Clases de Matemáticas (ESO y Bachillerato)</title>
-    <meta name="description" content="Clases particulares de Matemáticas para ESO y Bachillerato en Palma de Mallorca y Online. Aprende a razonar, no a memorizar. Pizarra digital Goodnotes, apuntes en PDF y simulador Casio fx-991.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daniel Casado Juan | Clases de Matemáticas (ESO y Bachillerato)</title>
+  <meta name="description" content="Clases particulares de Matemáticas para ESO y Bachillerato en Palma de Mallorca y Online. Aprende a razonar, no a memorizar. Pizarra digital Goodnotes, apuntes en PDF y estimador de cuota mensual.">
+  <meta name="theme-color" content="#F8F8F6">
+  <link rel="canonical" href="https://danicaju.github.io/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-    <!-- Tipografía Google Fonts: Plus Jakarta Sans, Inter, Share Tech Mono (LCD Casio) y VT323 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Daniel Casado Juan | Clases de Matemáticas (ESO y Bachillerato)">
+  <meta property="og:description" content="Clases particulares de Matemáticas en Palma de Mallorca y online. Aprende a razonar, no a memorizar.">
+  <meta property="og:url" content="https://danicaju.github.io/">
+  <meta property="og:image" content="https://danicaju.github.io/assets/img/daniel-640.webp">
+  <meta name="twitter:card" content="summary">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-                        body: ['Inter', 'system-ui', 'sans-serif'],
-                        lcd: ['"Share Tech Mono"', 'VT323', 'monospace'],
-                        mono: ['"Share Tech Mono"', 'monospace'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            200: '#c7d2fe',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
-                            950: '#1e1b4b',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- FontAwesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-        :root {
-            --bg-canvas: #080c16;
-            --grid-line: rgba(255, 255, 255, 0.035);
-        }
-
-        html {
-            scroll-behavior: auto;
-            overflow-x: hidden;
-            background-color: var(--bg-canvas);
-        }
-
-        html, body {
-            max-width: 100%;
-        }
-
-        body {
-            overflow-x: clip;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-canvas);
-            color: #f1f5f9;
-        }
-
-        h1, h2, h3, h4, .font-heading {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        /* Lienzo continuo matemático con cuadrícula suave de 36x36px */
-        .bg-math-grid {
-            background-color: #080c16;
-            background-image: 
-                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-            background-size: 36px 36px;
-        }
-
-        /* Paneles translúcidos de vidrio oscuro */
-        .glass-pill {
-            background: rgba(15, 23, 42, 0.82);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-
-        .glass-card {
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* ================================================= */
-        /* HERO LATERAL DECORATIONS & AMBIENT GLOWS          */
-        /* ================================================= */
-        @keyframes heroFloatSoft1 {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(-0.5deg); }
-        }
-        @keyframes heroFloatSoft2 {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(0.5deg); }
-        }
-        .hero-float-left {
-            animation: heroFloatSoft1 7s ease-in-out infinite;
-            opacity: 0.16;
-            transition: opacity 0.3s ease;
-        }
-        .hero-float-right {
-            animation: heroFloatSoft2 8s ease-in-out infinite 1s;
-            opacity: 0.16;
-            transition: opacity 0.3s ease;
-        }
-        .hero-float-left:hover, .hero-float-right:hover {
-            opacity: 0.45;
-        }
-
-        /* Glassmorphism secundario Hero */
-        .btn-glass-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(99, 102, 241, 0.4);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-glass-secondary:hover {
-            background: rgba(255, 255, 255, 0.09);
-            border-color: rgba(99, 102, 241, 0.8);
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Botón Flotante WhatsApp con visibilidad reactiva al scroll */
-        .floating-whatsapp-btn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 50;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(10px);
-            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
-        }
-        .floating-whatsapp-btn.btn-visible {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-        }
-        .floating-whatsapp-btn:hover {
-            transform: translateY(-4px) scale(1.04);
-        }
-
-        /* Modal PDF */
-        #pdfModal.modal-open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #pdfModal.modal-open > div {
-            transform: scale(1);
-        }
-
-        /* Orbes Parallax Ambientales Multicapa */
-        .parallax-orb-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .parallax-orb-wrapper {
-            position: absolute;
-            pointer-events: none;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @keyframes orbBreathe1 {
-            0%, 100% { transform: scale(1) translate(0, 0); }
-            50% { transform: scale(1.08) translate(25px, 15px); }
-        }
-
-        @keyframes orbBreathe2 {
-            0%, 100% { transform: scale(1) translate(0, 0); }
-            50% { transform: scale(0.92) translate(-20px, -20px); }
-        }
-
-        @keyframes orbBreathe3 {
-            0%, 100% { transform: scale(1) translate(0, 0); }
-            50% { transform: scale(1.06) translate(15px, -15px); }
-        }
-
-        .parallax-orb-pulse-1 {
-            animation: orbBreathe1 20s ease-in-out infinite;
-        }
-
-        .parallax-orb-pulse-2 {
-            animation: orbBreathe2 24s ease-in-out infinite;
-        }
-
-        .parallax-orb-pulse-3 {
-            animation: orbBreathe3 22s ease-in-out infinite;
-        }
-
-        /* Símbolos y fórmulas matemáticas con Parallax continuo */
-        .parallax-math-symbol {
-            position: absolute;
-            pointer-events: none;
-            user-select: none;
-            z-index: 1;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        /* Scroll-Driven Reveals con IntersectionObserver */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(24px) scale(0.985);
-            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-
-        .scroll-reveal.is-revealed {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .reveal-delay-1 { transition-delay: 90ms; }
-        .reveal-delay-2 { transition-delay: 180ms; }
-        .reveal-delay-3 { transition-delay: 270ms; }
-
-        /* Micro-Tilt 3D Interactivo */
-        .interactive-tilt {
-            transform-style: preserve-3d;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform;
-        }
-
-        /* ================================================= */
-        /* ESTILOS REALISTAS CALCULADORA CASIO CLASSWIZ FX-991 */
-        /* ================================================= */
-        .casio-chassis {
-            background: linear-gradient(145deg, #181d24 0%, #12151b 50%, #0e1015 100%);
-            box-shadow: 
-                0 25px 60px -15px rgba(0, 0, 0, 0.9),
-                0 10px 25px -5px rgba(15, 23, 42, 0.6),
-                inset 0 1px 2px rgba(255, 255, 255, 0.15),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Pantalla LCD Verde-Gris de Matriz de Puntos */
-        .casio-screen-frame {
-            background-color: #0d1014;
-            box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.85), 0 1px 1px rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .casio-lcd {
-            background-color: #8da488;
-            color: #121c11;
-            font-family: 'Share Tech Mono', monospace;
-            box-shadow: 
-                inset 0 2px 6px rgba(0, 0, 0, 0.4),
-                inset 0 0 14px rgba(0, 0, 0, 0.15);
-            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Líneas de escaneo / matriz de píxeles LCD */
-        .casio-lcd::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.04) 0px,
-                rgba(0, 0, 0, 0.04) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        /* Destello al calcular */
-        @keyframes lcdFlashAnim {
-            0% { background-color: #a4bea0; }
-            50% { background-color: #799074; }
-            100% { background-color: #8da488; }
-        }
-
-        .lcd-calculating {
-            animation: lcdFlashAnim 0.35s ease-in-out;
-        }
-
-        /* D-Pad Circular Metálico Central con Quadrant Hit Areas */
-        .casio-dpad-ring {
-            background: radial-gradient(circle at 45% 40%, #5a6475 0%, #2f3745 55%, #181d26 100%);
-            box-shadow: 
-                0 6px 16px rgba(0, 0, 0, 0.75),
-                inset 0 1px 2px rgba(255, 255, 255, 0.45),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .casio-dpad-hub {
-            background: radial-gradient(circle at 45% 40%, #738096 0%, #3e4858 60%, #242a35 100%);
-            box-shadow: 
-                0 2px 5px rgba(0, 0, 0, 0.6),
-                inset 0 1px 1px rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            transition: transform 0.08s ease;
-        }
-
-        .casio-dpad-hub:active {
-            transform: scale(0.92);
-        }
-
-        .casio-dpad-arrow-btn {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #e2e8f0;
-            transition: all 0.08s ease;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .casio-dpad-arrow-btn:hover {
-            color: #ffffff;
-            text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-        }
-
-        .casio-dpad-arrow-btn:active {
-            transform: scale(0.88);
-            color: #38bdf8;
-        }
-
-        /* Botones de la Calculadora */
-        .casio-btn {
-            position: relative;
-            user-select: none;
-            touch-action: manipulation;
-            transition: all 0.08s ease;
-            box-shadow: 
-                0 3px 0px rgba(0, 0, 0, 0.6),
-                0 4px 6px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.2);
-        }
-
-        .casio-btn:active {
-            transform: translateY(2px);
-            box-shadow: 
-                0 1px 0px rgba(0, 0, 0, 0.6),
-                0 1px 2px rgba(0, 0, 0, 0.3),
-                inset 0 1px 2px rgba(0, 0, 0, 0.4);
-        }
-
-        /* TECLADO NUMÉRICO BLANCO CLASSWIZ AUTÉNTICO (Casio fx-991SPX / DEX) */
-        .casio-btn-num {
-            background: linear-gradient(180deg, #ffffff 0%, #edf1f5 65%, #dce3eb 100%);
-            color: #0f172a !important;
-            font-weight: 800;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 
-                0 3px 0px #8595a8,
-                0 4px 6px rgba(0, 0, 0, 0.45),
-                inset 0 1px 1px #ffffff;
-        }
-
-        .casio-btn-num:hover {
-            background: linear-gradient(180deg, #ffffff 0%, #f4f6f8 65%, #e4eaf0 100%);
-        }
-
-        .casio-btn-num:active {
-            transform: translateY(2px);
-            box-shadow: 
-                0 1px 0px #8595a8,
-                0 1px 2px rgba(0, 0, 0, 0.3),
-                inset 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Botones de Función Azul / Gris Casio */
-        .casio-btn-op {
-            background: linear-gradient(180deg, #2b3340 0%, #1a202a 100%);
-            color: #93c5fd;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                0 3px 0px #0b0e14,
-                0 4px 6px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.25);
-        }
-
-        .casio-btn-op:hover {
-            background: linear-gradient(180deg, #343d4d 0%, #202632 100%);
-        }
-
-        /* Tecla DEL: Ámbar Casio */
-        .casio-btn-del {
-            background: linear-gradient(180deg, #c2410c 0%, #9a3412 100%);
-            color: #ffffff;
-            border: 1px solid rgba(251, 146, 60, 0.4);
-            box-shadow: 
-                0 3px 0px #431407,
-                0 4px 6px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Tecla AC: Carmesí Casio */
-        .casio-btn-ac {
-            background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
-            color: #ffffff;
-            border: 1px solid rgba(248, 113, 113, 0.4);
-            box-shadow: 
-                0 3px 0px #450a0a,
-                0 4px 6px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Tecla IGUAL [ = ] Casio */
-        .casio-btn-equals {
-            background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
-            color: #ffffff;
-            border: 1px solid rgba(56, 189, 248, 0.5);
-            box-shadow: 
-                0 3px 0px #082f49,
-                0 6px 16px rgba(2, 132, 199, 0.5),
-                inset 0 1px 2px rgba(255, 255, 255, 0.45);
-        }
-
-        .casio-btn-equals:hover {
-            background: linear-gradient(180deg, #0369a1 0%, #075985 100%);
-            box-shadow: 
-                0 3px 0px #082f49,
-                0 8px 20px rgba(2, 132, 199, 0.7),
-                inset 0 1px 2px rgba(255, 255, 255, 0.5);
-        }
-
-        .casio-btn-equals:active {
-            transform: translateY(2px);
-            box-shadow: 0 1px 0px #082f49, inset 0 1px 2px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Panel Solar Superior Derecho */
-        .casio-solar-cell {
-            background: linear-gradient(180deg, #3d2210 0%, #221208 50%, #140a04 100%);
-            border: 1px solid rgba(217, 119, 6, 0.45);
-            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.85);
-        }
-
-        /* Acordeón FAQ Minimalista */
-        details summary::-webkit-details-marker {
-            display: none;
-        }
-
-        details[open] .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        /* Respeto estricto a prefers-reduced-motion */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            .scroll-reveal {
-                opacity: 1 !important;
-                transform: none !important;
-                transition: none !important;
-            }
-            .interactive-tilt {
-                transform: none !important;
-                transition: none !important;
-            }
-            .parallax-orb-wrapper, .parallax-math-symbol {
-                transform: none !important;
-                transition: none !important;
-            }
-            .parallax-orb-pulse-1, .parallax-orb-pulse-2, .parallax-orb-pulse-3 {
-                animation: none !important;
-            }
-        }
-    </style>
+  <link rel="preload" href="assets/fonts/jakarta-var.woff2" as="font" type="font/woff2" crossorigin>
+  <script>(function(d){d.classList.add("js-motion");setTimeout(function(){if(!d.classList.contains("js-ready"))d.classList.remove("js-motion")},4000)})(document.documentElement)</script>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/main.js" defer></script>
 </head>
-<body class="bg-[#080c16] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white relative bg-math-grid min-h-screen">
+<body>
+<div class="sentinel" id="top-sentinel" aria-hidden="true"></div>
 
-    <!-- Orbes Parallax Ambientales Multicapa (Lienzo Continuo sin saltos cromáticos) -->
-    <div class="parallax-orb-container" aria-hidden="true">
-        <!-- Orbe Superior: Índigo luminoso -->
-        <div id="orb1" class="parallax-orb-wrapper -top-24 -left-20">
-            <div class="parallax-orb-pulse-1 w-[560px] h-[560px] rounded-full bg-indigo-600/18 blur-[130px]"></div>
-        </div>
-        <!-- Orbe Central: Azul eléctrico / Violeta -->
-        <div id="orb2" class="parallax-orb-wrapper top-[35vh] -right-28">
-            <div class="parallax-orb-pulse-2 w-[620px] h-[620px] rounded-full bg-blue-600/15 blur-[140px]"></div>
-        </div>
-        <!-- Orbe Inferior: Teal esmeralda / Cyan -->
-        <div id="orb3" class="parallax-orb-wrapper top-[70vh] left-[5vw]">
-            <div class="parallax-orb-pulse-3 w-[560px] h-[560px] rounded-full bg-teal-500/12 blur-[125px]"></div>
-        </div>
-        <!-- Orbe Cuarto: Violeta ambiental medio-izquierdo -->
-        <div id="orb4" class="parallax-orb-wrapper top-[50vh] -left-32">
-            <div class="parallax-orb-pulse-1 w-[500px] h-[500px] rounded-full bg-purple-600/12 blur-[130px]"></div>
-        </div>
-    </div>
+<!-- Sprite de iconos propios (trazo 1,5 px, currentColor) -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H11l-5 4v-4H5.5A1.5 1.5 0 0 1 4 14.5v-9A1.5 1.5 0 0 1 5.5 4z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zM5 15V6a1 1 0 0 1 1-1h9"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4"/></symbol>
+</svg>
 
-    <!-- Botón Flotante WhatsApp -->
-    <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20he%20visto%20tu%20web%20y%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       id="floatingWhatsApp"
-       aria-label="Contactar por WhatsApp directamente con Daniel Casado"
-       class="floating-whatsapp-btn flex items-center gap-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 pl-4 pr-5 py-3.5 rounded-full shadow-2xl hover:shadow-emerald-500/30 font-bold group border border-emerald-400/40">
-        <span class="relative flex h-3 w-3">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-950 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-slate-950"></span>
-        </span>
-        <i class="fab fa-whatsapp text-2xl"></i>
-        <span class="text-sm font-bold tracking-wide hidden sm:inline">WhatsApp directo</span>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#inicio">Daniel Casado Juan<small>Matemáticas · ESO y Bachillerato</small></a>
+    <nav class="nav-desktop" aria-label="Principal">
+      <a href="#metodologia">Metodología</a>
+      <a href="#tarifas">Tarifas</a>
+      <a href="#estimador">Estimador</a>
+      <a href="#faq">Dudas</a>
+    </nav>
+    <a class="btn btn-ink btn-sm" href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer">
+      <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp
     </a>
+    <details class="menu">
+      <summary>Menú</summary>
+      <nav class="menu-panel" aria-label="Principal (móvil)">
+        <a href="#metodologia">Metodología</a>
+        <a href="#tarifas">Tarifas</a>
+        <a href="#estimador">Estimador de cuota</a>
+        <a href="#faq">Preguntas frecuentes</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </details>
+  </div>
+</header>
 
-    <!-- BARRA SUPERIOR MEJORADA: Barra flotante moderna estilo "pill" centrada -->
-    <header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-5xl">
-        <nav class="glass-pill rounded-full shadow-2xl px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between border border-slate-700/60 transition-all" aria-label="Navegación principal">
-            
-            <!-- Monograma e Identidad -->
-            <a href="#" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-full pr-2">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-indigo-500 via-blue-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-sm sm:text-base shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
-                    DC
-                </div>
-                <div class="text-left">
-                    <span class="text-white font-bold text-sm sm:text-base tracking-tight block group-hover:text-indigo-300 transition-colors">Daniel Casado Juan</span>
-                    <span class="text-slate-400 text-[11px] sm:text-xs block -mt-0.5">Matemáticas ESO & Bach</span>
-                </div>
-            </a>
+<main id="contenido">
 
-            <!-- Enlaces de navegación desktop directos -->
-            <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-300">
-                <a href="#metodologia" class="hover:text-white transition-colors py-1">Metodología</a>
-                <a href="#tarifas" class="hover:text-white transition-colors py-1">Tarifas</a>
-                <a href="#calculadora" class="hover:text-white transition-colors flex items-center gap-1.5 py-1 text-indigo-300 font-semibold">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                    Calculadora Casio
-                </a>
-                <a href="#faq" class="hover:text-white transition-colors py-1">Dudas</a>
-                <a href="#contacto" class="hover:text-white transition-colors py-1">Contacto</a>
-            </div>
-
-            <!-- Botón CTA WhatsApp y Menú Móvil -->
-            <div class="flex items-center gap-2 sm:gap-3">
-                <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs sm:text-sm font-bold px-3.5 sm:px-4 py-2 rounded-full shadow-md shadow-emerald-500/20 transition-all hover:scale-105">
-                    <i class="fab fa-whatsapp text-base"></i>
-                    <span>Contactar</span>
-                </a>
-                
-                <button type="button" 
-                        id="mobileMenuToggle" 
-                        aria-label="Abrir menú de navegación" 
-                        aria-expanded="false" 
-                        class="md:hidden inline-flex items-center justify-center p-2 rounded-full text-slate-300 hover:text-white hover:bg-slate-800/80 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors">
-                    <i id="menuIcon" class="fas fa-bars text-lg"></i>
-                </button>
-            </div>
-        </nav>
-
-        <!-- Desplegable Móvil Flotante -->
-        <div id="mobileMenu" class="hidden md:hidden mt-2 p-4 rounded-2xl glass-pill border border-slate-700/80 space-y-2.5 shadow-2xl">
-            <a href="#metodologia" class="mobile-nav-link block px-3 py-2 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors">Metodología</a>
-            <a href="#tarifas" class="mobile-nav-link block px-3 py-2 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors">Modalidades y Tarifas</a>
-            <a href="#calculadora" class="mobile-nav-link block px-3 py-2 rounded-xl text-sm font-bold text-indigo-300 hover:text-indigo-200 hover:bg-slate-800/80 transition-colors flex items-center justify-between">
-                <span>Calculadora Casio fx-991</span>
-                <i class="fas fa-calculator text-xs"></i>
-            </a>
-            <a href="#faq" class="mobile-nav-link block px-3 py-2 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors">Preguntas frecuentes</a>
-            <a href="#contacto" class="mobile-nav-link block px-3 py-2 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors">Contacto directo</a>
+  <!-- Hero -->
+  <section class="hero" id="inicio" aria-labelledby="h-hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <p class="mono">Palma de Mallorca · Online · desde 10&nbsp;€/h por alumno</p>
+        <h1 id="h-hero">Clases de Matemáticas para ESO y Bachillerato</h1>
+        <p class="lead">Aprende a razonar y a resolver problemas con autonomía. Metodología práctica y visual con pizarra digital interactiva y apuntes en PDF tras cada sesión.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer">
+            <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>Escribir por WhatsApp
+          </a>
+          <a class="link" href="#tarifas">Ver tarifas</a>
         </div>
-    </header>
-
-    <!-- Hero Section con Fondo Continuo, Parallax y Ambient Glow -->
-    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden">
-        
-        <!-- Ambient Glow: Fondos difuminados para dar profundidad al lienzo oscuro -->
-        <div class="absolute -top-12 left-[-8%] w-[580px] h-[580px] bg-sky-500/[0.12] rounded-full pointer-events-none z-0" style="filter: blur(130px);" aria-hidden="true"></div>
-        <div class="absolute top-8 right-[-8%] w-[620px] h-[620px] bg-indigo-600/[0.12] rounded-full pointer-events-none z-0" style="filter: blur(130px);" aria-hidden="true"></div>
-
-        <!-- BLOQUE DECORATIVO LATERAL IZQUIERDO: ÁLGEBRA & FUNCIONES (ESO / Bachillerato) -->
-        <div class="hero-lateral-block hero-float-left hidden lg:flex flex-col items-start gap-3 absolute left-4 xl:left-12 2xl:left-24 top-24 xl:top-32 z-0 pointer-events-none select-none" data-parallax-speed="-0.12" aria-hidden="true">
-            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-[10px] font-mono tracking-widest text-sky-400 uppercase">
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-                ÁLGEBRA & FUNCIONES
-            </div>
-            
-            <!-- Gráfica SVG de Función Cuadrática sobre Ejes Cartesianos -->
-            <svg width="240" height="170" viewBox="0 0 240 170" fill="none" class="stroke-sky-400">
-                <!-- Ejes cartesianos -->
-                <line x1="20" y1="120" x2="220" y2="120" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35"/>
-                <line x1="120" y1="15" x2="120" y2="160" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35"/>
-                <!-- Flechas de los ejes -->
-                <polyline points="214,116 220,120 214,124" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.5"/>
-                <polyline points="116,21 120,15 124,21" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.5"/>
-                <!-- Marcas de graduación en ejes -->
-                <line x1="70" y1="117" x2="70" y2="123" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.4"/>
-                <line x1="170" y1="117" x2="170" y2="123" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.4"/>
-                <line x1="117" y1="70" x2="123" y2="70" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.4"/>
-                <!-- Parábola y = ax² + bx + c -->
-                <path d="M 40 155 Q 120 15 200 155" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-opacity="0.65" stroke-linecap="round"/>
-                <!-- Puntos notables: Vértice y Raíces -->
-                <circle cx="120" cy="85" r="3.5" fill="#38bdf8" fill-opacity="0.8"/>
-                <circle cx="68" cy="120" r="3" fill="#6366f1" fill-opacity="0.8"/>
-                <circle cx="172" cy="120" r="3" fill="#6366f1" fill-opacity="0.8"/>
-                <text x="126" y="80" fill="#38bdf8" fill-opacity="0.75" font-family="monospace" font-size="10">V(h, k)</text>
-                <!-- Eje de simetría discontinuo -->
-                <line x1="120" y1="35" x2="120" y2="155" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.3"/>
-            </svg>
-
-            <!-- Fórmula Cuadrática General de Resolución -->
-            <div class="text-sky-300/60 font-mono text-sm tracking-wide bg-sky-950/30 px-3.5 py-1.5 rounded-lg border border-sky-500/15 backdrop-blur-sm">
-                <span>x = <sup>-b ± √(b² - 4ac)</sup>&frasl;<sub>2a</sub></span>
-            </div>
-        </div>
-
-        <!-- BLOQUE DECORATIVO LATERAL DERECHO: GEOMETRÍA & TRIGONOMETRÍA (ESO / Bachillerato) -->
-        <div class="hero-lateral-block hero-float-right hidden lg:flex flex-col items-end gap-3 absolute right-4 xl:right-12 2xl:right-24 top-28 xl:top-36 z-0 pointer-events-none select-none" data-parallax-speed="0.14" aria-hidden="true">
-            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[10px] font-mono tracking-widest text-indigo-400 uppercase">
-                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                GEOMETRÍA & TRIGONOMETRÍA
-            </div>
-            
-            <!-- Gráfica SVG de Triángulo Rectángulo, Circunferencia y Onda Seno -->
-            <svg width="240" height="170" viewBox="0 0 240 170" fill="none" class="stroke-indigo-400">
-                <!-- Circunferencia goniométrica -->
-                <circle cx="155" cy="85" r="55" stroke="#6366f1" stroke-width="1.2" stroke-opacity="0.25" stroke-dasharray="3 3"/>
-                <line x1="90" y1="85" x2="220" y2="85" stroke="#6366f1" stroke-width="1" stroke-opacity="0.3"/>
-                <line x1="155" y1="20" x2="155" y2="150" stroke="#6366f1" stroke-width="1" stroke-opacity="0.3"/>
-                <!-- Triángulo rectángulo inscrito -->
-                <polygon points="155,85 198,85 198,48" fill="rgba(99, 102, 241, 0.08)" stroke="#818cf8" stroke-width="1.8" stroke-opacity="0.65"/>
-                <!-- Símbolo de ángulo recto -->
-                <rect x="189" y="76" width="9" height="9" fill="none" stroke="#818cf8" stroke-width="1.2" stroke-opacity="0.5"/>
-                <!-- Arco de ángulo alfa -->
-                <path d="M 170 85 A 15 15 0 0 0 167 72" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.7"/>
-                <text x="173" y="78" fill="#38bdf8" fill-opacity="0.8" font-family="sans-serif" font-size="10">α</text>
-                <!-- Catetos y etiquetas -->
-                <text x="172" y="98" fill="#818cf8" fill-opacity="0.7" font-family="monospace" font-size="9">cos(α)</text>
-                <text x="203" y="68" fill="#38bdf8" fill-opacity="0.7" font-family="monospace" font-size="9">sin(α)</text>
-                <!-- Onda sinusoidal sutil a la izquierda -->
-                <path d="M 15 85 Q 38 45, 60 85 T 105 85" fill="none" stroke="#6366f1" stroke-width="1.4" stroke-opacity="0.4" stroke-linecap="round"/>
-            </svg>
-
-            <!-- Fórmulas: Teorema de Pitágoras y Relación Fundamental -->
-            <div class="flex flex-col items-end gap-1 text-indigo-300/60 font-mono text-sm tracking-wide bg-indigo-950/30 px-3.5 py-1.5 rounded-lg border border-indigo-500/15 backdrop-blur-sm">
-                <span>a² + b² = c²</span>
-                <span class="text-xs text-indigo-400/50">sin²(α) + cos²(α) = 1</span>
-            </div>
-        </div>
-
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-            <div class="flex flex-col items-center text-center">
-                
-                <!-- Eyebrow Badge Superior del Hero -->
-                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-slate-900/90 text-slate-200 border border-slate-700/70 mb-8 shadow-lg backdrop-blur-md">
-                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                    <span>Especialista en ESO (1º a 4º) • Plazas limitadas para Bachillerato</span>
-                </div>
-
-                <!-- Foto de Perfil Integrada con Badge de Autoridad UIB Mejorado -->
-                <div class="relative mb-8 group interactive-tilt cursor-pointer" data-tilt-max="5">
-                    <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-teal-400 opacity-60 blur-md group-hover:opacity-90 transition duration-300"></div>
-                    <img src="avatar.jpg" 
-                         alt="Daniel Casado Juan - Profesor de Clases de Matemáticas" 
-                         width="144" 
-                         height="144" 
-                         loading="eager"
-                         class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-slate-900 shadow-2xl">
-                    
-                    <!-- Badge de Autoridad UIB Informática con SVG -->
-                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-slate-900/95 text-sky-300 border border-sky-400/40 text-[0.8rem] font-semibold px-3.5 py-1 rounded-full shadow-lg whitespace-nowrap backdrop-blur-md flex items-center gap-2 tracking-wide">
-                        <svg class="w-4 h-4 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                        </svg>
-                        <span>UIB Informática</span>
-                    </div>
-                </div>
-
-                <!-- Titular Principal -->
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 max-w-3xl leading-[1.15]">
-                    Clases de Matemáticas <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-teal-300">
-                        para ESO y Bachillerato
-                    </span>
-                </h1>
-
-                <!-- Subtítulo -->
-                <p class="text-base sm:text-xl text-slate-300 font-normal max-w-2xl mx-auto mb-9 leading-relaxed">
-                    Aprende a razonar y a resolver problemas con autonomía. Metodología práctica y visual con pizarra digital interactiva y apuntes en PDF tras cada sesión.
-                </p>
-
-                <!-- Acciones Principales: Jerarquía invertida -->
-                <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                    <!-- BOTÓN PRINCIPAL: Contacto directo / Reserva con WhatsApp -->
-                    <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold px-8 py-4 rounded-xl shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:shadow-[0_0_35px_rgba(16,185,129,0.55)] transition-all transform hover:-translate-y-0.5 text-base">
-                        <i class="fab fa-whatsapp text-xl"></i>
-                        <span>Reservar clase / Consultar dudas</span>
-                    </a>
-
-                    <!-- BOTÓN SECUNDARIO: Glassmorphism hacia la calculadora Casio -->
-                    <a href="#calculadora" 
-                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 btn-glass-secondary text-slate-200 hover:text-white font-semibold px-7 py-4 rounded-xl text-base">
-                        <i class="fas fa-calculator text-indigo-400"></i>
-                        <span>Simulador Casio fx-991</span>
-                    </a>
-                </div>
-
-                <!-- Enlace interactivo único bajo los botones principales -->
-                <div class="mt-6 flex justify-center">
-                    <button type="button" 
-                            id="openPdfModalBtn" 
-                            class="group inline-flex items-center gap-2.5 text-xs sm:text-sm text-indigo-300 hover:text-white transition-all py-2 px-5 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 hover:border-indigo-400/40 cursor-pointer backdrop-blur-sm shadow-sm">
-                        <svg class="w-4 h-4 text-indigo-400 group-hover:text-indigo-300 shrink-0 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <line x1="10" y1="9" x2="8" y2="9"/>
-                        </svg>
-                        <span class="underline decoration-indigo-400/50 underline-offset-4 group-hover:decoration-white font-medium">Ver ejemplo real de apuntes en PDF</span>
-                        <svg class="w-3.5 h-3.5 text-indigo-400 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                            <polyline points="12 5 19 12 12 19"/>
-                        </svg>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- CREDENCIALES: Franja Divisoria Full-Width (100% ancho) con diseño horizontal -->
-    <section class="w-full relative z-20 border-y border-white/[0.07] bg-slate-900/45 backdrop-blur-md py-7 mt-12 scroll-reveal" style="background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-top: 1px solid rgba(255, 255, 255, 0.07); border-bottom: 1px solid rgba(255, 255, 255, 0.07); padding: 28px 0; margin-top: 48px;">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-                
-                <!-- 1. Grado UIB -->
-                <div class="flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/25 text-blue-400 flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="text-[1.05rem] font-bold text-slate-100 leading-tight">Grado UIB</div>
-                        <div class="text-[0.85rem] text-slate-400 mt-1">Ingeniería Informática</div>
-                    </div>
-                </div>
-
-                <!-- 2. 3 Años de Experiencia -->
-                <div class="flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/25 text-indigo-400 flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="text-[1.05rem] font-bold text-slate-100 leading-tight">3 Años de Experiencia</div>
-                        <div class="text-[0.85rem] text-slate-400 mt-1">Clases particulares activas</div>
-                    </div>
-                </div>
-
-                <!-- 3. Sant Antoni Abat -->
-                <div class="flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M3 21h18"/>
-                            <path d="M5 21V7l7-4 7 4v14"/>
-                            <path d="M9 10h1"/>
-                            <path d="M9 14h1"/>
-                            <path d="M14 10h1"/>
-                            <path d="M14 14h1"/>
-                            <path d="M12 21v-4"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="text-[1.05rem] font-bold text-slate-100 leading-tight">Sant Antoni Abat</div>
-                        <div class="text-[0.85rem] text-slate-400 mt-1">Antiguo alumno del centro</div>
-                    </div>
-                </div>
-
-                <!-- 4. Apuntes en PDF -->
-                <div class="flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/25 text-violet-400 flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <line x1="10" y1="9" x2="8" y2="9"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="text-[1.05rem] font-bold text-slate-100 leading-tight">Apuntes en PDF</div>
-                        <div class="text-[0.85rem] text-slate-400 mt-1">Pizarra digital Goodnotes</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- METODOLOGÍA: 3 Pasos en Tarjetas Estilizadas con Iluminación Reactiva -->
-    <section id="metodologia" class="relative max-w-5xl mx-auto px-4 sm:px-6 py-20 sm:py-28 scroll-mt-24 overflow-hidden lg:overflow-visible">
-        
-        <!-- Símbolos matemáticos ESO laterales (posicionados fuera del flujo de lectura para evitar solapamiento) -->
-        <div class="parallax-math-symbol hidden 2xl:block absolute -left-32 top-36 text-indigo-400/15 text-2xl font-mono select-none pointer-events-none" data-parallax-speed="0.12" aria-hidden="true">
-            <span class="block text-3xl font-serif mb-1">π ≈ 3,1416</span>
-            <span class="text-xs text-indigo-300/40 font-sans">L = 2πr · A = πr²</span>
-        </div>
-        <div class="parallax-math-symbol hidden 2xl:block absolute -right-32 top-48 text-blue-400/15 text-2xl font-mono select-none pointer-events-none" data-parallax-speed="-0.14" aria-hidden="true">
-            <span class="block text-2xl font-mono mb-1">m = <sup>y₂ - y₁</sup>&frasl;<sub>x₂ - x₁</sub></span>
-            <span class="text-xs text-blue-300/40 font-sans">Pendiente de la recta</span>
-        </div>
-
-        <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
-            <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1.5 rounded-full">
-                Metodología de Trabajo
-            </span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-4 tracking-tight">
-                Aprender a razonar, no a memorizar
-            </h2>
-            <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
-                Las matemáticas no son una lista de recetas fijas. Mi prioridad es que el estudiante entienda el origen lógico de cada concepto para resolver cualquier problema con criterio y seguridad ante el folio en blanco.
-            </p>
-        </div>
-
-        <!-- Flujo de 3 Tarjetas Estilizadas con Hover Iluminado -->
-        <div class="grid md:grid-cols-3 gap-6 sm:gap-8 pt-4">
-            
-            <!-- Tarjeta 01: Diagnóstico de lagunas -->
-            <div class="relative bg-slate-900/55 rounded-2xl p-7 border border-white/[0.07] hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(56,189,248,0.12)] transition-all duration-300 flex flex-col justify-between scroll-reveal reveal-delay-1 group">
-                <div>
-                    <div class="flex items-center justify-between mb-5">
-                        <span class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-400 via-indigo-400 to-indigo-600 font-mono tracking-tighter select-none">
-                            01
-                        </span>
-                        <!-- Icono SVG Nítido para Diagnóstico y Detección de Lagunas -->
-                        <div class="w-11 h-11 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-500/20 transition-all duration-300 shadow-inner">
-                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                                <circle cx="11" cy="11" r="6"/>
-                                <path d="M21 21l-4.35-4.35" stroke-linecap="round"/>
-                                <path d="M8.5 11h5M11 8.5v5" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-blue-300 transition-colors">
-                        Diagnóstico de lagunas
-                    </h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
-                        Muchas dificultades en el curso actual vienen de dudas arrastradas de cursos previos (fracciones, signos, jerarquía de operaciones o despeje de incógnitas). Localizamos con precisión el origen del bloqueo y reconstruimos la base con total solidez.
-                    </p>
-                </div>
-                <div class="pt-4 border-t border-slate-800/80 text-xs font-semibold text-blue-400 flex items-center gap-2">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>Base conceptual afianzada</span>
-                </div>
-            </div>
-
-            <!-- Tarjeta 02: Razonamiento guiado -->
-            <div class="relative bg-slate-900/55 rounded-2xl p-7 border border-white/[0.07] hover:border-indigo-500/40 hover:shadow-[0_0_30px_rgba(99,102,241,0.12)] transition-all duration-300 flex flex-col justify-between scroll-reveal reveal-delay-2 group">
-                <div>
-                    <div class="flex items-center justify-between mb-5">
-                        <span class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-indigo-400 via-purple-400 to-violet-600 font-mono tracking-tighter select-none">
-                            02
-                        </span>
-                        <div class="w-11 h-11 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all duration-300 shadow-inner">
-                            <svg class="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-indigo-300 transition-colors">
-                        Razonamiento guiado
-                    </h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
-                        No doy las soluciones masticadas. Formulo preguntas estratégicas para que el estudiante deduzca los pasos lógicos por sí mismo, gane agilidad mental y sea capaz de defender el desarrollo de un examen sin depender de nadie.
-                    </p>
-                </div>
-                <div class="pt-4 border-t border-slate-800/80 text-xs font-semibold text-indigo-400 flex items-center gap-2">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>Autonomía y resolución propia</span>
-                </div>
-            </div>
-
-            <!-- Tarjeta 03: Cuaderno a papel en presencial & Goodnotes online -->
-            <div class="relative bg-slate-900/55 rounded-2xl p-7 border border-white/[0.07] hover:border-emerald-500/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.12)] transition-all duration-300 flex flex-col justify-between scroll-reveal reveal-delay-3 group">
-                <div>
-                    <div class="flex items-center justify-between mb-5">
-                        <span class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-teal-400 via-emerald-400 to-green-500 font-mono tracking-tighter select-none">
-                            03
-                        </span>
-                        <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all duration-300 shadow-inner">
-                            <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-emerald-300 transition-colors">
-                        Papel en casa & Goodnotes online
-                    </h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
-                        En clases presenciales trabajamos íntegramente a papel sobre el cuaderno del estudiante para asegurar orden, limpieza y soltura ante el examen real. En clases online usamos una tableta gráfica Huion Inspiroy 2M conectada al ordenador con Goodnotes, y el alumno recibe el PDF al terminar.
-                    </p>
-                </div>
-                <div class="pt-4 border-t border-slate-800/80 text-xs font-semibold text-emerald-400 flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        <span>Apuntes claros y ordenados</span>
-                    </div>
-                    <button type="button" onclick="document.getElementById('openPdfModalBtn')?.click()" class="text-[11px] font-semibold text-sky-400 hover:text-sky-300 hover:underline flex items-center gap-1 transition-colors cursor-pointer">
-                        <span>Ver muestra</span>
-                        <i class="fas fa-external-link-alt text-[9px]"></i>
-                    </button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- MODALIDADES Y TARIFAS: Formato limpio y abierto sobre el lienzo continuo -->
-    <section id="tarifas" class="relative max-w-5xl mx-auto px-4 sm:px-6 py-20 sm:py-28 scroll-mt-24 overflow-hidden lg:overflow-visible">
-        <span id="modalidades" class="scroll-mt-24 absolute -top-10" aria-hidden="true"></span>
-        
-        <!-- Símbolos matemáticos ESO con parallax -->
-        <div class="parallax-math-symbol hidden 2xl:block absolute -left-32 top-36 text-indigo-400/15 text-2xl font-mono select-none pointer-events-none" data-parallax-speed="-0.12" aria-hidden="true">
-            <span class="block text-2xl font-mono">a² + b² = c²</span>
-            <span class="text-xs text-indigo-300/40 font-sans">Pitágoras</span>
-        </div>
-        <div class="parallax-math-symbol hidden 2xl:block absolute -right-32 bottom-36 text-teal-400/15 text-2xl font-serif select-none pointer-events-none" data-parallax-speed="0.16" aria-hidden="true">
-            φ = <sup>(1 + √5)</sup>/<sub>2</sub>
-        </div>
-
-        <div class="text-center max-w-2xl mx-auto mb-16 scroll-reveal">
-            <span class="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3.5 py-1.5 rounded-full">
-                Precios Transparentes
-            </span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-3 tracking-tight">
-                Modalidades y Tarifas
-            </h2>
-            <p class="text-slate-300 text-sm sm:text-base">
-                Sin matrícula ni permanencia obligatoria. Escoge entre el apoyo directo a domicilio en Palma o la comodidad y flexibilidad de las sesiones online.
-            </p>
-        </div>
-
-        <!-- Tarjetas Fluidas sobre Lienzo Oscuro -->
-        <div class="grid md:grid-cols-2 gap-8 mb-12">
-            
-            <!-- Tarjeta Presencial -->
-            <div class="relative glass-card rounded-3xl p-8 border border-slate-800/80 hover:border-blue-500/50 transition-all duration-300 flex flex-col justify-between scroll-reveal reveal-delay-1 interactive-tilt" data-tilt-max="3">
-                <div class="absolute -top-px left-8 right-8 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-                <div>
-                    <div class="flex justify-between items-start mb-5">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-md">Individual</span>
-                            <h3 class="text-2xl font-bold text-white mt-2">Presencial a Domicilio</h3>
-                        </div>
-                        <span class="text-xs font-semibold text-slate-300 bg-slate-800/80 border border-slate-700/60 px-3 py-1 rounded-full">Palma de Mallorca</span>
-                    </div>
-                    <p class="text-slate-300 text-sm mb-6">Atención directa en tu propio hogar con el material y temario del colegio o instituto.</p>
-                    
-                    <div class="mb-7 flex items-baseline">
-                        <span class="text-5xl font-black text-white">15€</span>
-                        <span class="text-slate-400 font-medium ml-2">/ hora</span>
-                    </div>
-
-                    <ul class="space-y-3.5 text-sm text-slate-300 mb-8">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-4 h-4 text-blue-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span><strong class="text-white">Desplazamiento incluido</strong> en Palma y zonas acordadas.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-4 h-4 text-blue-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span>Seguimiento directo del libro, deberes y exámenes del centro.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-4 h-4 text-blue-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span>Ritmo 100% individualizado para afianzar cada paso.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <a href="#calculadora" 
-                   onclick="setCalculatorModality('presencial')"
-                   class="w-full text-center block bg-slate-800/90 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl border border-slate-700 transition-all shadow-sm">
-                    Calcular cuota mensual →
-                </a>
-            </div>
-
-            <!-- Tarjeta Online -->
-            <div class="relative glass-card rounded-3xl p-8 border border-indigo-500/40 hover:border-indigo-400/70 transition-all duration-300 flex flex-col justify-between scroll-reveal reveal-delay-2 interactive-tilt" data-tilt-max="3">
-                <div class="absolute -top-px left-8 right-8 h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
-                <div>
-                    <div class="flex justify-between items-start mb-5">
-                        <div>
-                            <div class="flex items-center gap-2 mb-2 flex-wrap">
-                                <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-md">Individual</span>
-                                <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 text-white shadow-md shadow-indigo-500/30 border border-indigo-300/40">
-                                    <svg class="w-3.5 h-3.5 text-amber-300 fill-amber-300/20 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                                    </svg>
-                                    <span>Máxima flexibilidad · Recomendado</span>
-                                </span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white">Online Interactiva</h3>
-                        </div>
-                        <span class="text-xs font-semibold text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 px-3 py-1 rounded-full whitespace-nowrap">Pizarra Goodnotes</span>
-                    </div>
-                    <p class="text-slate-300 text-sm mb-6">Sesión en tiempo real con pizarra digital compartida (tableta gráfica Huion Inspiroy 2M), audio nítido y cero desplazamientos.</p>
-                    
-                    <div class="mb-7 flex items-baseline">
-                        <span class="text-5xl font-black text-white">13€</span>
-                        <span class="text-slate-400 font-medium ml-2">/ hora</span>
-                    </div>
-
-                    <ul class="space-y-3.5 text-sm text-slate-300 mb-8">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span><strong class="text-white">Pizarra Goodnotes en vivo</strong> con tableta gráfica para desarrollos claros.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span><strong class="text-white">Envío inmediato del PDF</strong> con los desarrollos al finalizar.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span>Máxima flexibilidad horaria para repasar antes de exámenes.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <a href="#calculadora" 
-                   onclick="setCalculatorModality('online')"
-                   class="w-full text-center block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md shadow-indigo-600/30">
-                    Calcular cuota mensual →
-                </a>
-            </div>
-
-        </div>
-
-        <!-- Banner Modalidad Dúo Fluido -->
-        <div class="glass-card rounded-3xl p-8 sm:p-10 border border-slate-800/80 shadow-2xl relative overflow-hidden scroll-reveal">
-            <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-                <div class="max-w-xl text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 px-3 py-1 rounded-full mb-3">
-                        <svg class="w-4 h-4 shrink-0 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        <span>Modalidad Compartida</span>
-                    </div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-                        Modalidad Dúo: Estudia con un compañero
-                    </h3>
-                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                        Si compartes clase con un amigo o compañero del mismo curso y temario, las sesiones resultan dinámicas, participativas y la tarifa por alumno se reduce.
-                    </p>
-                </div>
-
-                <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full lg:w-auto">
-                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 text-center w-full sm:w-48 backdrop-blur-sm flex flex-col justify-between interactive-tilt" data-tilt-max="3">
-                        <div>
-                            <span class="text-xs uppercase font-bold text-slate-400 block mb-1">Presencial Dúo</span>
-                            <div class="text-3xl font-black text-teal-300">12€</div>
-                            <span class="text-xs text-slate-400">/h por alumno</span>
-                        </div>
-                        <a href="#calculadora" 
-                           onclick="setCalculatorModality('duo-presencial')" 
-                           class="mt-4 inline-block text-xs font-semibold text-teal-300 hover:text-white bg-teal-950/80 hover:bg-teal-900 border border-teal-500/40 py-2 px-3 rounded-lg transition-all">
-                            Calcular cuota mensual →
-                        </a>
-                    </div>
-
-                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 text-center w-full sm:w-48 backdrop-blur-sm flex flex-col justify-between interactive-tilt" data-tilt-max="3">
-                        <div>
-                            <span class="text-xs uppercase font-bold text-slate-400 block mb-1">Online Dúo</span>
-                            <div class="text-3xl font-black text-teal-300">10€</div>
-                            <span class="text-xs text-slate-400">/h por alumno</span>
-                        </div>
-                        <a href="#calculadora" 
-                           onclick="setCalculatorModality('duo-online')" 
-                           class="mt-4 inline-block text-xs font-semibold text-teal-300 hover:text-white bg-teal-950/80 hover:bg-teal-900 border border-teal-500/40 py-2 px-3 rounded-lg transition-all">
-                            Calcular cuota mensual →
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- CALCULADORA CIENTÍFICA CASIO CLASSWIZ FX-991 INTERACTIVA PARA LAS TARIFAS -->
-    <section id="calculadora" class="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28 scroll-mt-24 overflow-hidden lg:overflow-visible">
-        
-        <!-- Símbolos matemáticos con parallax -->
-        <div class="parallax-math-symbol hidden xl:block -left-24 top-48 text-indigo-400/20 text-3xl font-mono select-none" data-parallax-speed="0.15" aria-hidden="true">
-            f(x) = ax² + bx + c
-        </div>
-        <div class="parallax-math-symbol hidden xl:block -right-20 top-56 text-blue-400/20 select-none" data-parallax-speed="-0.14" aria-hidden="true">
-            <svg width="90" height="90" viewBox="0 0 90 90" fill="none" class="stroke-blue-400/30">
-                <circle cx="45" cy="45" r="35" stroke-width="1.5"/>
-                <line x1="10" y1="45" x2="80" y2="45" stroke-width="1.5"/>
-                <line x1="45" y1="10" x2="45" y2="80" stroke-width="1.5"/>
-                <path d="M20 70 L45 20 L70 70 Z" stroke-width="1.5" stroke-dasharray="3 3"/>
-            </svg>
-        </div>
-
-        <div class="text-center max-w-2xl mx-auto mb-16 scroll-reveal">
-            <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1.5 rounded-full">
-                Simulador Científico Casio
-            </span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-3 tracking-tight">
-                Calculadora Casio fx-991 ClassWiz
-            </h2>
-            <p class="text-slate-300 text-sm sm:text-base">
-                Calcula tu tarifa interactuando con la clásica calculadora científica Casio. Usa el D-Pad para cambiar modalidad, ajusta las horas y pulsa <strong class="text-sky-400">[ = ]</strong> para consultar por WhatsApp.
-            </p>
-        </div>
-
-        <!-- Layout Central: Calculadora Casio + Panel Editorial de Control -->
-        <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            <!-- COLUMNA CASIO FX-991 CLASSWIZ (6 Cols) -->
-            <div class="lg:col-span-6 flex justify-center">
-                <div class="casio-chassis rounded-[36px] p-5 sm:p-6 w-full max-w-[390px] interactive-tilt" data-tilt-max="4" id="casioCalculatorWidget">
-                    
-                    <!-- 1. Cabecera Casio & Celda Solar -->
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex flex-col">
-                            <span class="text-white font-extrabold text-base tracking-widest leading-none">CASIO</span>
-                            <span class="text-[10px] text-slate-400 font-mono tracking-wider mt-0.5">fx-991SPX <span class="italic font-bold text-slate-300">ClassWiz</span></span>
-                        </div>
-
-                        <!-- Panel Celda Solar Realista -->
-                        <div class="flex flex-col items-end">
-                            <div class="casio-solar-cell w-20 h-5 rounded flex items-center justify-between px-1 relative overflow-hidden" title="Panel Solar Fotovoltaico">
-                                <div class="w-px h-full bg-amber-500/30"></div>
-                                <div class="w-px h-full bg-amber-500/30"></div>
-                                <div class="w-px h-full bg-amber-500/30"></div>
-                            </div>
-                            <span class="text-[8px] font-mono text-slate-500 tracking-tight mt-0.5">NATURAL-V.P.A.M.</span>
-                        </div>
-                    </div>
-
-                    <!-- 2. Marco y Pantalla LCD de Matriz de Puntos Verde-Gris -->
-                    <div class="casio-screen-frame p-2.5 rounded-2xl mb-5">
-                        <div id="casioLcdScreen" class="casio-lcd rounded-xl p-3 select-none transition-colors" title="Pantalla LCD Casio - Pulsa para reservar por WhatsApp">
-                            
-                            <!-- Indicadores superiores de pantalla Casio -->
-                            <div class="flex items-center justify-between text-[10px] font-bold pb-1 mb-1 border-b border-[#7b9076]">
-                                <span class="bg-[#121c11] text-[#8da488] px-1 rounded-sm text-[8px] font-mono leading-tight">MATH</span>
-                                <span class="text-[9px] font-bold">D</span>
-                                <span class="text-[9px] tracking-tight">REPASO</span>
-                                <span class="text-[9px] font-bold">UIB</span>
-                                <span id="casioLevelLcd" class="text-[9px] font-bold">ESO</span>
-                            </div>
-
-                            <!-- Línea 1 LCD: Modalidad Activa -->
-                            <div class="flex items-center justify-between text-xs font-bold truncate tracking-tight text-[#121c11] mb-0.5">
-                                <span id="lcdModalityName">▸ PRESENCIAL · 15€/h</span>
-                                <span id="lcdDuoBadge" class="hidden text-[9px] bg-[#121c11] text-[#8da488] px-1 rounded-sm">DÚO</span>
-                            </div>
-
-                            <!-- Línea 2 LCD: Operación en curso (según especificación: 2.0 h/sem (30.00€)) -->
-                            <div id="lcdOperation" class="text-xs text-[#233322] font-semibold tracking-tight mb-2">
-                                2.0 h/sem (30.00€)
-                            </div>
-
-                            <!-- Línea 3 LCD: Numerales Grandes Total Mensual -->
-                            <div class="flex items-baseline justify-between pt-1 border-t border-[#7b9076]/70">
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-[#1e2d1d]">TOTAL:</span>
-                                <div class="text-right">
-                                    <span id="lcdTotalAmount" class="text-3xl sm:text-4xl font-black tracking-tight text-[#0f170e]">120.00€</span>
-                                    <span class="text-[10px] font-semibold text-[#253523] block -mt-1">/ mes (4 sem)</span>
-                                </div>
-                            </div>
-
-                            <!-- Línea 4 LCD: Prompt de Acción WhatsApp (según especificación: [=] RESERVAR WHATSAPP) -->
-                            <div id="lcdActionPrompt" class="text-[10px] font-bold text-[#1a2619] mt-2 flex items-center justify-between bg-[#7e9479]/60 px-2 py-0.5 rounded transition-all">
-                                <span>[=] RESERVAR WHATSAPP</span>
-                                <span class="animate-pulse text-xs font-mono">&gt;</span>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- 3. Sección Superior de Control y D-Pad Circular Metálico -->
-                    <div class="grid grid-cols-3 gap-2 items-center mb-5">
-                        
-                        <!-- Columna Izquierda: SHIFT y MODO -->
-                        <div class="flex flex-col gap-2">
-                            <button type="button" 
-                                    id="casioShiftBtn"
-                                    class="casio-btn casio-btn-op h-8 rounded-lg text-[10px] font-bold text-amber-300 flex items-center justify-center"
-                                    title="Alternar entre ESO y Bachillerato">
-                                SHIFT
-                            </button>
-                            <button type="button" 
-                                    id="casioOptnBtn"
-                                    class="casio-btn casio-btn-op h-8 rounded-lg text-[10px] font-bold text-slate-300 flex items-center justify-center"
-                                    title="Cambiar modalidad de clase">
-                                MODOS
-                            </button>
-                        </div>
-
-                        <!-- Centro: D-PAD Circular Metálico Casio con Quadrant Touch Areas -->
-                        <div class="flex justify-center">
-                            <div class="casio-dpad-ring w-20 h-20 sm:w-24 sm:h-24 rounded-full relative flex items-center justify-center select-none">
-                                <!-- Flecha Arriba: Modalidad anterior (Área táctil generosa) -->
-                                <button type="button" id="dpadUp" aria-label="Modalidad anterior" class="casio-dpad-arrow-btn top-0 left-1/2 -translate-x-1/2 w-12 h-7 focus:outline-none">
-                                    <i class="fas fa-caret-up text-sm"></i>
-                                </button>
-                                <!-- Flecha Abajo: Modalidad siguiente (Área táctil generosa) -->
-                                <button type="button" id="dpadDown" aria-label="Modalidad siguiente" class="casio-dpad-arrow-btn bottom-0 left-1/2 -translate-x-1/2 w-12 h-7 focus:outline-none">
-                                    <i class="fas fa-caret-down text-sm"></i>
-                                </button>
-                                <!-- Flecha Izquierda: Restar horas (Área táctil generosa) -->
-                                <button type="button" id="dpadLeft" aria-label="Restar horas" class="casio-dpad-arrow-btn left-0 top-1/2 -translate-y-1/2 w-7 h-12 focus:outline-none">
-                                    <i class="fas fa-caret-left text-sm"></i>
-                                </button>
-                                <!-- Flecha Derecha: Sumar horas (Área táctil generosa) -->
-                                <button type="button" id="dpadRight" aria-label="Sumar horas" class="casio-dpad-arrow-btn right-0 top-1/2 -translate-y-1/2 w-7 h-12 focus:outline-none">
-                                    <i class="fas fa-caret-right text-sm"></i>
-                                </button>
-
-                                <!-- Hub Central D-Pad -->
-                                <button type="button" id="dpadCenter" aria-label="Cambiar modo" class="casio-dpad-hub w-8 h-8 rounded-full flex items-center justify-center text-[8px] font-mono font-bold text-slate-200 hover:text-white focus:outline-none">
-                                    MODO
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Columna Derecha: NIVEL y ON/AC -->
-                        <div class="flex flex-col gap-2">
-                            <button type="button" 
-                                    id="casioLevelBtn"
-                                    class="casio-btn casio-btn-op h-8 rounded-lg text-[10px] font-bold text-indigo-300 flex items-center justify-center"
-                                    title="Cambiar nivel académico">
-                                NIVEL
-                            </button>
-                            <button type="button" 
-                                    id="casioResetBtn"
-                                    class="casio-btn casio-btn-ac h-8 rounded-lg text-[10px] font-bold text-white flex items-center justify-center"
-                                    title="Reiniciar valores a 2h/sem y Presencial">
-                                ON / AC
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <!-- 4. Fila de Accesos Rápidos de Horas -->
-                    <div class="mb-4">
-                        <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider mb-1 px-1 flex justify-between">
-                            <span>Dedicación rápida:</span>
-                            <span id="casioCurrentHoursIndicator" class="text-indigo-400 font-bold">2.0 h/sem</span>
-                        </div>
-                        <div class="grid grid-cols-5 gap-1.5" id="casioQuickHours">
-                            <button type="button" data-hour="1" class="casio-hour-btn casio-btn casio-btn-op py-1.5 rounded-lg text-xs font-bold">1h</button>
-                            <button type="button" data-hour="1.5" class="casio-hour-btn casio-btn casio-btn-op py-1.5 rounded-lg text-xs font-bold">1.5h</button>
-                            <button type="button" data-hour="2" class="casio-hour-btn casio-btn casio-btn-op py-1.5 rounded-lg text-xs font-bold border-indigo-500 bg-indigo-950 text-indigo-300">2h</button>
-                            <button type="button" data-hour="3" class="casio-hour-btn casio-btn casio-btn-op py-1.5 rounded-lg text-xs font-bold">3h</button>
-                            <button type="button" data-hour="4" class="casio-hour-btn casio-btn casio-btn-op py-1.5 rounded-lg text-xs font-bold">4h</button>
-                        </div>
-                    </div>
-
-                    <!-- 5. Teclado Numérico Blanco y Operadores Casio -->
-                    <div class="grid grid-cols-5 gap-1.5 text-sm font-bold">
-                        
-                        <!-- Fila 1 -->
-                        <button type="button" data-casio-key="7" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">7</button>
-                        <button type="button" data-casio-key="8" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">8</button>
-                        <button type="button" data-casio-key="9" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">9</button>
-                        <button type="button" id="casioDelKey" class="casio-btn casio-btn-del py-2.5 rounded-xl text-xs" title="Borrar o reducir decimal">DEL</button>
-                        <button type="button" id="casioAcKey" class="casio-btn casio-btn-ac py-2.5 rounded-xl text-xs" title="Reiniciar a 2h presencial">AC</button>
-
-                        <!-- Fila 2 -->
-                        <button type="button" data-casio-key="4" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">4</button>
-                        <button type="button" data-casio-key="5" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">5</button>
-                        <button type="button" data-casio-key="6" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">6</button>
-                        <button type="button" id="casioMultiplyKey" class="casio-btn casio-btn-op py-2.5 rounded-xl text-sm" title="Multiplicar">×</button>
-                        <button type="button" id="casioDivideKey" class="casio-btn casio-btn-op py-2.5 rounded-xl text-sm" title="Dividir">÷</button>
-
-                        <!-- Fila 3 -->
-                        <button type="button" data-casio-key="1" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">1</button>
-                        <button type="button" data-casio-key="2" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">2</button>
-                        <button type="button" data-casio-key="3" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">3</button>
-                        <button type="button" id="casioPlusKey" class="casio-btn casio-btn-op py-2.5 rounded-xl text-base text-emerald-400" title="Sumar 0.5 horas">+</button>
-                        <button type="button" id="casioMinusKey" class="casio-btn casio-btn-op py-2.5 rounded-xl text-base text-rose-400" title="Restar 0.5 horas">-</button>
-
-                        <!-- Fila 4 -->
-                        <button type="button" data-casio-key="0" class="casio-key-num casio-btn casio-btn-num py-2.5 rounded-xl">0</button>
-                        <button type="button" id="casioDotKey" class="casio-btn casio-btn-num py-2.5 rounded-xl" title="Añadir decimal .5">.</button>
-                        <button type="button" id="casioExpKey" class="casio-btn casio-btn-op py-2.5 rounded-xl text-[10px] font-mono" title="Factor mensual ×4">×10ˣ</button>
-                        <button type="button" id="casioAnsKey" class="casio-btn casio-btn-op py-2.5 rounded-xl text-xs font-mono" title="Recuperar valor previo">Ans</button>
-                        <!-- Tecla IGUAL [ = ]: Ejecución y llamada a WhatsApp -->
-                        <button type="button" id="casioEqualsKey" class="casio-btn casio-btn-equals py-2.5 rounded-xl text-lg font-black" title="Calcular y solicitar plaza por WhatsApp">=</button>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- COLUMNA EXPLICATIVA ABIERTA (DISEÑO EDITORIAL SIN CAJAS PESADAS) -->
-            <div class="lg:col-span-6 space-y-8 lg:pl-4">
-                
-                <!-- Encabezado editorial -->
-                <div>
-                    <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full mb-3">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                        Presupuesto transparente en tiempo real
-                    </span>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                        Configura tus clases a medida
-                    </h3>
-                    <p class="text-slate-300 text-sm mt-1.5">
-                        Elige curso, ajusta la frecuencia semanal en la Casio y consulta disponibilidad directamente por WhatsApp.
-                    </p>
-                </div>
-
-                <!-- 1. Selector de Nivel Escolar (Abierto con línea divisoria fina) -->
-                <div class="pt-6 border-t border-slate-800/80">
-                    <label for="studentLevelSelect" class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">
-                        1. Nivel escolar del alumno
-                    </label>
-                    <div class="relative">
-                        <select id="studentLevelSelect" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all appearance-none pr-10">
-                            <option value="1º de ESO">1º de ESO</option>
-                            <option value="2º de ESO">2º de ESO</option>
-                            <option value="3º de ESO" selected>3º de ESO</option>
-                            <option value="4º de ESO">4º de ESO (Académicas o Aplicadas)</option>
-                            <option value="1º de Bachillerato">1º de Bachillerato (Consultar temario)</option>
-                            <option value="2º de Bachillerato">2º de Bachillerato (Consultar temario)</option>
-                        </select>
-                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
-                    </div>
-
-                    <!-- Aviso contextual Bachillerato -->
-                    <div id="bachNotice" class="hidden mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-300 flex items-start gap-2.5">
-                        <i class="fas fa-info-circle text-amber-400 mt-0.5 text-sm flex-shrink-0"></i>
-                        <span>Las plazas de Bachillerato son selectas y se confirman tras consultar el temario y las fechas de exámenes del alumno.</span>
-                    </div>
-                </div>
-
-                <!-- 2. Selector de Modalidad Sincronizado (Abierto) -->
-                <div class="pt-6 border-t border-slate-800/80">
-                    <div class="flex items-center justify-between mb-2.5">
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest">
-                            2. Modalidad (también en D-Pad)
-                        </label>
-                        <span class="text-[11px] text-slate-400">Usa las flechas de la Casio</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2.5" id="modalityPills">
-                        <button type="button" data-mod="presencial" class="mod-pill p-3 rounded-xl border border-indigo-500 bg-indigo-500/15 text-left transition-all">
-                            <span class="block text-xs font-bold text-white">Presencial</span>
-                            <span class="block text-[11px] text-indigo-300 mt-0.5">15€ / hora</span>
-                        </button>
-                        <button type="button" data-mod="online" class="mod-pill p-3 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all hover:border-slate-700">
-                            <span class="block text-xs font-bold text-slate-300">Online</span>
-                            <span class="block text-[11px] text-slate-400 mt-0.5">13€ / hora</span>
-                        </button>
-                        <button type="button" data-mod="duo-presencial" class="mod-pill p-3 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all hover:border-slate-700">
-                            <span class="block text-xs font-bold text-slate-300">Dúo Presencial</span>
-                            <span class="block text-[11px] text-emerald-400 mt-0.5">12€ / h alumno</span>
-                        </button>
-                        <button type="button" data-mod="duo-online" class="mod-pill p-3 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all hover:border-slate-700">
-                            <span class="block text-xs font-bold text-slate-300">Dúo Online</span>
-                            <span class="block text-[11px] text-emerald-400 mt-0.5">10€ / h alumno</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 3. Selector de Días de Repaso por Semana y Duración -->
-                <div class="pt-6 border-t border-slate-800/80">
-                    <div class="flex items-center justify-between mb-2.5">
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest">
-                            3. Días de repaso por semana
-                        </label>
-                        <span class="text-[11px] text-sky-400 font-semibold" id="panelDaysIndicator">2 días / semana (Habitual)</span>
-                    </div>
-                    
-                    <!-- Botones de Días por semana -->
-                    <div class="grid grid-cols-4 gap-2 mb-3" id="daysSelector">
-                        <button type="button" data-days="1" class="day-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-center transition-all hover:border-slate-700">
-                            <span class="block text-xs font-bold text-slate-300">1 día</span>
-                            <span class="block text-[10px] text-slate-500 mt-0.5">Ocasional</span>
-                        </button>
-                        <button type="button" data-days="2" class="day-btn p-2.5 rounded-xl border border-indigo-500 bg-indigo-500/15 text-center transition-all">
-                            <span class="block text-xs font-bold text-white">2 días</span>
-                            <span class="block text-[10px] text-indigo-300 mt-0.5">Habitual</span>
-                        </button>
-                        <button type="button" data-days="3" class="day-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-center transition-all hover:border-slate-700">
-                            <span class="block text-xs font-bold text-slate-300">3 días</span>
-                            <span class="block text-[10px] text-slate-500 mt-0.5">Refuerzo</span>
-                        </button>
-                        <button type="button" data-days="4" class="day-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-center transition-all hover:border-slate-700">
-                            <span class="block text-xs font-bold text-slate-300">4 días</span>
-                            <span class="block text-[10px] text-slate-500 mt-0.5">Intensivo</span>
-                        </button>
-                    </div>
-
-                    <!-- Selector de Duración por Sesión -->
-                    <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-800/40">
-                        <span class="text-xs text-slate-400 font-medium">Duración por sesión:</span>
-                        <div class="inline-flex rounded-lg p-0.5 bg-slate-950 border border-slate-800" id="durationSelector">
-                            <button type="button" data-duration="1.0" class="dur-btn px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-600 text-white transition-all">1,0 h</button>
-                            <button type="button" data-duration="1.5" class="dur-btn px-2.5 py-1 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-all">1,5 h</button>
-                            <button type="button" data-duration="2.0" class="dur-btn px-2.5 py-1 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-all">2,0 h</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Desglose y Resumen de Presupuesto (Abierto, Tipográfico y Elegante) -->
-                <div class="pt-6 border-t border-slate-800/80">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Resumen del presupuesto</span>
-                        <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full font-semibold">Sin permanencia ni matrícula</span>
-                    </div>
-
-                    <div class="space-y-3 text-xs sm:text-sm text-slate-300 mb-6">
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Modalidad elegida:</span>
-                            <strong id="panelModalityText" class="text-white font-semibold">Presencial a Domicilio</strong>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Frecuencia elegida:</span>
-                            <strong id="panelFrequencyText" class="text-white font-semibold">2 días / semana (1,0h por clase)</strong>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Horas semanales totales:</span>
-                            <strong id="panelHoursText" class="text-white font-semibold">2,0 horas / semana</strong>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Inversión semanal:</span>
-                            <strong id="panelWeeklyText" class="text-white font-semibold">30,00€ / semana</strong>
-                        </div>
-                        <div class="flex justify-between items-baseline pt-4 border-t border-slate-800/80">
-                            <span class="text-sm sm:text-base font-bold text-white">Estimado mensual (~4 sem):</span>
-                            <span id="panelMonthlyText" class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-teal-300 font-heading">120,00€</span>
-                        </div>
-                    </div>
-
-                    <!-- Mensaje previsualizado de WhatsApp -->
-                    <div class="text-[11px] text-slate-300 bg-slate-900/50 rounded-xl p-3.5 border border-slate-800/80 mb-5">
-                        <div class="font-semibold text-emerald-400 mb-1 flex items-center gap-1.5">
-                            <i class="fab fa-whatsapp"></i> Mensaje redactado automáticamente:
-                        </div>
-                        <p id="whatsappMessageText" class="italic text-slate-300 line-clamp-3">
-                            "¡Hola Daniel! He visto tu web de clases de matemáticas..."
-                        </p>
-                    </div>
-
-                    <!-- Botón directo de reserva WhatsApp -->
-                    <a id="calculatorWhatsAppBtn" 
-                       href="#" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="w-full inline-flex items-center justify-center gap-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-4 px-6 rounded-2xl shadow-xl shadow-emerald-500/25 transition-all hover:scale-[1.01] text-base">
-                        <i class="fab fa-whatsapp text-2xl"></i>
-                        <span>Pedir plaza por WhatsApp</span>
-                    </a>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- PREGUNTAS FRECUENTES (FAQ): Acordeón con Contenedores Tipo Tarjeta Sutiles -->
-    <section id="faq" class="relative max-w-4xl mx-auto px-4 sm:px-6 py-20 sm:py-28 scroll-mt-24 overflow-hidden lg:overflow-visible">
-        
-        <!-- Símbolos matemáticos ESO con parallax -->
-        <div class="parallax-math-symbol hidden 2xl:block absolute -left-32 top-24 text-slate-400/15 text-xl font-mono select-none pointer-events-none" data-parallax-speed="-0.1" aria-hidden="true">
-            <span class="block font-mono">(a + b)² = a² + 2ab + b²</span>
-            <span class="text-xs text-slate-400/40 font-sans">Identidad notable</span>
-        </div>
-        <div class="parallax-math-symbol hidden 2xl:block absolute -right-32 top-40 text-indigo-400/15 text-xl font-mono select-none pointer-events-none" data-parallax-speed="0.12" aria-hidden="true">
-            <span class="block font-mono">√a · √b = √(a · b)</span>
-            <span class="text-xs text-indigo-300/40 font-sans">Propiedades de radicales</span>
-        </div>
-
-        <div class="text-center mb-14 scroll-reveal">
-            <span class="text-xs font-bold uppercase tracking-widest text-slate-400 bg-slate-800/80 border border-slate-700/60 px-3.5 py-1.5 rounded-full">
-                Dudas Habituales
-            </span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-3">
-                Preguntas frecuentes
-            </h2>
-            <p class="text-slate-400 text-sm">
-                Claridad desde el primer momento en horarios, desplazamientos y metodología.
-            </p>
-        </div>
-
-        <!-- Acordeón de Tarjetas Sutiles Coherente con el Diseño -->
-        <div class="space-y-3">
-            
-            <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.035] hover:border-white/[0.1] transition-all duration-200 p-5 sm:p-6 scroll-reveal">
-                <summary class="flex items-center justify-between cursor-pointer list-none text-base sm:text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">
-                    <span class="flex items-center gap-3">
-                        <span class="text-indigo-400 font-mono text-sm">01.</span>
-                        ¿Cómo funcionan las clases online y las presenciales a domicilio?
-                    </span>
-                    <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 faq-icon ml-4 group-open:rotate-180 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-                </summary>
-                <div class="mt-3.5 pl-8 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
-                    En las clases online nos conectamos por videollamada con audio nítido y tableta gráfica Huion Inspiroy 2M conectada al ordenador con Goodnotes en directo, visualizando la resolución paso a paso y enviando el PDF nada más terminar. En las clases presenciales a domicilio trabajamos íntegramente a papel sobre el cuaderno del estudiante para consolidar el orden, la limpieza de escritura y la soltura de cara a los exámenes presenciales.
-                </div>
-            </details>
-
-            <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.035] hover:border-white/[0.1] transition-all duration-200 p-5 sm:p-6 scroll-reveal">
-                <summary class="flex items-center justify-between cursor-pointer list-none text-base sm:text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">
-                    <span class="flex items-center gap-3">
-                        <span class="text-indigo-400 font-mono text-sm">02.</span>
-                        ¿Las clases presenciales a domicilio tienen suplemento por desplazamiento?
-                    </span>
-                    <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 faq-icon ml-4 group-open:rotate-180 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-                </summary>
-                <div class="mt-3.5 pl-8 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
-                    No. El desplazamiento está 100% incluido en la tarifa de 15€/h dentro de Palma y zonas acordadas. No hay cargos ocultos ni sorpresas en el precio acordado.
-                </div>
-            </details>
-
-            <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.035] hover:border-white/[0.1] transition-all duration-200 p-5 sm:p-6 scroll-reveal">
-                <summary class="flex items-center justify-between cursor-pointer list-none text-base sm:text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">
-                    <span class="flex items-center gap-3">
-                        <span class="text-indigo-400 font-mono text-sm">03.</span>
-                        ¿Hay matrícula previa o compromiso de permanencia?
-                    </span>
-                    <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 faq-icon ml-4 group-open:rotate-180 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-                </summary>
-                <div class="mt-3.5 pl-8 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
-                    No hay matrícula ni permanencia obligatoria. Las clases se programan de mutuo acuerdo y puedes pausar o finalizar el servicio cuando los objetivos académicos se hayan alcanzado con éxito.
-                </div>
-            </details>
-
-            <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.035] hover:border-white/[0.1] transition-all duration-200 p-5 sm:p-6 scroll-reveal">
-                <summary class="flex items-center justify-between cursor-pointer list-none text-base sm:text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">
-                    <span class="flex items-center gap-3">
-                        <span class="text-indigo-400 font-mono text-sm">04.</span>
-                        ¿Qué ocurre si un día coincide con examen o imprevisto y no podemos hacer la clase?
-                    </span>
-                    <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 faq-icon ml-4 group-open:rotate-180 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-                </summary>
-                <div class="mt-3.5 pl-8 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
-                    Avisando con antelación suficiente, reprogramamos la clase en otro hueco disponible durante la semana o el fin de semana sin ningún inconveniente ni penalización.
-                </div>
-            </details>
-
-            <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.035] hover:border-white/[0.1] transition-all duration-200 p-5 sm:p-6 scroll-reveal">
-                <summary class="flex items-center justify-between cursor-pointer list-none text-base sm:text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">
-                    <span class="flex items-center gap-3">
-                        <span class="text-indigo-400 font-mono text-sm">05.</span>
-                        ¿Cómo funciona la modalidad Dúo con un compañero?
-                    </span>
-                    <svg class="w-4 h-4 text-slate-400 transition-transform duration-300 faq-icon ml-4 group-open:rotate-180 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-                </summary>
-                <div class="mt-3.5 pl-8 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
-                    Si dos alumnos del mismo curso o centro escolar reciben la clase juntos, la tarifa por alumno se reduce a 12€/h en presencial o 10€/h en online. Las sesiones resultan muy dinámicas al resolver dudas compartidas del mismo temario.
-                </div>
-            </details>
-
-        </div>
-    </section>
-
-    <!-- SECCIÓN CONTACTO: Formato Abierto y Generoso sobre el Lienzo Continuo -->
-    <section id="contacto" class="relative max-w-5xl mx-auto px-4 sm:px-6 py-20 sm:py-28 scroll-mt-24 scroll-reveal overflow-hidden lg:overflow-visible">
-        
-        <!-- Símbolos matemáticos ESO con parallax -->
-        <div class="parallax-math-symbol hidden 2xl:block absolute -left-32 top-24 text-indigo-400/15 text-2xl font-mono select-none pointer-events-none" data-parallax-speed="0.12" aria-hidden="true">
-            y = mx + n
-        </div>
-        <div class="parallax-math-symbol hidden 2xl:block absolute -right-32 top-36 text-emerald-400/15 text-2xl font-mono select-none pointer-events-none" data-parallax-speed="-0.14" aria-hidden="true">
-            ax + b = 0
-        </div>
-
-        <div class="relative text-center max-w-3xl mx-auto">
-            
-            <!-- Glows sutiles integrados -->
-            <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
-
-            <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 mb-6">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Atención directa sin intermediarios
-            </span>
-            
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-5 tracking-tight">
-                Consulta horarios y reserva tu plaza
-            </h2>
-            
-            <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
-                Escríbeme por WhatsApp indicando el curso actual del alumno, sus objetivos y tu preferencia de horarios. Te responderé directamente para coordinar la primera sesión.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://wa.me/34637621315?text=Hola%20Daniel,%20he%20visto%20tu%20web%20y%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-4 px-8 rounded-full shadow-xl shadow-emerald-500/30 transition-all hover:scale-105 text-lg">
-                    <i class="fab fa-whatsapp text-2xl"></i>
-                    <span>+34 637 621 315</span>
-                </a>
-            </div>
-
-            <!-- Etiquetas de ubicación e identidad -->
-            <div class="mt-12 pt-8 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-8 text-xs text-slate-400">
-                <span class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-indigo-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    <span>Palma de Mallorca</span>
-                </span>
-                <span class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-indigo-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                    <span>Clases Online en directo</span>
-                </span>
-                <span class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-indigo-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                    <span>Daniel Casado Juan</span>
-                </span>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- FOOTER: Cierre oscuro elegante y continuo -->
-    <footer class="border-t border-slate-800/80 py-10 text-center text-xs text-slate-500 scroll-reveal">
-        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>© 2026 Daniel Casado Juan. Clases particulares de Matemáticas para ESO y Bachillerato.</p>
-            <div class="flex items-center gap-5">
-                <a href="#metodologia" class="hover:text-slate-300 transition-colors">Metodología</a>
-                <a href="#tarifas" class="hover:text-slate-300 transition-colors">Tarifas</a>
-                <a href="#calculadora" class="hover:text-slate-300 transition-colors">Calculadora Casio</a>
-                <a href="#faq" class="hover:text-slate-300 transition-colors">Dudas</a>
-                <a href="#contacto" class="hover:text-slate-300 transition-colors">Contacto</a>
-                <a href="https://github.com/danicaju" target="_blank" rel="noopener noreferrer" class="hover:text-slate-300 transition-colors flex items-center gap-1">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ============================================================== -->
-    <!-- MOTOR JAVASCRIPT: CALCULADORA CASIO FX-991, PARALLAX, NAVEGACIÓN -->
-    <!-- ============================================================== -->
-    <script>
-        // Modalidades y Tarifas
-        const modalityConfig = {
-            'presencial': {
-                id: 'presencial',
-                rate: 15,
-                name: 'Presencial a Domicilio',
-                lcdName: 'PRESENCIAL · 15€/h',
-                isDuo: false,
-                note: 'Palma de Mallorca'
-            },
-            'online': {
-                id: 'online',
-                rate: 13,
-                name: 'Online Interactiva',
-                lcdName: 'ONLINE · 13€/h',
-                isDuo: false,
-                note: 'Pizarra Goodnotes + PDF'
-            },
-            'duo-presencial': {
-                id: 'duo-presencial',
-                rate: 12,
-                name: 'Dúo Presencial',
-                lcdName: 'DÚO PRESENCIAL · 12€/h',
-                isDuo: true,
-                note: '12€/h por alumno'
-            },
-            'duo-online': {
-                id: 'duo-online',
-                rate: 10,
-                name: 'Dúo Online',
-                lcdName: 'DÚO ONLINE · 10€/h',
-                isDuo: true,
-                note: '10€/h por alumno'
-            }
-        };
-
-        const modalityOrder = ['presencial', 'online', 'duo-presencial', 'duo-online'];
-
-        // Estado Global de la Calculadora
-        let currentModality = 'presencial';
-        let currentDays = 2;
-        let currentDuration = 1.0;
-        let currentHours = 2.0;
-
-        // Elementos DOM de la Calculadora Casio
-        const casioLcdScreen = document.getElementById('casioLcdScreen');
-        const lcdModalityName = document.getElementById('lcdModalityName');
-        const lcdDuoBadge = document.getElementById('lcdDuoBadge');
-        const lcdOperation = document.getElementById('lcdOperation');
-        const lcdTotalAmount = document.getElementById('lcdTotalAmount');
-        const casioLevelLcd = document.getElementById('casioLevelLcd');
-        const lcdActionPrompt = document.getElementById('lcdActionPrompt');
-        const casioCurrentHoursIndicator = document.getElementById('casioCurrentHoursIndicator');
-
-        // Elementos DOM del Panel Lateral y WhatsApp
-        const studentLevelSelect = document.getElementById('studentLevelSelect');
-        const bachNotice = document.getElementById('bachNotice');
-        const panelDaysIndicator = document.getElementById('panelDaysIndicator');
-        const panelFrequencyText = document.getElementById('panelFrequencyText');
-        const panelModalityText = document.getElementById('panelModalityText');
-        const panelHoursText = document.getElementById('panelHoursText');
-        const panelWeeklyText = document.getElementById('panelWeeklyText');
-        const panelMonthlyText = document.getElementById('panelMonthlyText');
-        const whatsappMessageText = document.getElementById('whatsappMessageText');
-        const calculatorWhatsAppBtn = document.getElementById('calculatorWhatsAppBtn');
-
-        // Formato Moneda Europea
-        function formatCurrency(amount) {
-            return amount.toFixed(2).replace('.', ',') + '€';
-        }
-
-        function formatHoursText(h) {
-            const hStr = h.toFixed(1).replace('.0', '').replace('.', ',');
-            return `${hStr} ${h === 1 ? 'hora' : 'horas'} / semana`;
-        }
-
-        // Sincronizar selectores de días y duración cuando las horas se modifican desde la Casio
-        function syncDaysAndDurationFromHours(h) {
-            const validPairs = [
-                { days: 1, dur: 1.0, h: 1.0 },
-                { days: 1, dur: 1.5, h: 1.5 },
-                { days: 2, dur: 1.0, h: 2.0 },
-                { days: 1, dur: 2.0, h: 2.0 },
-                { days: 2, dur: 1.5, h: 3.0 },
-                { days: 3, dur: 1.0, h: 3.0 },
-                { days: 2, dur: 2.0, h: 4.0 },
-                { days: 4, dur: 1.0, h: 4.0 },
-                { days: 3, dur: 1.5, h: 4.5 },
-                { days: 4, dur: 1.5, h: 6.0 },
-                { days: 3, dur: 2.0, h: 6.0 },
-                { days: 4, dur: 2.0, h: 8.0 }
-            ];
-            let match = validPairs.find(p => Math.abs(p.h - h) < 0.05);
-            if (match) {
-                currentDays = match.days;
-                currentDuration = match.dur;
-            } else {
-                currentDuration = 1.0;
-                currentDays = Math.max(1, Math.min(4, Math.round(h)));
-            }
-        }
-
-        // Actualización Reactiva de la Calculadora Casio y el Panel
-        function renderCalculator(skipFlash = false) {
-            const modData = modalityConfig[currentModality] || modalityConfig['presencial'];
-            const rate = modData.rate;
-            const level = studentLevelSelect.value;
-            const weekly = rate * currentHours;
-            const monthly = weekly * 4;
-
-            // 1. Actualizar Pantalla LCD Casio
-            lcdModalityName.textContent = `▸ ${modData.lcdName}`;
-            if (modData.isDuo) {
-                lcdDuoBadge.classList.remove('hidden');
-            } else {
-                lcdDuoBadge.classList.add('hidden');
-            }
-
-            const hDisp = currentHours.toFixed(1).replace('.0', '');
-            const durDisp = currentDuration.toFixed(1).replace('.0', '').replace('.', ',');
-            // Formato exacto en LCD Casio
-            if (Math.abs((currentDays * currentDuration) - currentHours) < 0.05) {
-                lcdOperation.textContent = `${currentDays}d × ${durDisp}h = ${hDisp}h/sem (${weekly.toFixed(2)}€)`;
-            } else {
-                lcdOperation.textContent = `${hDisp}h/sem (${weekly.toFixed(2)}€)`;
-            }
-            lcdTotalAmount.textContent = `${monthly.toFixed(2)}€`;
-            casioCurrentHoursIndicator.textContent = `${hDisp} h/sem`;
-
-            const isBach = level.includes('Bachillerato');
-            casioLevelLcd.textContent = isBach ? 'BACH' : 'ESO';
-
-            if (bachNotice) {
-                if (isBach) {
-                    bachNotice.classList.remove('hidden');
-                } else {
-                    bachNotice.classList.add('hidden');
-                }
-            }
-
-            // Efecto Flash LCD si se solicita
-            if (!skipFlash && casioLcdScreen) {
-                casioLcdScreen.classList.remove('lcd-calculating');
-                void casioLcdScreen.offsetWidth; // Forzar reflow
-                casioLcdScreen.classList.add('lcd-calculating');
-            }
-
-            // 2. Actualizar Botones de Horas en Teclado Casio
-            document.querySelectorAll('.casio-hour-btn').forEach(btn => {
-                const bHour = parseFloat(btn.getAttribute('data-hour'));
-                if (Math.abs(bHour - currentHours) < 0.05) {
-                    btn.classList.add('border-indigo-500', 'bg-indigo-950', 'text-indigo-300');
-                    btn.classList.remove('casio-btn-op');
-                } else {
-                    btn.classList.remove('border-indigo-500', 'bg-indigo-950', 'text-indigo-300');
-                    btn.classList.add('casio-btn-op');
-                }
-            });
-
-            // 3. Actualizar Pastillas de Modalidad en Panel
-            document.querySelectorAll('.mod-pill').forEach(pill => {
-                const pMod = pill.getAttribute('data-mod');
-                if (pMod === currentModality) {
-                    pill.classList.add('border-indigo-500', 'bg-indigo-500/15');
-                    pill.classList.remove('border-slate-800', 'bg-slate-900/60');
-                } else {
-                    pill.classList.remove('border-indigo-500', 'bg-indigo-500/15');
-                    pill.classList.add('border-slate-800', 'bg-slate-900/60');
-                }
-            });
-
-            // 4. Actualizar Botones de Días por Semana
-            const dayLabels = {
-                1: '1 día / semana (Ocasional)',
-                2: '2 días / semana (Habitual)',
-                3: '3 días / semana (Refuerzo)',
-                4: '4 días / semana (Intensivo)'
-            };
-
-            if (panelDaysIndicator) {
-                panelDaysIndicator.textContent = dayLabels[currentDays] || `${currentDays} días / semana`;
-            }
-
-            document.querySelectorAll('.day-btn').forEach(btn => {
-                const days = parseInt(btn.getAttribute('data-days'), 10);
-                const titleSpan = btn.querySelector('span:first-child');
-                const noteSpan = btn.querySelector('span:last-child');
-                if (days === currentDays) {
-                    btn.classList.add('border-indigo-500', 'bg-indigo-500/15');
-                    btn.classList.remove('border-slate-800', 'bg-slate-900/60');
-                    if (titleSpan) { titleSpan.classList.add('text-white'); titleSpan.classList.remove('text-slate-300'); }
-                    if (noteSpan) { noteSpan.classList.add('text-indigo-300'); noteSpan.classList.remove('text-slate-500'); }
-                } else {
-                    btn.classList.remove('border-indigo-500', 'bg-indigo-500/15');
-                    btn.classList.add('border-slate-800', 'bg-slate-900/60');
-                    if (titleSpan) { titleSpan.classList.remove('text-white'); titleSpan.classList.add('text-slate-300'); }
-                    if (noteSpan) { noteSpan.classList.remove('text-indigo-300'); noteSpan.classList.add('text-slate-500'); }
-                }
-            });
-
-            // 5. Actualizar Botones de Duración por Sesión
-            document.querySelectorAll('.dur-btn').forEach(btn => {
-                const dur = parseFloat(btn.getAttribute('data-duration'));
-                if (Math.abs(dur - currentDuration) < 0.05) {
-                    btn.classList.add('bg-indigo-600', 'text-white');
-                    btn.classList.remove('text-slate-400');
-                } else {
-                    btn.classList.remove('bg-indigo-600', 'text-white');
-                    btn.classList.add('text-slate-400');
-                }
-            });
-
-            // 6. Actualizar Panel Lateral
-            if (panelFrequencyText) {
-                panelFrequencyText.textContent = `${currentDays} ${currentDays === 1 ? 'día' : 'días'} / semana (${durDisp}h por clase)`;
-            }
-
-            panelModalityText.textContent = modData.name;
-            panelHoursText.textContent = formatHoursText(currentHours);
-            panelWeeklyText.textContent = `${formatCurrency(weekly)} / semana${modData.isDuo ? ' por alumno' : ''}`;
-            panelMonthlyText.textContent = formatCurrency(monthly);
-
-            // 7. Construir y Actualizar Enlace Directo a WhatsApp
-            const duoText = modData.isDuo ? ' (por alumno)' : '';
-            const bachExtra = isBach ? ' Me gustaría consultar disponibilidad de temario y horarios.' : ' ¿Qué horarios tendrías libres?';
-            const msg = `¡Hola Daniel! He visto tu web de clases de matemáticas. Me gustaría consultar disponibilidad para ${level} en modalidad ${modData.name}, con ${currentDays} ${currentDays === 1 ? 'día' : 'días'} a la semana (${durDisp}h por sesión, total ${hDisp}h/semana; estimado mensual: ${formatCurrency(monthly)}${duoText}).${bachExtra}`;
-
-            whatsappMessageText.textContent = `"${msg}"`;
-            const encoded = encodeURIComponent(msg);
-            const waUrl = `https://wa.me/34637621315?text=${encoded}`;
-            calculatorWhatsAppBtn.href = waUrl;
-        }
-
-        // Selección de Modalidad Externa / Helpers
-        function setCalculatorModality(mod) {
-            if (!modalityConfig[mod]) return;
-            currentModality = mod;
-            renderCalculator();
-        }
-
-        // Ciclar Modalidad con D-Pad
-        function cycleModality(direction = 1) {
-            let currentIndex = modalityOrder.indexOf(currentModality);
-            if (currentIndex === -1) currentIndex = 0;
-            let nextIndex = (currentIndex + direction + modalityOrder.length) % modalityOrder.length;
-            currentModality = modalityOrder[nextIndex];
-            renderCalculator();
-        }
-
-        // Modificar Horas con teclas + / -
-        function adjustHours(delta) {
-            previousHoursValue = currentHours;
-            let newHours = Math.round((currentHours + delta) * 2) / 2;
-            if (newHours < 1.0) newHours = 1.0;
-            if (newHours > 8.0) newHours = 8.0;
-            currentHours = newHours;
-            syncDaysAndDurationFromHours(currentHours);
-            renderCalculator();
-        }
-
-        // Acción al pulsar [ = ] (IGUAL en Casio)
-        function triggerCasioEquals() {
-            if (casioLcdScreen) {
-                casioLcdScreen.classList.remove('lcd-calculating');
-                void casioLcdScreen.offsetWidth;
-                casioLcdScreen.classList.add('lcd-calculating');
-            }
-
-            if (lcdActionPrompt) {
-                lcdActionPrompt.innerHTML = `<span>[OK] CONECTANDO CON WHATSAPP...</span><span class="animate-ping text-[8px] leading-none">●</span>`;
-                setTimeout(() => {
-                    lcdActionPrompt.innerHTML = `<span>[=] RESERVAR WHATSAPP</span><span class="animate-pulse text-xs font-mono">&gt;</span>`;
-                }, 2200);
-            }
-
-            // Abrir WhatsApp en nueva pestaña
-            if (calculatorWhatsAppBtn && calculatorWhatsAppBtn.href) {
-                window.open(calculatorWhatsAppBtn.href, '_blank', 'noopener,noreferrer');
-            }
-        }
-
-        // Inicialización de Event Listeners de la Calculadora Casio
-        let previousHoursValue = 2.0;
-
-        function initCasioInteractions() {
-            // D-Pad Quadrant Buttons
-            const dpadUp = document.getElementById('dpadUp');
-            const dpadDown = document.getElementById('dpadDown');
-            const dpadLeft = document.getElementById('dpadLeft');
-            const dpadRight = document.getElementById('dpadRight');
-            const dpadCenter = document.getElementById('dpadCenter');
-
-            if (dpadUp) dpadUp.addEventListener('click', () => cycleModality(-1));
-            if (dpadDown) dpadDown.addEventListener('click', () => cycleModality(1));
-            if (dpadLeft) dpadLeft.addEventListener('click', () => adjustHours(-0.5));
-            if (dpadRight) dpadRight.addEventListener('click', () => adjustHours(0.5));
-            if (dpadCenter) dpadCenter.addEventListener('click', () => cycleModality(1));
-
-            // Botones Superiores Casio
-            const casioOptnBtn = document.getElementById('casioOptnBtn');
-            const casioResetBtn = document.getElementById('casioResetBtn');
-            const casioLevelBtn = document.getElementById('casioLevelBtn');
-            const casioShiftBtn = document.getElementById('casioShiftBtn');
-
-            if (casioOptnBtn) casioOptnBtn.addEventListener('click', () => cycleModality(1));
-            if (casioResetBtn) casioResetBtn.addEventListener('click', () => {
-                previousHoursValue = currentHours;
-                currentModality = 'presencial';
-                currentDays = 2;
-                currentDuration = 1.0;
-                currentHours = 2.0;
-                studentLevelSelect.value = '3º de ESO';
-                renderCalculator();
-            });
-
-            if (casioLevelBtn) {
-                casioLevelBtn.addEventListener('click', () => {
-                    const idx = studentLevelSelect.selectedIndex;
-                    studentLevelSelect.selectedIndex = (idx + 1) % studentLevelSelect.options.length;
-                    renderCalculator();
-                });
-            }
-
-            if (casioShiftBtn) {
-                casioShiftBtn.addEventListener('click', () => {
-                    // Alternar entre ESO y Bachillerato
-                    const currentIsBach = studentLevelSelect.value.includes('Bachillerato');
-                    studentLevelSelect.value = currentIsBach ? '3º de ESO' : '1º de Bachillerato';
-                    renderCalculator();
-                });
-            }
-
-            // Teclas Rápidas de Horas (1h, 1.5h, 2h, 3h, 4h)
-            document.querySelectorAll('.casio-hour-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    previousHoursValue = currentHours;
-                    const targetHours = parseFloat(btn.getAttribute('data-hour'));
-                    currentHours = targetHours;
-                    syncDaysAndDurationFromHours(currentHours);
-                    renderCalculator();
-                });
-            });
-
-            // Teclado Numérico Casio (0-9)
-            document.querySelectorAll('.casio-key-num').forEach(key => {
-                key.addEventListener('click', () => {
-                    const num = parseFloat(key.getAttribute('data-casio-key'));
-                    previousHoursValue = currentHours;
-                    if (num >= 1 && num <= 8) {
-                        currentHours = num;
-                    } else if (num === 0) {
-                        currentHours = 1.0;
-                    } else if (num === 9) {
-                        currentHours = 8.0;
-                    }
-                    syncDaysAndDurationFromHours(currentHours);
-                    renderCalculator();
-                });
-            });
-
-            // Tecla Punto Decimal (.)
-            const casioDotKey = document.getElementById('casioDotKey');
-            if (casioDotKey) {
-                casioDotKey.addEventListener('click', () => {
-                    previousHoursValue = currentHours;
-                    if (Number.isInteger(currentHours)) {
-                        currentHours = Math.min(8.0, currentHours + 0.5);
-                    } else {
-                        currentHours = Math.floor(currentHours);
-                    }
-                    syncDaysAndDurationFromHours(currentHours);
-                    renderCalculator();
-                });
-            }
-
-            // Teclas Operadoras
-            const casioPlusKey = document.getElementById('casioPlusKey');
-            const casioMinusKey = document.getElementById('casioMinusKey');
-            const casioMultiplyKey = document.getElementById('casioMultiplyKey');
-            const casioDivideKey = document.getElementById('casioDivideKey');
-            const casioExpKey = document.getElementById('casioExpKey');
-            const casioAnsKey = document.getElementById('casioAnsKey');
-            const casioDelKey = document.getElementById('casioDelKey');
-            const casioAcKey = document.getElementById('casioAcKey');
-            const casioEqualsKey = document.getElementById('casioEqualsKey');
-
-            if (casioPlusKey) casioPlusKey.addEventListener('click', () => adjustHours(0.5));
-            if (casioMinusKey) casioMinusKey.addEventListener('click', () => adjustHours(-0.5));
-            if (casioMultiplyKey) casioMultiplyKey.addEventListener('click', () => adjustHours(1.0));
-            if (casioDivideKey) casioDivideKey.addEventListener('click', () => adjustHours(-1.0));
-
-            if (casioExpKey) {
-                casioExpKey.addEventListener('click', () => {
-                    if (casioLcdScreen) {
-                        casioLcdScreen.classList.remove('lcd-calculating');
-                        void casioLcdScreen.offsetWidth;
-                        casioLcdScreen.classList.add('lcd-calculating');
-                    }
-                    lcdOperation.textContent = `4 sem × ${currentHours.toFixed(1)}h = ${(currentHours * 4).toFixed(1)}h/mes`;
-                });
-            }
-
-            if (casioAnsKey) {
-                casioAnsKey.addEventListener('click', () => {
-                    const temp = currentHours;
-                    currentHours = previousHoursValue;
-                    previousHoursValue = temp;
-                    syncDaysAndDurationFromHours(currentHours);
-                    renderCalculator();
-                });
-            }
-
-            if (casioDelKey) {
-                casioDelKey.addEventListener('click', () => {
-                    previousHoursValue = currentHours;
-                    if (!Number.isInteger(currentHours)) {
-                        currentHours = Math.floor(currentHours);
-                    } else if (currentHours > 1.0) {
-                        currentHours = currentHours - 1.0;
-                    } else {
-                        currentHours = 2.0;
-                    }
-                    syncDaysAndDurationFromHours(currentHours);
-                    renderCalculator();
-                });
-            }
-
-            if (casioAcKey) {
-                casioAcKey.addEventListener('click', () => {
-                    previousHoursValue = currentHours;
-                    currentModality = 'presencial';
-                    currentDays = 2;
-                    currentDuration = 1.0;
-                    currentHours = 2.0;
-                    studentLevelSelect.value = '3º de ESO';
-                    renderCalculator();
-                });
-            }
-
-            if (casioEqualsKey) casioEqualsKey.addEventListener('click', triggerCasioEquals);
-
-            // Pantalla LCD clickable para disparar WhatsApp
-            if (casioLcdScreen) {
-                casioLcdScreen.style.cursor = 'pointer';
-                casioLcdScreen.addEventListener('click', triggerCasioEquals);
-            }
-
-            // Pastillas de Modalidad en el Panel Lateral
-            document.querySelectorAll('.mod-pill').forEach(pill => {
-                pill.addEventListener('click', () => {
-                    const mod = pill.getAttribute('data-mod');
-                    setCalculatorModality(mod);
-                });
-            });
-
-            // Selector de Días de Repaso por Semana
-            document.querySelectorAll('.day-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    currentDays = parseInt(btn.getAttribute('data-days'), 10) || 2;
-                    currentHours = Math.round((currentDays * currentDuration) * 10) / 10;
-                    renderCalculator();
-                });
-            });
-
-            // Selector de Duración por Sesión
-            document.querySelectorAll('.dur-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    currentDuration = parseFloat(btn.getAttribute('data-duration')) || 1.0;
-                    currentHours = Math.round((currentDays * currentDuration) * 10) / 10;
-                    renderCalculator();
-                });
-            });
-
-            // Selector de Nivel Escolar
-            if (studentLevelSelect) {
-                studentLevelSelect.addEventListener('change', () => renderCalculator());
-            }
-
-            // Soporte de Teclado Físico para la Calculadora Casio
-            window.addEventListener('keydown', (e) => {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
-
-                if (e.key >= '1' && e.key <= '8') {
-                    previousHoursValue = currentHours;
-                    currentHours = parseFloat(e.key);
-                    syncDaysAndDurationFromHours(currentHours);
-                    renderCalculator();
-                } else if (e.key === '+') {
-                    adjustHours(0.5);
-                } else if (e.key === '-') {
-                    adjustHours(-0.5);
-                } else if (e.key === '.' || e.key === ',') {
-                    previousHoursValue = currentHours;
-                    if (Number.isInteger(currentHours)) {
-                        currentHours = Math.min(8.0, currentHours + 0.5);
-                    } else {
-                        currentHours = Math.floor(currentHours);
-                    }
-                    syncDaysAndDurationFromHours(currentHours);
-                    renderCalculator();
-                } else if (e.key === 'Enter') {
-                    triggerCasioEquals();
-                } else if (e.key === 'Backspace' || e.key === 'Delete') {
-                    if (casioDelKey) casioDelKey.click();
-                } else if (e.key === 'Escape') {
-                    if (casioAcKey) casioAcKey.click();
-                }
-            });
-        }
-
-        // ==========================================
-        // 1. DESPLAZAMIENTO SUAVE Y ANCLAS ORGÁNICAS
-        // ==========================================
-        let activeScrollCancel = null;
-        let activeScrollRafId = null;
-
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        function smoothScrollTo(targetY, onComplete) {
-            if (activeScrollCancel) {
-                activeScrollCancel();
-                activeScrollCancel = null;
-            }
-            if (activeScrollRafId) {
-                cancelAnimationFrame(activeScrollRafId);
-                activeScrollRafId = null;
-            }
-
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                window.scrollTo({ top: targetY, behavior: 'smooth' });
-                if (onComplete) onComplete();
-                return;
-            }
-
-            const startY = window.pageYOffset || window.scrollY || 0;
-            const diff = targetY - startY;
-            if (Math.abs(diff) < 2) {
-                if (onComplete) onComplete();
-                return;
-            }
-
-            const duration = Math.min(800, Math.max(450, Math.abs(diff) * 0.25));
-            let startTime = null;
-            let isCancelled = false;
-
-            function cancelScroll() {
-                if (isCancelled) return;
-                isCancelled = true;
-                if (activeScrollRafId) {
-                    cancelAnimationFrame(activeScrollRafId);
-                    activeScrollRafId = null;
-                }
-                cleanup();
-                activeScrollCancel = null;
-            }
-
-            function cleanup() {
-                window.removeEventListener('wheel', cancelScroll);
-                window.removeEventListener('touchmove', cancelScroll);
-                window.removeEventListener('keydown', onKeyDown);
-            }
-
-            function onKeyDown(e) {
-                if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'].includes(e.code)) {
-                    cancelScroll();
-                }
-            }
-
-            window.addEventListener('wheel', cancelScroll, { passive: true });
-            window.addEventListener('touchmove', cancelScroll, { passive: true });
-            window.addEventListener('keydown', onKeyDown, { passive: true });
-
-            activeScrollCancel = cancelScroll;
-
-            function step(timestamp) {
-                if (isCancelled) return;
-                if (!startTime) startTime = timestamp;
-                const elapsed = timestamp - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = easeInOutCubic(progress);
-
-                window.scrollTo(0, startY + diff * eased);
-
-                if (progress < 1) {
-                    activeScrollRafId = requestAnimationFrame(step);
-                } else {
-                    cleanup();
-                    activeScrollCancel = null;
-                    activeScrollRafId = null;
-                    if (onComplete) onComplete();
-                }
-            }
-
-            activeScrollRafId = requestAnimationFrame(step);
-        }
-
-        function scrollToElement(target, hash) {
-            if (!target) return;
-            const headerOffset = 85;
-
-            target.classList.add('is-revealed');
-            const childReveals = target.querySelectorAll('.scroll-reveal');
-            childReveals.forEach(el => el.classList.add('is-revealed'));
-
-            const rect = target.getBoundingClientRect();
-            const currentScrollY = window.pageYOffset || window.scrollY || 0;
-            const offsetPosition = rect.top + currentScrollY - headerOffset;
-
-            smoothScrollTo(Math.max(0, offsetPosition), () => {
-                if (!target.hasAttribute('tabindex')) {
-                    target.setAttribute('tabindex', '-1');
-                }
-                target.focus({ preventScroll: true });
-            });
-
-            if (hash && history.pushState) {
-                history.pushState(null, null, hash);
-            }
-        }
-
-        function initSmoothAnchorNavigation() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const menuIcon = document.getElementById('menuIcon');
-
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if (!href) return;
-
-                    if (href === '#' || href === '#top') {
-                        e.preventDefault();
-                        smoothScrollTo(0);
-                        if (history.pushState) {
-                            history.pushState(null, null, window.location.pathname);
-                        }
-                        return;
-                    }
-
-                    const targetId = href.startsWith('#') ? href.slice(1) : href;
-                    const target = document.getElementById(targetId);
-                    if (!target) return;
-
-                    e.preventDefault();
-
-                    // Cerrar menú móvil si está abierto
-                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                        if (mobileMenuToggle) mobileMenuToggle.setAttribute('aria-expanded', 'false');
-                        if (menuIcon) {
-                            menuIcon.classList.remove('fa-times');
-                            menuIcon.classList.add('fa-bars');
-                        }
-                    }
-
-                    scrollToElement(target, href);
-                });
-            });
-
-            // Menú Móvil Toggle
-            if (mobileMenuToggle && mobileMenu) {
-                mobileMenuToggle.addEventListener('click', () => {
-                    const isOpen = !mobileMenu.classList.contains('hidden');
-                    if (isOpen) {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenuToggle.setAttribute('aria-expanded', 'false');
-                        menuIcon.classList.remove('fa-times');
-                        menuIcon.classList.add('fa-bars');
-                    } else {
-                        mobileMenu.classList.remove('hidden');
-                        mobileMenuToggle.setAttribute('aria-expanded', 'true');
-                        menuIcon.classList.remove('fa-bars');
-                        menuIcon.classList.add('fa-times');
-                    }
-                });
-            }
-        }
-
-        // ==========================================
-        // 2. REVELADO PROGRESIVO (IntersectionObserver)
-        // ==========================================
-        function initScrollReveals() {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const revealElements = document.querySelectorAll('.scroll-reveal');
-
-            if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-                revealElements.forEach(el => el.classList.add('is-revealed'));
-                return;
-            }
-
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-revealed');
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, {
-                root: null,
-                rootMargin: '0px 0px -30px 0px',
-                threshold: 0.05
-            });
-
-            revealElements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    el.classList.add('is-revealed');
-                } else {
-                    observer.observe(el);
-                }
-            });
-        }
-
-        // ==========================================
-        // 3. PARALLAX DINÁMICO MULTICAPA POR GPU
-        // ==========================================
-        function initParallax() {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (prefersReducedMotion) return;
-
-            const orb1 = document.getElementById('orb1');
-            const orb2 = document.getElementById('orb2');
-            const orb3 = document.getElementById('orb3');
-            const orb4 = document.getElementById('orb4');
-            const mathSymbols = Array.from(document.querySelectorAll('.parallax-math-symbol'));
-
-            let symbolData = [];
-            function cachePositions() {
-                const currentScrollY = window.pageYOffset || window.scrollY || 0;
-                symbolData = mathSymbols.map(el => {
-                    const parent = el.closest('section, header');
-                    const rect = parent ? parent.getBoundingClientRect() : { top: 0, height: 0 };
-                    const sectionTop = parent ? rect.top + currentScrollY : 0;
-                    const sectionHeight = parent ? (parent.offsetHeight || rect.height) : 0;
-                    return {
-                        el,
-                        sectionTop,
-                        sectionHeight,
-                        speed: parseFloat(el.getAttribute('data-parallax-speed') || '0.12')
-                    };
-                });
-            }
-            cachePositions();
-            window.addEventListener('resize', cachePositions, { passive: true });
-
-            let latestScrollY = window.pageYOffset || window.scrollY || 0;
-            let ticking = false;
-
-            function updateParallax() {
-                const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-                const progress = Math.min(1, Math.max(0, latestScrollY / maxScroll));
-
-                // Orbes ambientales multicapa
-                if (orb1) {
-                    const y1 = (progress - 0.5) * 140;
-                    const x1 = (progress - 0.5) * 40;
-                    orb1.style.transform = `translate3d(${x1.toFixed(1)}px, ${y1.toFixed(1)}px, 0)`;
-                }
-                if (orb2) {
-                    const y2 = (progress - 0.5) * -160;
-                    const x2 = (progress - 0.5) * -50;
-                    orb2.style.transform = `translate3d(${x2.toFixed(1)}px, ${y2.toFixed(1)}px, 0)`;
-                }
-                if (orb3) {
-                    const y3 = (progress - 0.5) * 130;
-                    const x3 = (progress - 0.5) * 35;
-                    orb3.style.transform = `translate3d(${x3.toFixed(1)}px, ${y3.toFixed(1)}px, 0)`;
-                }
-                if (orb4) {
-                    const y4 = (progress - 0.5) * -120;
-                    const x4 = (progress - 0.5) * 45;
-                    orb4.style.transform = `translate3d(${x4.toFixed(1)}px, ${y4.toFixed(1)}px, 0)`;
-                }
-
-                // Símbolos matemáticos con parallax suave
-                const viewportCenter = latestScrollY + window.innerHeight / 2;
-                for (let i = 0; i < symbolData.length; i++) {
-                    const item = symbolData[i];
-                    const sectionCenter = item.sectionTop + (item.sectionHeight / 2);
-                    const delta = viewportCenter - sectionCenter;
-                    const maxRange = (window.innerHeight + item.sectionHeight) / 2;
-
-                    if (Math.abs(delta) < maxRange + 150) {
-                        const rawY = delta * item.speed;
-                        const clampedY = Math.max(-45, Math.min(45, rawY));
-                        item.el.style.transform = `translate3d(0, ${clampedY.toFixed(1)}px, 0)`;
-                    }
-                }
-
-                ticking = false;
-            }
-
-            function onScroll() {
-                latestScrollY = window.pageYOffset || window.scrollY || 0;
-                if (!ticking) {
-                    requestAnimationFrame(updateParallax);
-                    ticking = true;
-                }
-            }
-
-            window.addEventListener('scroll', onScroll, { passive: true });
-            updateParallax();
-        }
-
-        // ==========================================
-        // 4. MICRO-TILT 3D INTERACTIVO
-        // ==========================================
-        function initTiltEffect() {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-            if (prefersReducedMotion || !isFinePointer) return;
-
-            const tiltElements = document.querySelectorAll('.interactive-tilt');
-
-            tiltElements.forEach(el => {
-                let isHovered = false;
-                let rafId = null;
-                let resetTimer = null;
-                const maxTilt = parseFloat(el.getAttribute('data-tilt-max') || '3.5');
-
-                function onMouseEnter() {
-                    isHovered = true;
-                    if (resetTimer) {
-                        clearTimeout(resetTimer);
-                        resetTimer = null;
-                    }
-                    el.style.transition = 'transform 0.12s ease-out, box-shadow 0.2s ease-out';
-                }
-
-                function onMouseMove(e) {
-                    if (!isHovered) return;
-                    if (rafId) return;
-
-                    rafId = requestAnimationFrame(() => {
-                        rafId = null;
-                        if (!isHovered) return;
-
-                        const bounds = el.getBoundingClientRect();
-                        const x = e.clientX - bounds.left;
-                        const y = e.clientY - bounds.top;
-                        const centerX = bounds.width / 2;
-                        const centerY = bounds.height / 2;
-
-                        const rotateX = Math.max(-maxTilt, Math.min(maxTilt, ((centerY - y) / (centerY || 1)) * maxTilt));
-                        const rotateY = Math.max(-maxTilt, Math.min(maxTilt, ((x - centerX) / (centerX || 1)) * maxTilt));
-
-                        el.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px) scale3d(1.01, 1.01, 1.01)`;
-                    });
-                }
-
-                function onMouseLeave() {
-                    isHovered = false;
-                    if (rafId) {
-                        cancelAnimationFrame(rafId);
-                        rafId = null;
-                    }
-                    el.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-                    el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale3d(1, 1, 1)';
-
-                    resetTimer = setTimeout(() => {
-                        if (!isHovered) {
-                            el.style.transform = '';
-                            el.style.transition = '';
-                        }
-                    }, 420);
-                }
-
-                el.addEventListener('mouseenter', onMouseEnter);
-                el.addEventListener('mousemove', onMouseMove);
-                el.addEventListener('mouseleave', onMouseLeave);
-            });
-        }
-
-        // ==========================================
-        // 5. VISIBILIDAD REACTIVA DEL BOTÓN WHATSAPP
-        // ==========================================
-        function initFloatingWhatsAppScroll() {
-            const floatingBtn = document.getElementById('floatingWhatsApp');
-            if (!floatingBtn) return;
-
-            function updateFloatingVisibility() {
-                const scrollY = window.pageYOffset || window.scrollY || 0;
-                if (scrollY > 400) {
-                    floatingBtn.classList.add('btn-visible');
-                } else {
-                    floatingBtn.classList.remove('btn-visible');
-                }
-            }
-
-            window.addEventListener('scroll', updateFloatingVisibility, { passive: true });
-            updateFloatingVisibility();
-        }
-
-        // ==========================================
-        // 6. MODAL INTERACTIVO DE APUNTES REALES (GOODNOTES)
-        // ==========================================
-        function initPdfModal() {
-            const openBtn = document.getElementById('openPdfModalBtn');
-            const modal = document.getElementById('pdfModal');
-            const closeBtn = document.getElementById('closePdfModalBtn');
-            const closeBtnBottom = document.getElementById('closePdfModalBtnBottom');
-            const tab1 = document.getElementById('modalTab1');
-            const tab2 = document.getElementById('modalTab2');
-            const noteImg = document.getElementById('modalNoteImg');
-            const openFullLink = document.getElementById('modalOpenFullLink');
-            const viewToggle = document.getElementById('modalViewToggle');
-            const viewToggleText = document.getElementById('modalViewToggleText');
-
-            if (!modal) return;
-
-            let isZoomed = false;
-
-            function setZoom(zoom) {
-                isZoomed = zoom;
-                if (!noteImg) return;
-                if (isZoomed) {
-                    noteImg.className = 'w-full max-w-xl h-auto block transition-all duration-200 cursor-zoom-out';
-                    if (viewToggleText) viewToggleText.textContent = 'Ajustar';
-                } else {
-                    noteImg.className = 'max-h-[58vh] sm:max-h-[64vh] w-auto h-auto object-contain block transition-all duration-200 cursor-zoom-in';
-                    if (viewToggleText) viewToggleText.textContent = 'Ampliar';
-                }
-            }
-
-            function openModal() {
-                modal.classList.add('modal-open');
-                document.body.style.overflow = 'hidden';
-                setZoom(false); // Vista ajustada por defecto para ver la hoja entera
-            }
-
-            function closeModal() {
-                modal.classList.remove('modal-open');
-                document.body.style.overflow = '';
-            }
-
-            if (openBtn) openBtn.addEventListener('click', openModal);
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            if (closeBtnBottom) closeBtnBottom.addEventListener('click', closeModal);
-
-            if (tab1 && tab2 && noteImg) {
-                tab1.addEventListener('click', () => {
-                    noteImg.src = 'apuntes-goodnotes-1.jpg';
-                    if (openFullLink) openFullLink.href = 'apuntes-goodnotes-1.jpg';
-                    tab1.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white transition-all shadow-sm';
-                    tab2.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white bg-slate-800 transition-all';
-                });
-                tab2.addEventListener('click', () => {
-                    noteImg.src = 'apuntes-goodnotes-2.jpg';
-                    if (openFullLink) openFullLink.href = 'apuntes-goodnotes-2.jpg';
-                    tab2.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white transition-all shadow-sm';
-                    tab1.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white bg-slate-800 transition-all';
-                });
-            }
-
-            if (viewToggle) {
-                viewToggle.addEventListener('click', () => setZoom(!isZoomed));
-            }
-            if (noteImg) {
-                noteImg.addEventListener('click', () => setZoom(!isZoomed));
-            }
-
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('modal-open')) {
-                    closeModal();
-                }
-            });
-        }
-
-        // Inicialización General
-        function initApp() {
-            renderCalculator(true);
-            initCasioInteractions();
-            initFloatingWhatsAppScroll();
-            initPdfModal();
-            initSmoothAnchorNavigation();
-            initScrollReveals();
-            initParallax();
-            initTiltEffect();
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initApp);
-        } else {
-            initApp();
-        }
-    </script>
-
-    <!-- Modal de Muestra Real de Apuntes en PDF (Goodnotes) -->
-    <div id="pdfModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
-        <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[94vh]">
-            
-            <!-- Cabecera del modal -->
-            <div class="px-5 py-3 border-b border-slate-800 flex items-center justify-between bg-slate-900/95 shrink-0">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-bold border border-indigo-500/30">
-                        PDF
-                    </div>
-                    <div>
-                        <h4 id="pdfModalTitle" class="text-sm sm:text-base font-bold text-white leading-tight">Muestra Real de Apuntes (Goodnotes)</h4>
-                        <p class="text-[11px] text-slate-400">Pizarra digital generada en tiempo real durante la clase</p>
-                    </div>
-                </div>
-                <button type="button" id="closePdfModalBtn" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors" aria-label="Cerrar modal">
-                    <i class="fas fa-times text-base"></i>
-                </button>
-            </div>
-
-            <!-- Selector interactivo de páginas de apuntes y controles de visualización -->
-            <div class="px-4 sm:px-5 py-2.5 bg-slate-950/90 border-b border-slate-800 flex items-center justify-between gap-2.5 flex-wrap shrink-0">
-                <div class="flex items-center gap-1.5 sm:gap-2">
-                    <button type="button" id="modalTab1" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white transition-all shadow-sm">
-                        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        <span>Pág. 1: Dominio y Signos</span>
-                    </button>
-                    <button type="button" id="modalTab2" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white bg-slate-800 transition-all">
-                        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        <span>Pág. 2: Inversa y Recorrido</span>
-                    </button>
-                    <!-- Toggle de Modo Ajustar / Zoom -->
-                    <button type="button" id="modalViewToggle" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 border border-slate-700 transition-all flex items-center gap-1.5" title="Alternar entre ver hoja entera o ampliar">
-                        <i class="fas fa-expand-arrows-alt text-[10px]"></i>
-                        <span id="modalViewToggleText">Ampliar</span>
-                    </button>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <a id="modalOpenFullLink" href="apuntes-goodnotes-1.jpg" target="_blank" rel="noopener noreferrer" class="text-xs text-sky-400 hover:text-sky-300 font-semibold inline-flex items-center gap-1 transition-colors" title="Abrir imagen en nueva pestaña para zoom libre">
-                        <span>Ver imagen completa</span>
-                        <i class="fas fa-external-link-alt text-[10px]"></i>
-                    </a>
-                    <span class="text-[11px] text-emerald-400 font-mono hidden md:inline-flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Huion Inspiroy 2M + PC
-                    </span>
-                </div>
-            </div>
-
-            <!-- Cuerpo con imagen de Goodnotes (Ajustada a pantalla por defecto para ver la hoja entera de arriba a abajo) -->
-            <div id="modalImgContainer" class="p-3 sm:p-4 overflow-y-auto bg-slate-950 flex flex-col items-center justify-center flex-1 min-h-0">
-                <div class="rounded-xl overflow-hidden border border-slate-800 shadow-2xl bg-white flex justify-center">
-                    <img id="modalNoteImg" 
-                         src="apuntes-goodnotes-1.jpg" 
-                         alt="Muestra real de apuntes en pizarra Goodnotes resuelta por Daniel Casado con tableta Huion Inspiroy 2M" 
-                         class="max-h-[58vh] sm:max-h-[64vh] w-auto h-auto object-contain block transition-all duration-200 cursor-zoom-in">
-                </div>
-            </div>
-
-            <!-- Aclaración de clases presenciales a papel vs online -->
-            <div class="px-5 py-2.5 bg-slate-900 border-t border-slate-800 text-[11px] text-slate-300 shrink-0">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
-                    <div class="flex items-center gap-1.5">
-                        <span class="inline-flex items-center gap-1 text-emerald-400 font-bold shrink-0">
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                            <span>Online:</span>
-                        </span>
-                        <span>Pizarra digital con tableta gráfica Huion Inspiroy 2M; entrega de archivo PDF al terminar.</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <span class="inline-flex items-center gap-1 text-sky-400 font-bold shrink-0">
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                            <span>Presencial:</span>
-                        </span>
-                        <span>Trabajo 100% a mano sobre papel en el cuaderno del alumno para preparar exámenes reales.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pie del modal -->
-            <div class="px-5 py-2.5 border-t border-slate-800/80 bg-slate-900/95 flex items-center justify-between shrink-0">
-                <span class="text-xs text-slate-400">Material original elaborado por Daniel Casado</span>
-                <button type="button" id="closePdfModalBtnBottom" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-colors">
-                    Cerrar vista previa
-                </button>
-            </div>
-        </div>
+        <p class="phone mono">+34 637 621 315</p>
+      </div>
+      <figure class="portrait">
+        <img src="assets/img/daniel-640.webp" width="640" height="800" fetchpriority="high" alt="Retrato de Daniel Casado Juan, profesor de Matemáticas">
+        <figcaption>Daniel Casado Juan · Grado en Ingeniería Informática, UIB</figcaption>
+      </figure>
     </div>
+  </section>
+
+  <!-- Ficha del profesor -->
+  <section class="ficha" aria-label="Sobre el profesor">
+    <div class="wrap">
+      <dl>
+        <div><dt>Formación</dt><dd>Grado UIB en Ingeniería Informática</dd></div>
+        <div><dt>Experiencia</dt><dd>3 años de clases particulares activas</dd></div>
+        <div><dt>Centro</dt><dd>Antiguo alumno del Sant Antoni Abat</dd></div>
+        <div><dt>Material</dt><dd>Apuntes en PDF con pizarra digital Goodnotes</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Metodología -->
+  <section class="metodo" id="metodologia" aria-labelledby="h-metodo">
+    <div class="wrap">
+      <div class="head-center" data-reveal>
+        <h2 id="h-metodo">Aprender a razonar, no a memorizar</h2>
+        <p class="lead">Las matemáticas no son una lista de recetas fijas. Mi prioridad es que el estudiante entienda el origen lógico de cada concepto para resolver cualquier problema con criterio y seguridad ante el folio en blanco.</p>
+      </div>
+      <ol class="steps" data-reveal-group>
+        <li class="step card">
+          <span class="step-num" aria-hidden="true">01</span>
+          <div>
+            <h3>Diagnóstico de lagunas</h3>
+            <p>Muchas dificultades en el curso actual vienen de dudas arrastradas de cursos previos (fracciones, signos, jerarquía de operaciones o despeje de incógnitas). Localizamos con precisión el origen del bloqueo y reconstruimos la base con total solidez.</p>
+            <p class="outcome"><span class="mono">Resultado</span>Base conceptual afianzada</p>
+          </div>
+        </li>
+        <li class="step card">
+          <span class="step-num" aria-hidden="true">02</span>
+          <div>
+            <h3>Razonamiento guiado</h3>
+            <p>No doy las soluciones masticadas. Formulo preguntas estratégicas para que el estudiante deduzca los pasos lógicos por sí mismo, gane agilidad mental y sea capaz de defender el desarrollo de un examen sin depender de nadie.</p>
+            <p class="outcome"><span class="mono">Resultado</span>Autonomía y resolución propia</p>
+          </div>
+        </li>
+        <li class="step card">
+          <span class="step-num" aria-hidden="true">03</span>
+          <div>
+            <h3>Papel en casa y Goodnotes online</h3>
+            <p>En clases presenciales trabajamos íntegramente a papel sobre el cuaderno del estudiante para asegurar orden, limpieza y soltura ante el examen real. En clases online usamos una tableta gráfica Huion Inspiroy 2M conectada al ordenador con Goodnotes, y el alumno recibe el PDF al terminar.</p>
+            <p class="outcome"><span class="mono">Resultado</span>Apuntes claros y ordenados</p>
+            <a class="link" href="#apuntes">Ver muestra de apuntes</a>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Muestra real de apuntes -->
+  <section class="apuntes" id="apuntes" aria-labelledby="h-apuntes">
+    <div class="wrap apuntes-grid">
+      <div class="apuntes-text" data-reveal>
+        <h2 id="h-apuntes">Muestra real de apuntes</h2>
+        <p class="lead">Pizarra digital generada en tiempo real durante la clase. Material original elaborado por Daniel Casado.</p>
+        <p><strong>Online:</strong> pizarra digital con tableta gráfica Huion Inspiroy 2M; entrega de archivo PDF al terminar.</p>
+        <p><strong>Presencial:</strong> trabajo 100% a mano sobre papel en el cuaderno del alumno para preparar exámenes reales.</p>
+      </div>
+      <div class="sheets" data-reveal-group>
+        <figure>
+          <a class="sheet-open" href="assets/img/apuntes-1.webp" target="_blank" rel="noopener" data-title="Pág. 1 · Dominio y signos" data-caption="Cálculo del dominio de una función irracional de índice par: el radicando debe ser mayor o igual que 0 y el denominador no puede ser 0, con estudio de signos." aria-label="Ampliar la página 1 de los apuntes: Dominio y signos">
+            <img src="assets/img/apuntes-1.webp" width="785" height="1024" loading="lazy" alt="Apuntes de Goodnotes: función irracional de índice par, cálculo del dominio con estudio de signos">
+          </a>
+          <figcaption class="mono">Pág. 1 · Dominio y signos</figcaption>
+        </figure>
+        <figure>
+          <a class="sheet-open" href="assets/img/apuntes-2.webp" target="_blank" rel="noopener" data-title="Pág. 2 · Inversa y recorrido" data-caption="Cálculo de la función inversa y de su recorrido, resuelto paso a paso a mano con la tableta gráfica." aria-label="Ampliar la página 2 de los apuntes: Inversa y recorrido">
+            <img src="assets/img/apuntes-2.webp" width="787" height="1024" loading="lazy" alt="Apuntes de Goodnotes: inversa y recorrido de una función resueltos a mano con tableta gráfica">
+          </a>
+          <figcaption class="mono">Pág. 2 · Inversa y recorrido</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tarifas -->
+  <section class="tarifas" id="tarifas" aria-labelledby="h-tarifas">
+    <div class="wrap">
+      <div class="head-left" data-reveal>
+        <h2 id="h-tarifas">Modalidades y tarifas</h2>
+        <p class="lead">Sin matrícula ni permanencia obligatoria. Escoge entre el apoyo directo a domicilio en Palma o la comodidad y flexibilidad de las sesiones online.</p>
+      </div>
+
+      <div class="plan-group">
+        <div class="group-head" data-reveal>
+          <h3>Individual</h3>
+          <p>Sesiones para un solo alumno, con ritmo individualizado para afianzar cada paso.</p>
+        </div>
+        <ul class="plan-grid" data-reveal-group>
+          <li class="plan card">
+            <h4>Presencial a domicilio</h4>
+            <p class="plan-meta mono">Palma de Mallorca</p>
+            <p class="price"><span class="amount">15&nbsp;€</span><span class="unit mono">/ hora</span></p>
+            <p class="plan-desc">Atención directa en tu propio hogar con el material y temario del colegio o instituto.</p>
+            <ul class="plain">
+              <li><strong>Desplazamiento incluido</strong> en Palma y zonas acordadas.</li>
+              <li>Seguimiento directo del libro, deberes y exámenes del centro.</li>
+              <li>Ritmo 100% individualizado para afianzar cada paso.</li>
+            </ul>
+            <a class="btn btn-ink btn-block" href="#estimador" data-modalidad="presencial">Calcular cuota mensual</a>
+          </li>
+          <li class="plan card">
+            <h4>Online interactiva</h4>
+            <p class="plan-meta mono">Pizarra Goodnotes</p>
+            <p class="price"><span class="amount">13&nbsp;€</span><span class="unit mono">/ hora</span></p>
+            <p class="plan-desc">Sesión en tiempo real con pizarra digital compartida (tableta gráfica Huion Inspiroy 2M), audio nítido y cero desplazamientos.</p>
+            <ul class="plain">
+              <li><strong>Pizarra Goodnotes en vivo</strong> con tableta gráfica para desarrollos claros.</li>
+              <li><strong>Envío inmediato del PDF</strong> con los desarrollos al finalizar.</li>
+              <li>Máxima flexibilidad horaria para repasar antes de exámenes.</li>
+            </ul>
+            <a class="btn btn-ink btn-block" href="#estimador" data-modalidad="online">Calcular cuota mensual</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="plan-group">
+        <div class="group-head" data-reveal>
+          <h3>Modalidad Dúo: estudia con un compañero</h3>
+          <p>Si compartes clase con un amigo o compañero del mismo curso y temario, las sesiones resultan dinámicas, participativas y la tarifa por alumno se reduce.</p>
+        </div>
+        <ul class="plan-grid" data-reveal-group>
+          <li class="plan card">
+            <h4>Presencial dúo</h4>
+            <p class="price"><span class="amount">12&nbsp;€</span><span class="unit mono">/ h por alumno</span></p>
+            <a class="btn btn-ink btn-block" href="#estimador" data-modalidad="duo-presencial">Calcular cuota mensual</a>
+          </li>
+          <li class="plan card">
+            <h4>Online dúo</h4>
+            <p class="price"><span class="amount">10&nbsp;€</span><span class="unit mono">/ h por alumno</span></p>
+            <a class="btn btn-ink btn-block" href="#estimador" data-modalidad="duo-online">Calcular cuota mensual</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estimador de cuota -->
+  <section class="estimador" id="estimador" aria-labelledby="h-est">
+    <div class="wrap">
+      <div class="head-left" data-reveal>
+        <h2 id="h-est">Estima tu cuota mensual</h2>
+        <p class="lead">Elige nivel, modalidad y frecuencia. El total se actualiza al momento y puedes enviar la consulta por WhatsApp ya redactada.</p>
+      </div>
+
+      <div class="est-grid">
+        <form class="est-form" id="est-form" autocomplete="off" data-reveal>
+          <div class="field">
+            <label class="lbl" for="nivel"><span class="mono">1</span>Nivel escolar del alumno</label>
+            <div class="select-wrap">
+              <select id="nivel" name="nivel">
+                <option value="1º de ESO">1º de ESO</option>
+                <option value="2º de ESO">2º de ESO</option>
+                <option value="3º de ESO" selected>3º de ESO</option>
+                <option value="4º de ESO">4º de ESO (Académicas o Aplicadas)</option>
+                <option value="1º de Bachillerato">1º de Bachillerato (Consultar temario)</option>
+                <option value="2º de Bachillerato">2º de Bachillerato (Consultar temario)</option>
+              </select>
+              <svg class="icon" aria-hidden="true"><use href="#i-down"/></svg>
+            </div>
+          </div>
+          <p class="notice" id="bach-notice" hidden>Las plazas de Bachillerato son selectas y se confirman tras consultar el temario y las fechas de exámenes del alumno.</p>
+
+          <fieldset>
+            <legend><span class="mono">2</span>Modalidad</legend>
+            <div class="choices">
+              <div class="choice"><input type="radio" name="modalidad" id="m-presencial" value="presencial" checked><label for="m-presencial"><span class="t">Presencial</span><span class="s">15 € / hora</span></label></div>
+              <div class="choice"><input type="radio" name="modalidad" id="m-online" value="online"><label for="m-online"><span class="t">Online</span><span class="s">13 € / hora</span></label></div>
+              <div class="choice"><input type="radio" name="modalidad" id="m-duo-presencial" value="duo-presencial"><label for="m-duo-presencial"><span class="t">Dúo presencial</span><span class="s">12 € / h alumno</span></label></div>
+              <div class="choice"><input type="radio" name="modalidad" id="m-duo-online" value="duo-online"><label for="m-duo-online"><span class="t">Dúo online</span><span class="s">10 € / h alumno</span></label></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="mono">3</span>Días de repaso por semana</legend>
+            <div class="choices choices-days">
+              <div class="choice"><input type="radio" name="dias" id="d-1" value="1"><label for="d-1"><span class="t">1 día</span><span class="s">Ocasional</span></label></div>
+              <div class="choice"><input type="radio" name="dias" id="d-2" value="2" checked><label for="d-2"><span class="t">2 días</span><span class="s">Habitual</span></label></div>
+              <div class="choice"><input type="radio" name="dias" id="d-3" value="3"><label for="d-3"><span class="t">3 días</span><span class="s">Refuerzo</span></label></div>
+              <div class="choice"><input type="radio" name="dias" id="d-4" value="4"><label for="d-4"><span class="t">4 días</span><span class="s">Intensivo</span></label></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="mono">4</span>Duración por sesión</legend>
+            <div class="choices choices-3">
+              <div class="choice"><input type="radio" name="duracion" id="u-10" value="1" checked><label for="u-10"><span class="t">1 h</span></label></div>
+              <div class="choice"><input type="radio" name="duracion" id="u-15" value="1.5"><label for="u-15"><span class="t">1,5 h</span></label></div>
+              <div class="choice"><input type="radio" name="duracion" id="u-20" value="2"><label for="u-20"><span class="t">2 h</span></label></div>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="est-out" data-reveal>
+          <div class="readout" role="status" aria-live="polite" aria-label="Resumen del presupuesto">
+            <dl>
+              <div class="row"><dt class="mono">Modalidad</dt><dd id="o-mod">Presencial a Domicilio</dd></div>
+              <div class="row"><dt class="mono">Frecuencia</dt><dd id="o-freq">2 días / semana (1 h por clase)</dd></div>
+              <div class="row"><dt class="mono">Horas semanales</dt><dd id="o-hours">2 horas / semana</dd></div>
+              <div class="row"><dt class="mono">Inversión semanal</dt><dd id="o-week">30,00&nbsp;€ / semana</dd></div>
+            </dl>
+            <div class="total">
+              <span class="mono">Estimado mensual (~4 semanas)</span>
+              <span class="total-amount" id="o-month">120,00&nbsp;€</span>
+            </div>
+          </div>
+          <p class="msg"><span class="mono">Mensaje redactado automáticamente</span><span id="o-msg">«¡Hola Daniel! He visto tu web de clases de matemáticas. Me gustaría consultar disponibilidad para 3º de ESO en modalidad Presencial a Domicilio, con 2 días a la semana (1h por sesión, total 2h/semana; estimado mensual: 120,00€). ¿Qué horarios tendrías libres?»</span></p>
+          <div class="copy-row">
+            <button type="button" class="btn-ghost" id="est-copy"><svg class="icon" aria-hidden="true"><use id="est-copy-icon" href="#i-copy"/></svg><span id="est-copy-label">Copiar mensaje</span></button>
+            <span class="visually-hidden" id="est-copy-status" role="status" aria-live="polite"></span>
+          </div>
+          <a class="btn btn-primary btn-block" id="est-wa" target="_blank" rel="noopener noreferrer" href="https://wa.me/34637621315?text=%C2%A1Hola%20Daniel!%20He%20visto%20tu%20web%20de%20clases%20de%20matem%C3%A1ticas.%20Me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%203%C2%BA%20de%20ESO%20en%20modalidad%20Presencial%20a%20Domicilio%2C%20con%202%20d%C3%ADas%20a%20la%20semana%20(1h%20por%20sesi%C3%B3n%2C%20total%202h%2Fsemana%3B%20estimado%20mensual%3A%20120%2C00%E2%82%AC).%20%C2%BFQu%C3%A9%20horarios%20tendr%C3%ADas%20libres%3F">
+            <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>Pedir plaza por WhatsApp
+          </a>
+          <p class="est-note">Sin permanencia ni matrícula.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dudas -->
+  <section class="faq" id="faq" aria-labelledby="h-faq">
+    <div class="wrap">
+      <div class="faq-head" data-reveal>
+        <h2 id="h-faq">Preguntas frecuentes</h2>
+        <p>Claridad desde el primer momento en horarios, desplazamientos y metodología.</p>
+      </div>
+      <div class="faq-list card" data-reveal>
+        <div class="acc-item">
+          <h3><button type="button" class="acc-trigger" id="faq-b1" aria-expanded="true" aria-controls="faq-p1"><span class="mono">01</span><span>¿Cómo funcionan las clases online y las presenciales a domicilio?</span><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></h3>
+          <div class="acc-panel" id="faq-p1" role="region" aria-labelledby="faq-b1"><div class="acc-inner"><p class="answer">En las clases online nos conectamos por videollamada con audio nítido y tableta gráfica Huion Inspiroy 2M conectada al ordenador con Goodnotes en directo, visualizando la resolución paso a paso y enviando el PDF nada más terminar. En las clases presenciales a domicilio trabajamos íntegramente a papel sobre el cuaderno del estudiante para consolidar el orden, la limpieza de escritura y la soltura de cara a los exámenes presenciales.</p></div></div>
+        </div>
+        <div class="acc-item">
+          <h3><button type="button" class="acc-trigger" id="faq-b2" aria-expanded="true" aria-controls="faq-p2"><span class="mono">02</span><span>¿Las clases presenciales a domicilio tienen suplemento por desplazamiento?</span><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></h3>
+          <div class="acc-panel" id="faq-p2" role="region" aria-labelledby="faq-b2"><div class="acc-inner"><p class="answer">No. El desplazamiento está 100% incluido en la tarifa de 15&nbsp;€/h dentro de Palma y zonas acordadas. No hay cargos ocultos ni sorpresas en el precio acordado.</p></div></div>
+        </div>
+        <div class="acc-item">
+          <h3><button type="button" class="acc-trigger" id="faq-b3" aria-expanded="true" aria-controls="faq-p3"><span class="mono">03</span><span>¿Hay matrícula previa o compromiso de permanencia?</span><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></h3>
+          <div class="acc-panel" id="faq-p3" role="region" aria-labelledby="faq-b3"><div class="acc-inner"><p class="answer">No hay matrícula ni permanencia obligatoria. Las clases se programan de mutuo acuerdo y puedes pausar o finalizar el servicio cuando los objetivos académicos se hayan alcanzado con éxito.</p></div></div>
+        </div>
+        <div class="acc-item">
+          <h3><button type="button" class="acc-trigger" id="faq-b4" aria-expanded="true" aria-controls="faq-p4"><span class="mono">04</span><span>¿Qué ocurre si un día coincide con examen o imprevisto y no podemos hacer la clase?</span><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></h3>
+          <div class="acc-panel" id="faq-p4" role="region" aria-labelledby="faq-b4"><div class="acc-inner"><p class="answer">Avisando con antelación suficiente, reprogramamos la clase en otro hueco disponible durante la semana o el fin de semana sin ningún inconveniente ni penalización.</p></div></div>
+        </div>
+        <div class="acc-item">
+          <h3><button type="button" class="acc-trigger" id="faq-b5" aria-expanded="true" aria-controls="faq-p5"><span class="mono">05</span><span>¿Cómo funciona la modalidad Dúo con un compañero?</span><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></h3>
+          <div class="acc-panel" id="faq-p5" role="region" aria-labelledby="faq-b5"><div class="acc-inner"><p class="answer">Si dos alumnos del mismo curso o centro escolar reciben la clase juntos, la tarifa por alumno se reduce a 12&nbsp;€/h en presencial o 10&nbsp;€/h en online. Las sesiones resultan muy dinámicas al resolver dudas compartidas del mismo temario.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cierre y contacto -->
+  <section class="contact band-slate" id="contacto" aria-labelledby="h-contacto">
+    <div class="wrap contact-grid">
+      <div data-reveal>
+        <h2 id="h-contacto">Consulta horarios y reserva tu plaza</h2>
+        <p class="lead">Escríbeme por WhatsApp indicando el curso actual del alumno, sus objetivos y tu preferencia de horarios. Te responderé directamente para coordinar la primera sesión.</p>
+        <p class="phone-big">+34 637 621 315</p>
+        <a class="btn btn-primary" href="https://wa.me/34637621315?text=Hola%20Daniel,%20he%20visto%20tu%20web%20y%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer">
+          <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>Escribir por WhatsApp
+        </a>
+      </div>
+      <div class="info" data-reveal>
+        <dl>
+          <div><dt>Zona</dt><dd>Palma de Mallorca<span>Clases online en directo</span></dd></div>
+          <div>
+            <dt>Tarifas (€/hora; dúo, por alumno)</dt>
+            <dd>
+              <span class="price-line">Presencial a domicilio <b>15 €</b></span>
+              <span class="price-line">Online interactiva <b>13 €</b></span>
+              <span class="price-line">Dúo presencial <b>12 €</b></span>
+              <span class="price-line">Dúo online <b>10 €</b></span>
+            </dd>
+          </div>
+          <div><dt>Atención</dt><dd>Directa, sin intermediarios<span>Sin matrícula ni permanencia</span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer band-slate">
+  <div class="wrap foot" data-reveal>
+    <p>© 2026 Daniel Casado Juan. Clases particulares de Matemáticas para ESO y Bachillerato.</p>
+    <nav aria-label="Pie de página">
+      <a href="#metodologia">Metodología</a>
+      <a href="#tarifas">Tarifas</a>
+      <a href="#estimador">Estimador</a>
+      <a href="#faq">Dudas</a>
+      <a href="https://github.com/danicaju" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- WhatsApp flotante (solo móvil; aparece al salir el CTA del hero) -->
+<a class="btn btn-primary fab" id="fab" inert href="https://wa.me/34637621315?text=Hola%20Daniel,%20quiero%20consultar%20disponibilidad%20para%20clases%20de%20matem%C3%A1ticas." target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp</a>
+
+<!-- Lightbox de apuntes -->
+<dialog id="lightbox" aria-labelledby="lb-title">
+  <div class="lb-bar">
+    <p class="mono lb-title" id="lb-title">Apuntes</p>
+    <span class="mono" id="lb-count" aria-live="polite">1 / 2</span>
+    <button type="button" class="btn btn-ink btn-sm" id="lb-zoom" aria-pressed="false">Ampliar</button>
+    <form method="dialog"><button class="btn btn-ink btn-sm" autofocus>Cerrar<svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></form>
+  </div>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" src="" alt="" width="785" height="1024"></div>
+  <p class="lb-cap" id="lb-caption"></p>
+  <div class="lb-foot">
+    <div class="lb-nav">
+      <button type="button" class="btn btn-ink btn-sm" id="lb-prev"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg>Anterior</button>
+      <button type="button" class="btn btn-ink btn-sm" id="lb-next">Siguiente<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+    </div>
+    <a class="link lb-open" id="lb-open" href="#" target="_blank" rel="noopener">Abrir imagen completa<svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg></a>
+  </div>
+</dialog>
 
 </body>
 </html>
